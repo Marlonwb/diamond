@@ -52,7 +52,7 @@
         <servlet-name>springMVC</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!-- 因为spring-servlet.xml只是 controller 级别的上下文，说白了就是 servlet 级别的初始化，它不涉及到除了转发之外的任何实体，
-        所以它的作用范围仅仅限制在 servlet 级别，所以它的初始化应该是跟spring 的 DispatcherServlet 初始化在一起，所以就是在 <servlet> 表情中初始化的。
+        所以它的作用范围仅仅限制在 servlet 级别，所以它的初始化应该是跟spring 的 DispatcherServlet 初始化在一起，所以就是在 <servlet> 中初始化的。
         它有一个默认值就是【servlet-name】-servlet.xml
         -->
         <!--注意配置文件的对应的名称是【servlet-name】-servlet.xml，所以如果你没有给servlet 制定配置文件的位置，并且在默认位置下也没有配置文件，那么系统启动的时候就会报错
