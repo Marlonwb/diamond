@@ -13,6 +13,8 @@
                            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <bean class="person.marlon.diamond.util.ApplicationContextUtil" />
+
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
 
@@ -130,5 +132,30 @@
     <!-- 配置使Spring采用CGLIB代理 -->
     <!--<aop:aspectj-autoproxy proxy-target-class="true" />-->
 
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <!--set default encoding:set same as resource bundle.-->
+        <!--<property name="defaultEncoding" value="iso-8859-1" />-->
+        <!--<property name="defaultEncoding" value="UTF-8" />-->
+        <property name="basenames">
+            <list>
+                <!--<value>i18n_messages/zh_CN</value>-->
+                <value>i18n_messages/</value>
+            </list>
+        </property>
+        <!--默认为false，这样当Spring在ResourceBundle中找不到messageKey的话，就抛出NoSuchMessageException，
+            把它设置为True，则找不到不会抛出异常，而是使用messageKey作为返回值。-->
+        <property name="useCodeAsDefaultMessage" value="true" />
+        <!--如果设置为-1，表示Cache forever。一般生产环境下采用-1，开发环境为了方便调测采用某个正整数，规范地我们可通过profile来定义  -->
+        <!--<property name="cacheSeconds" value="3600"/>-->
+        <!--<property name="fallbackToSystemLocale" value="true"/>-->
+    </bean>
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="cookieName" value="language"/>
+        <property name="cookieMaxAge" value="3600"/>
+        <property name="defaultLocale" value="en"/>
+    </bean>
 
 </beans>
