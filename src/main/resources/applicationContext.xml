@@ -39,10 +39,10 @@
     <!--</bean>-->
 
 
-    <!--&lt;!&ndash; 配置Freemarker屬性文件路徑 &ndash;&gt;-->
-    <!--<bean id="freemarkerConfiguration"        class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
-        <!--<property name="location" value="classpath:conf/freemarker.properties" />-->
-    <!--</bean>-->
+    <mvc:interceptors>
+        <!--如有多个按照配置的顺序拦截-->
+        <bean class="person.marlon.diamond.interceptor.AuthenticationInterceptor" />
+    </mvc:interceptors>
 
     <!--</bean>-->
     <!-- 配置freeMarker模板加載地址 -->

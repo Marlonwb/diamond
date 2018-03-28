@@ -27,8 +27,8 @@ public class I18nUtil {
      * @return
      */
     public static String getMessage(String key) {
-        System.out.println(Locale.getDefault());
-        System.out.println(LocaleContextHolder.getLocale());
+//        System.out.println(Locale.getDefault());
+//        System.out.println(LocaleContextHolder.getLocale());
        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
 

@@ -16,23 +16,23 @@ import java.util.TimerTask;
 public class MyConfig {
 
     @Autowired
-    private Environment env;
+    private Environment env;//env.getProperty("start_greeting")
 
     @PostConstruct
     private void ver(){
-        System.out.println(env.getProperty("greeting"));
+        System.out.println(I18nUtil.getMessage("start_greeting") + I18nUtil.getMessage("author"));
         System.out.println(CharGraph.generateFoZu());
-        new Timer("dynamic").scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                try{
-
-                    System.out.println(/*new SimpleDateFormat().format()*/I18nUtil.getMessage("author"));
-                }catch(Exception e){
-                    System.out.println(e.getMessage());
-                }
-
-            }
-        },3000,5000);
+//        new Timer("dynamic").scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                try{
+//
+//                    System.out.println(/*new SimpleDateFormat().format()*/I18nUtil.getMessage("author"));
+//                }catch(Exception e){
+//                    System.out.println(e.getMessage());
+//                }
+//
+//            }
+//        },3000,5000);
     }
 }
