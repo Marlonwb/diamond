@@ -41,7 +41,8 @@
 
     <mvc:interceptors>
         <!--如有多个按照配置的顺序拦截-->
-        <bean class="person.marlon.diamond.interceptor.AuthenticationInterceptor" />
+        <bean class="person.marlon.diamond.interceptor.LocaleInterceptor" />
+        <bean class="person.marlon.diamond.interceptor.SessionInterceptor" />
     </mvc:interceptors>
 
     <!--</bean>-->
@@ -153,9 +154,9 @@
 
     <bean id="localeResolver"
           class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-        <property name="cookieName" value="language"/>
-        <property name="cookieMaxAge" value="3600"/>
-        <property name="defaultLocale" value="en"/>
+        <property name="cookieName" value="locale"/>
+        <property name="cookieMaxAge" value="604800"/>
+        <property name="defaultLocale" value="zh_CN"/>
     </bean>
 
 </beans>

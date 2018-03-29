@@ -45,7 +45,7 @@ public class CookieUtil {
     /**
      * 获取对应key的Cookie对象
      */
-    private static Cookie getCookie(HttpServletRequest request, String key) {
+    public static Cookie getCookie(HttpServletRequest request, String key) {
         Cookie cookies[] = request.getCookies();
         if (cookies != null && null != key) {
             for (Cookie cookie : cookies) {
