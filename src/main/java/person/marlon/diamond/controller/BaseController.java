@@ -3,19 +3,30 @@ package person.marlon.diamond.controller;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 import person.marlon.diamond.demo.model.Content;
 import person.marlon.diamond.demo.model.Option;
 import org.springframework.ui.Model;
+import person.marlon.diamond.util.I18nUtil;
+import person.marlon.diamond.util.StringUtil;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/file")
-public class FileController {
+@RequestMapping("/**")
+public class BaseController {
+
+    @Resource
+    private LocaleResolver localeResolver;
 
     /**
      * 真·送命题
@@ -399,10 +410,32 @@ public class FileController {
         return  new Gson().toJson(content);
     }
 
-    @RequestMapping(value = "/greet")
+    @RequestMapping(value = "")
+    public String goHome(){
+        return "default";
+    }
+
+    @RequestMapping(value = "/greet",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
     public String echo(@RequestParam(defaultValue = "") String name,Model model){
         model.addAttribute("name",name);
-//        return  new Gson().toJson(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(System.currentTimeMillis())+" hello: "+ name);
-        return "default";
+        return  new Gson().toJson( new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(System.currentTimeMillis())
+                + " " + I18nUtil.getMessage("author") + " replied from server: hello, "+ name);
+    }
+
+    /**
+     * switch language(only support en|zh_CN until now)
+     */
+    @RequestMapping(value = "/language",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String setLocale(@RequestParam(defaultValue = "") String language, HttpServletRequest request, HttpServletResponse response){
+        if(StringUtil.isNotEmpty(language)){
+            localeResolver.setLocale(request, response, new Locale(language));
+        }
+        //TODO
+        // need to validate failed conditions:the language should in the scope of the configuration.
+
+
+        return I18nUtil.getMessage("success");
     }
 }
