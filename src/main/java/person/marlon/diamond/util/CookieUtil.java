@@ -1,5 +1,7 @@
 package person.marlon.diamond.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +80,7 @@ public class CookieUtil {
                                  String path) {
         Cookie _cookie = createCookie(name, value);
         _cookie.setMaxAge(expiry);// how many seconds
-        if(!StringUtil.isEmpty(domain)){
+        if(!StringUtils.isEmpty(domain)){
             _cookie.setDomain(domain);
         }
         _cookie.setPath(path);
@@ -89,7 +91,7 @@ public class CookieUtil {
                                        String domain, String path) {
         Cookie _cookie = createCookie(name, value);
         _cookie.setMaxAge(expiry);// how many seconds
-        if(!StringUtil.isEmpty(domain))
+        if(!StringUtils.isEmpty(domain))
             _cookie.setDomain(domain);
         _cookie.setPath(path);
         _cookie.setSecure(true);

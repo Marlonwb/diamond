@@ -1,6 +1,7 @@
 package person.marlon.diamond.controller;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +12,6 @@ import person.marlon.diamond.demo.model.Content;
 import person.marlon.diamond.demo.model.Option;
 import org.springframework.ui.Model;
 import person.marlon.diamond.util.I18nUtil;
-import person.marlon.diamond.util.StringUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -429,7 +429,7 @@ public class BaseController {
     @RequestMapping(value = "/language",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String setLocale(@RequestParam(defaultValue = "") String language, HttpServletRequest request, HttpServletResponse response){
-        if(StringUtil.isNotEmpty(language)){
+        if(StringUtils.isNotEmpty(language)){
             localeResolver.setLocale(request, response, new Locale(language));
         }
         //TODO

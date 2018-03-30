@@ -1,5 +1,7 @@
 package person.marlon.diamond.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -15,6 +17,8 @@ import java.util.TimerTask;
 @PropertySource(value = {"classpath:system.properties"},ignoreResourceNotFound=false)
 public class MyConfig {
 
+    Logger logger = LoggerFactory.getLogger(MyConfig.class);
+
     @Autowired
     private Environment env;//env.getProperty("start_greeting")
 
@@ -22,6 +26,9 @@ public class MyConfig {
     private void ver(){
         System.out.println(I18nUtil.getMessage("start_greeting") + I18nUtil.getMessage("author"));
         System.out.println(CharGraph.generateFoZu());
+
+        logger.info("haahaahahahahaha");
+
 //        new Timer("dynamic").scheduleAtFixedRate(new TimerTask() {
 //            @Override
 //            public void run() {
