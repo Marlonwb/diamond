@@ -10,14 +10,12 @@ import person.marlon.diamond.util.CharGraph;
 import person.marlon.diamond.util.I18nUtil;
 
 import javax.annotation.PostConstruct;
-import java.util.Timer;
-import java.util.TimerTask;
 
 @Configuration
 @PropertySource(value = {"classpath:system.properties"},ignoreResourceNotFound=false)
 public class MyConfig {
 
-    Logger logger = LoggerFactory.getLogger(MyConfig.class);
+    private Logger logger = LoggerFactory.getLogger(MyConfig.class);
 
     @Autowired
     private Environment env;//env.getProperty("start_greeting")
