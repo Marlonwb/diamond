@@ -25,11 +25,6 @@
         <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />-->
     <!--</context:component-scan>-->
 
-
-    <!-- 静态资源过滤 -->
-    <mvc:resources mapping="/resources/**" location="/WEB-INF/static/"/>
-
-    <!--再进行js、image、css等静态资源访问的相关配置，这样，SpringMVC才能访问网站内的静态资源：-->
     <!--ViewResolver 视图解析器-->
     <!--用于支持Servlet、JSP视图解析-->
     <!--<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
@@ -37,13 +32,6 @@
         <!--<property name="prefix" value="/WEB-INF/views/"/>-->
         <!--<property name="suffix" value=".jsp"/>-->
     <!--</bean>-->
-
-
-    <mvc:interceptors>
-        <!--如有多个按照配置的顺序拦截-->
-        <bean class="person.marlon.diamond.interceptor.LocaleInterceptor" />
-        <bean class="person.marlon.diamond.interceptor.SessionInterceptor" />
-    </mvc:interceptors>
 
     <!--</bean>-->
     <!-- 配置freeMarker模板加載地址 -->
