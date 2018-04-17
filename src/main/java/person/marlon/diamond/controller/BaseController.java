@@ -12,6 +12,7 @@ import person.marlon.diamond.demo.model.Content;
 import person.marlon.diamond.demo.model.Option;
 import org.springframework.ui.Model;
 import person.marlon.diamond.util.I18nUtil;
+import person.marlon.diamond.util.WebUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import static person.marlon.diamond.util.WebUtil.getRedirectUri;
 
 @Controller
 @RequestMapping("/**")
@@ -413,6 +416,11 @@ public class BaseController {
     @RequestMapping(value = "")
     public String goHome(){
         return "default";
+    }
+
+    @RequestMapping("/redirect")
+        public String redirect(HttpServletRequest request,String relativeUri){
+        return WebUtil.getRedirectUri(WebUtil.getAbsoluteRequestDomain(request),relativeUri);
     }
 
     @RequestMapping(value = "/greet",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
