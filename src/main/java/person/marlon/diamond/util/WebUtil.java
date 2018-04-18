@@ -97,7 +97,7 @@ public class WebUtil {
         String scheme = WebUtil.getRequestScheme(request);
         absoluteUrl = StringUtils.isEmpty(scheme) ? requestServerName : scheme + "://" + requestServerName;
         String port = WebUtil.getRequestPort(request);
-        absoluteUrl = StringUtils.isEmpty(port) ? absoluteUrl :absoluteUrl + ":" + port;
+        absoluteUrl = StringUtils.isEmpty(port) || "80".equals(port) || "443".equals(port) ? absoluteUrl :absoluteUrl + ":" + port;
         //为了防止链接会多带斜杠（拼接接口时会就会带上斜杠，无需多带，/rtc/dispatch）
         if(absoluteUrl.endsWith("/")){
             absoluteUrl = absoluteUrl.substring(0,absoluteUrl.length()-1);
