@@ -3,6 +3,7 @@ package person.marlon.diamond.controller;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,9 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 import person.marlon.diamond.demo.model.Content;
 import person.marlon.diamond.demo.model.Option;
-import org.springframework.ui.Model;
 import person.marlon.diamond.util.I18nUtil;
-import person.marlon.diamond.util.WebUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import static person.marlon.diamond.util.WebUtil.getRedirectUri;
 
 @Controller
 @RequestMapping("/**")
@@ -403,7 +400,7 @@ public class BaseController {
                 "润才是王道。"));
     }
 
-    @RequestMapping(value = "/play",produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/play",produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String play(@RequestParam(defaultValue = "1")String key){
         Content content = selections.get(key);
@@ -419,8 +416,9 @@ public class BaseController {
     }
 
     @RequestMapping("/redirect")
-        public String redirect(HttpServletRequest request,String relativeUri){
-        return WebUtil.getRedirectUri(WebUtil.getAbsoluteRequestDomain(request),relativeUri);
+    public String redirect(HttpServletRequest request,String relativeUri){
+        //return WebUtil.getRedirectUri(WebUtil.getAbsoluteRequestDomain(request),relativeUri);
+        return "redirect:/play";
     }
 
     @RequestMapping(value = "/greet",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")

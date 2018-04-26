@@ -2,7 +2,7 @@
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-          version="3.1"><!--id = "test" （可配置项）-->
+         version="3.1"><!--id = "test" （可配置项）-->
 
     <display-name>Diamond</display-name>
 
@@ -45,7 +45,7 @@
         <param-name>contextConfigLocation</param-name>
         <!-- 如果是监听多个文件，可用‘，’隔开 -->
         <!--<param-value>classpath*:*context.xml,classpath*:context/*context.xml</param-value>-->
-        <param-value>classpath:applicationContext.xml</param-value>
+        <param-value>classpath*:applicationContext.xml</param-value>
     </context-param>
 
     <servlet>
@@ -60,7 +60,7 @@
         <!--以下init-param是自定义SpringMVC的配置文件的位置 -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/springMVC-servlet.xml</param-value>
+            <param-value>classpath:springMVC-servlet.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -72,27 +72,27 @@
 
     <!--测试用Servlet-->
     <!--<servlet>-->
-        <!--<servlet-name>MyHttpServlet</servlet-name>-->
-        <!--<servlet-class>person.marlon.diamond.demo.MyHttpServletBean</servlet-class>-->
-            <!--&lt;!&ndash; 自定义Servlet，通过继承HttpServletBean（其直接继承了HttpServlet）,设置了set方法，可以直接读到这里配置的参数&ndash;&gt;-->
-            <!--<init-param>-->
-            <!--<param-name>name</param-name>-->
-            <!--<param-value>marlon wang</param-value>-->
-        <!--</init-param>-->
+    <!--<servlet-name>MyHttpServlet</servlet-name>-->
+    <!--<servlet-class>person.marlon.diamond.demo.MyHttpServletBean</servlet-class>-->
+    <!--&lt;!&ndash; 自定义Servlet，通过继承HttpServletBean（其直接继承了HttpServlet）,设置了set方法，可以直接读到这里配置的参数&ndash;&gt;-->
+    <!--<init-param>-->
+    <!--<param-name>name</param-name>-->
+    <!--<param-value>marlon wang</param-value>-->
+    <!--</init-param>-->
     <!--</servlet>-->
     <!--<servlet-mapping>-->
-        <!--<servlet-name>MyHttpServlet</servlet-name>-->
-        <!--<url-pattern>/name</url-pattern>-->
+    <!--<servlet-name>MyHttpServlet</servlet-name>-->
+    <!--<url-pattern>/name</url-pattern>-->
     <!--</servlet-mapping>-->
 
     <!--&lt;!&ndash; StatViewServlet是一个标准的Servlet &ndash;&gt;-->
     <!--<servlet>-->
-        <!--<servlet-name>DruidStatView</servlet-name>-->
-        <!--<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>-->
+    <!--<servlet-name>DruidStatView</servlet-name>-->
+    <!--<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>-->
     <!--</servlet>-->
     <!--<servlet-mapping>-->
-        <!--<servlet-name>DruidStatView</servlet-name>-->
-        <!--<url-pattern>/druid/*</url-pattern>-->
+    <!--<servlet-name>DruidStatView</servlet-name>-->
+    <!--<url-pattern>/druid/*</url-pattern>-->
     <!--</servlet-mapping>-->
 
 </web-app>

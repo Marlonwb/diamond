@@ -146,5 +146,4 @@
         <property name="cookieMaxAge" value="604800"/>
         <property name="defaultLocale" value="zh_CN"/>
     </bean>
-
 </beans>

@@ -137,7 +137,7 @@
 
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="ERROR-OUT" />
         <appender-ref ref="INFO-OUT" />
