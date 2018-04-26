@@ -6,15 +6,18 @@
     <groupId>person.marlon</groupId>
     <artifactId>diamond</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <!--<modules>-->
+    <!--packaging不配默认为jar，配pom什么都不会产生，一般用于父模块-->
+    <packaging>pom</packaging>
+    <modules>
         <!--<module>controller</module>-->
         <!--<module>service</module>-->
         <!--<module>dao</module>-->
-        <!--<module>war</module>-->
-        <!--<module>common</module>-->
-    <!--</modules>-->
+        <module>war</module>
+        <module>common</module>
+        <module>task</module>
+    </modules>
 
-    <packaging>war</packaging>
+
     <!--描述性属性，optional
     <name>Test</name>-->
     <!--<url>person.marlon.brilliant.cn</url>-->
@@ -48,7 +51,7 @@
             <!--</dependency>-->
         <!--</dependencies>-->
     <!--</dependencyManagement>-->
-
+<dependencyManagement>
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
@@ -296,7 +299,7 @@
         </dependency>
         <!--=====================LOG DEPENDENCY END==========================-->
     </dependencies>
-
+</dependencyManagement>
     <build>
         <!--optional -->
         <finalName>Diamond</finalName>

@@ -22,10 +22,10 @@ public class MyConfig {
 
     @PostConstruct
     private void ver(){
-        System.out.println(I18nUtil.getMessage("start_greeting") + I18nUtil.getMessage("author"));
+        System.out.println(Thread.currentThread().getName() + ":" + I18nUtil.getMessage("start_greeting") + I18nUtil.getMessage("author"));
         System.out.println(CharGraph.generateFoZu());
 
-        logger.info("haahaahahahahaha");
+        logger.info(Thread.currentThread().getName() +":haahaahahahahaha");
 
 //        new Timer("dynamic").scheduleAtFixedRate(new TimerTask() {
 //            @Override
