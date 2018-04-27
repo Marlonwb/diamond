@@ -162,14 +162,21 @@
 
 
     <!--定义计划任务线程池配置-->
-    <task:scheduler id="taskScheduler" pool-size="10"/>
+    <!--<task:scheduler id="taskScheduler" pool-size="10"/>-->
     <!--用于执行定时任务的bean,可多个-->
-    <bean id="sampleTask" class="person.marlon.diamond.task.SampleTask"/>
+    <!--<bean id="sampleTask" class="person.marlon.diamond.task.SampleTask"/>-->
     <!--计划任务管理配置-->
-    <task:scheduled-tasks scheduler="taskScheduler">
-        <task:scheduled ref="sampleTask" method="greet" fixed-delay="5000" initial-delay="3000"/>
-        <task:scheduled ref="sampleTask" method="feedback" fixed-rate="8000" initial-delay="3000"/>
-        <!--<task:scheduled ref="beanC" method="methodC" cron="*/5 * * * * MON-FRI"/>-->
-    </task:scheduled-tasks>
+    <!--<task:scheduled-tasks scheduler="taskScheduler">-->
+        <!--'fixed-delay':defines a periodic trigger with a fixed delay indicating the number of milliseconds to wait
+                after each task execution has completed.
+           'fixed-rate', indicating how often the method should be executed regardless of how long any previous execution takes.
+           'initial-delay' parameter may be specified indicating the number of milliseconds to wait before the first execution of the method
+         -->
+        <!--<task:scheduled ref="sampleTask" method="greet" fixed-delay="5000" initial-delay="3000"/>-->
+
+        <!--<task:scheduled ref="sampleTask" method="feedback" fixed-rate="5000" initial-delay="3000"/>-->
+
+        <!--<task:scheduled ref="sampleTask" method="greet" cron="*/5 * * * * MON-FRI"/>-->
+    <!--</task:scheduled-tasks>-->
 
 </beans>
