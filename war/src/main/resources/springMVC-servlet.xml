@@ -13,14 +13,14 @@
 
     <!-- 第一步扫描所有组件 @Repository @Service @Controller @Component -->
     <!--指明 controller 所在包，并扫描其中的注解（可以只到webtest，会自动扫描包含这个后面的所有包）-->
-    <context:component-scan base-package="person.marlon.diamond.controller"/>
-    <context:component-scan base-package="person.marlon.diamond.RestController"/>
+    <context:component-scan base-package="person.marlon.diamond.common.controller"/>
+    <context:component-scan base-package="person.marlon.diamond.common.RestController"/>
 
     <mvc:interceptors>
         <!--如有多个按照配置的顺序拦截-->
-        <bean class="person.marlon.diamond.interceptor.AuthenticationInterceptor" />
-        <bean class="person.marlon.diamond.interceptor.LocaleInterceptor" />
-        <bean class="person.marlon.diamond.interceptor.SessionInterceptor" />
+        <bean class="person.marlon.diamond.common.interceptor.AuthenticationInterceptor" />
+        <bean class="person.marlon.diamond.common.interceptor.LocaleInterceptor" />
+        <bean class="person.marlon.diamond.common.interceptor.SessionInterceptor" />
     </mvc:interceptors>
 
 </beans>

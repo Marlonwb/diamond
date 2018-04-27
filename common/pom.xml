@@ -174,12 +174,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+        <!--=====================LOG DEPENDENCY END==========================-->
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
-            <version>2.2.2</version>
         </dependency>
-        <!--=====================LOG DEPENDENCY END==========================-->
     </dependencies>
     
 </project>
