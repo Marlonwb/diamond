@@ -6,19 +6,21 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
                            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <bean class="person.marlon.diamond.util.ApplicationContextUtil" />
+    <bean class="person.marlon.diamond.common.util.ApplicationContextUtil" />
 
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
 
-    <context:component-scan base-package="person.marlon.diamond.service"/>
+    <context:component-scan base-package="person.marlon.diamond.common.service"/>
     <!--也可以定义宽泛目录，controller和service在两个配置文件分离:用exclude-filter、include-filter中的配置-->
     <!--<context:component-scan base-package="com.bijian.study" use-default-filters="false">-->
         <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />-->
@@ -146,4 +148,28 @@
         <property name="cookieMaxAge" value="604800"/>
         <property name="defaultLocale" value="zh_CN"/>
     </bean>
+
+    <!--用于是否@Asyc @Schedule注解生效开关-->
+    <!--<task:annotation-driven executor="taskExecutor" scheduler="scheduler"/>-->
+
+    <!--定义异步任务线程池执行器-->
+    <task:executor
+            id="taskExecutor"
+            pool-size="5-25"
+            queue-capacity="100"
+            rejection-policy="CALLER_RUNS"
+            keep-alive="120"/>
+
+
+    <!--定义计划任务线程池配置-->
+    <task:scheduler id="taskScheduler" pool-size="10"/>
+    <!--用于执行定时任务的bean,可多个-->
+    <bean id="sampleTask" class="person.marlon.diamond.task.SampleTask"/>
+    <!--计划任务管理配置-->
+    <task:scheduled-tasks scheduler="taskScheduler">
+        <task:scheduled ref="sampleTask" method="greet" fixed-delay="5000" initial-delay="3000"/>
+        <task:scheduled ref="sampleTask" method="feedback" fixed-rate="8000" initial-delay="3000"/>
+        <!--<task:scheduled ref="beanC" method="methodC" cron="*/5 * * * * MON-FRI"/>-->
+    </task:scheduled-tasks>
+
 </beans>

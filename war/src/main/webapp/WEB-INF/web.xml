@@ -45,7 +45,7 @@
         <param-name>contextConfigLocation</param-name>
         <!-- 如果是监听多个文件，可用‘，’隔开 -->
         <!--<param-value>classpath*:*context.xml,classpath*:context/*context.xml</param-value>-->
-        <param-value>classpath*:applicationContext.xml</param-value>
+        <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
     <servlet>
@@ -73,7 +73,7 @@
     <!--测试用Servlet-->
     <!--<servlet>-->
     <!--<servlet-name>MyHttpServlet</servlet-name>-->
-    <!--<servlet-class>person.marlon.diamond.demo.MyHttpServletBean</servlet-class>-->
+    <!--<servlet-class>MyHttpServletBean</servlet-class>-->
     <!--&lt;!&ndash; 自定义Servlet，通过继承HttpServletBean（其直接继承了HttpServlet）,设置了set方法，可以直接读到这里配置的参数&ndash;&gt;-->
     <!--<init-param>-->
     <!--<param-name>name</param-name>-->

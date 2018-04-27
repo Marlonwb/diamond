@@ -1,4 +1,4 @@
-import person.marlon.diamond.util.JSONUtil;
+import person.marlon.diamond.common.util.JSONUtil;
 
 import java.util.HashMap;
 import java.util.Map;
