@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="person.marlon.diamond.dao.user.mappers.UserMapper">
+    <resultMap id="BaseResultMap" type="person.marlon.diamond.dao.user.dto.User" >
+        <id property="id" column="id"  jdbcType="BIGINT" />
+        <result property="userId" column="userid"  jdbcType="BIGINT" />
+        <result property="nickName" column="nickname"  jdbcType="VARCHAR" />
+        <result property="password" column="password"  jdbcType="VARCHAR" />
+        <result property="firstName" column="firstname"  jdbcType="VARCHAR" />
+        <result property="lastName" column="lastname"  jdbcType="VARCHAR" />
+        <result property="middleName" column="middlename"  jdbcType="VARCHAR" />
+        <result property="nameShow" column="name_show"  jdbcType="INTEGER" />
+        <result property="identity" column="identity"  jdbcType="VARCHAR" />
+        <result property="phone" column="phone"  jdbcType="VARCHAR" />
+        <result property="email" column="email"  jdbcType="VARCHAR" />
+        <result property="isEmailVerified" column="is_email_verified"  jdbcType="INTEGER" />
+        <result property="registerTime" column="register_time"  jdbcType="TIMESTAMP" />
+        <result property="modifyTime" column="modify_time"  jdbcType="TIMESTAMP" />
+        <result property="iconUrl" column="icon_url"  jdbcType="VARCHAR" />
+        <result property="address" column="address"  jdbcType="VARCHAR" />
+        <result property="defaultLanguage" column="default_language"  jdbcType="VARCHAR" />
+        <result property="sex" column="sex"  jdbcType="INTEGER" />
+        <result property="state" column="state"  jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="userColumns" >
+        id, userid, nickname, password,firstname,lastname,middlename,name_show,identity,phone,
+        email,is_email_verified,register_time,modify_time,icon_url,address,default_language,sex,state
+    </sql>
+
+
+    <select id="selectOne" resultType="person.marlon.diamond.dao.user.dto.User">
+      select
+       <include refid="userColumns" />
+       from user where userid = #{userId}
+    </select>
+
+    <!--<insert id="insert" parameterType="person.marlon.diamond.dao.user.dto.User">-->
+        <!--<selectKey>-->
+
+        <!--</selectKey>-->
+    <!--</insert>-->
+
+</mapper>

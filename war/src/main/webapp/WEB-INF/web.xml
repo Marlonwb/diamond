@@ -45,7 +45,8 @@
         <param-name>contextConfigLocation</param-name>
         <!-- 如果是监听多个文件，可用‘，’隔开 -->
         <!--<param-value>classpath*:*context.xml,classpath*:context/*context.xml</param-value>-->
-        <param-value>classpath:applicationContext.xml</param-value>
+        <!--<param-value>classpath:applicationContext.xml,classpath*:*context.xml</param-value>-->
+        <param-value>classpath:applicationContext.xml,classpath:*context.xml</param-value>
     </context-param>
 
     <servlet>

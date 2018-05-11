@@ -17,26 +17,14 @@
 
     <bean class="person.marlon.diamond.common.util.ApplicationContextUtil" />
 
-    <!-- 开启注解 -->
+    <context:property-placeholder location="classpath:system.properties"  order="1"/>
+
     <mvc:annotation-driven/>
 
     <context:component-scan base-package="person.marlon.diamond.common.service"/>
-    <!--也可以定义宽泛目录，controller和service在两个配置文件分离:用exclude-filter、include-filter中的配置-->
-    <!--<context:component-scan base-package="com.bijian.study" use-default-filters="false">-->
-        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />-->
-        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />-->
-    <!--</context:component-scan>-->
+    <context:component-scan base-package="person.marlon.diamond.dao"/>
+    <context:component-scan base-package="person.marlon.diamond.service"/>
 
-    <!--ViewResolver 视图解析器-->
-    <!--用于支持Servlet、JSP视图解析-->
-    <!--<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--&lt;!&ndash;<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>&ndash;&gt;-->
-        <!--<property name="prefix" value="/WEB-INF/views/"/>-->
-        <!--<property name="suffix" value=".jsp"/>-->
-    <!--</bean>-->
-
-    <!--</bean>-->
-    <!-- 配置freeMarker模板加載地址 -->
     <bean id="freemarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/WEB-INF/ftl" />
         <property name="configLocation" value="classpath:freemarker/freemarker.properties" />
@@ -48,98 +36,28 @@
     </bean>
     <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
 
-    <!-- 配置FreeMarker视图 -->
     <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="contentType" value="text/html;charset=UTF-8"/>
         <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
-        <!-- Set the view names (or name patterns) that can be handled by this{@link org.springframework.web.servlet.ViewResolver}. -->
-        <!--配置了多个视图解析器（且种类不同，会依次按配置顺序走），如果配置了两个一样类型的视图解析器（如默认），
-        对应不同路径，会出现404，原因是InternalResourceViewResolver，其有一个buildView方法，该方法一定会创建一个View；
-        所以呢View永远不为null（即使该jsp不存在),问题就是出在这；因为我们使用这个的时候默认是使用servlet forward转发的，此时并不知道该jsp是否存在。
-        另外坑爹之处注意：不能配后缀，配了后缀就会出现报错！-->
-        <!--<property name="viewNames">-->
-            <!--<array>-->
-                <!--<value>*.ftl</value>-->
-            <!--</array>-->
-        <!--</property>-->
+
         <property name="prefix" value=""/>
         <property name="suffix" value=".ftl"/>
-        <!--<property name="cache" value="true"/>-->
         <property name="exposeSessionAttributes" value="true"/>
         <property name="exposeRequestAttributes" value="true"/>
         <property name="exposeSpringMacroHelpers" value="true"/>
-        <!-- 在页面中使用${rc.contextPath}就可获得contextPath -->
         <property name="requestContextAttribute" value="rc"/>
-        <!-- 給視圖解析器配置優先級，你可以給之前jsp視圖解析器的值配為2 -->
         <property name="order" value="1"/>
     </bean>
 
-    <!--update files support -->
-    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />-->
-
-
-    <!--&lt;!&ndash; 重要配置：启用扫描并自动创建代理的功能  &ndash;&gt;-->
-    <!--<jpa:repositories base-package="person.marlon.diamond.repository"-->
-                      <!--entity-manager-factory-ref="entityManagerFactory"-->
-                      <!--transaction-manager-ref="transactionManager" />-->
-
-    <!--&lt;!&ndash; Hibernate对Jpa的实现 &ndash;&gt;-->
-    <!--<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>-->
-
-    <!--&lt;!&ndash; 定义事务管理器（声明式的事务） &ndash;&gt;-->
-    <!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
-        <!--<property name="entityManagerFactory" ref="entityManagerFactory" />-->
-    <!--</bean>-->
-
-    <!--&lt;!&ndash; 开启注解事务支持 @Transactional &ndash;&gt;-->
-    <!--<tx:annotation-driven transaction-manager="transactionManager" />-->
-
-    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
-    <!--&lt;!&ndash; 基本属性 url、user、password &ndash;&gt;-->
-    <!--<property name="url" value="jdbc:mysql://localhost:3306/pavtrelay2?useSSL=true"/>-->
-    <!--<property name="username" value="pavtrelay2" />-->
-    <!--<property name="password" value="3c7uaij67jna" />-->
-    <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
-    <!--<property name="initialSize" value="1" />-->
-    <!--<property name="minIdle" value="1" />-->
-    <!--<property name="maxActive" value="20" />-->
-    <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
-    <!--<property name="maxWait" value="60000" />-->
-    <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
-    <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
-    <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
-    <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
-    <!--<property name="validationQuery" value="SELECT 'x'" />-->
-    <!--<property name="testWhileIdle" value="true" />-->
-    <!--<property name="testOnBorrow" value="false" />-->
-    <!--<property name="testOnReturn" value="false" />-->
-    <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
-    <!--<property name="poolPreparedStatements" value="true" />-->
-    <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
-    <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
-    <!--<property name="filters" value="stat" />-->
-    <!--</bean>-->
-
-    <!-- 配置使Spring采用CGLIB代理 -->
-    <!--<aop:aspectj-autoproxy proxy-target-class="true" />-->
-
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">
-        <!--set default encoding:set same as resource bundle.-->
-        <!--<property name="defaultEncoding" value="iso-8859-1" />-->
-        <!--<property name="defaultEncoding" value="UTF-8" />-->
         <property name="basenames">
             <list>
-                <!--<value>i18n_messages/zh_CN</value>-->
                 <value>i18n_messages/</value>
             </list>
         </property>
-        <!--默认为false，这样当Spring在ResourceBundle中找不到messageKey的话，就抛出NoSuchMessageException，
-            把它设置为True，则找不到不会抛出异常，而是使用messageKey作为返回值。-->
+
         <property name="useCodeAsDefaultMessage" value="true" />
-        <!--如果设置为-1，表示Cache forever。一般生产环境下采用-1，开发环境为了方便调测采用某个正整数，规范地我们可通过profile来定义  -->
-        <!--<property name="cacheSeconds" value="3600"/>-->
-        <!--<property name="fallbackToSystemLocale" value="true"/>-->
     </bean>
 
     <bean id="localeResolver"
@@ -149,34 +67,11 @@
         <property name="defaultLocale" value="zh_CN"/>
     </bean>
 
-    <!--用于是否@Asyc @Schedule注解生效开关-->
-    <!--<task:annotation-driven executor="taskExecutor" scheduler="scheduler"/>-->
-
-    <!--定义异步任务线程池执行器-->
     <task:executor
             id="taskExecutor"
             pool-size="5-25"
             queue-capacity="100"
             rejection-policy="CALLER_RUNS"
             keep-alive="120"/>
-
-
-    <!--定义计划任务线程池配置-->
-    <!--<task:scheduler id="taskScheduler" pool-size="10"/>-->
-    <!--用于执行定时任务的bean,可多个-->
-    <!--<bean id="sampleTask" class="person.marlon.diamond.task.SampleTask"/>-->
-    <!--计划任务管理配置-->
-    <!--<task:scheduled-tasks scheduler="taskScheduler">-->
-        <!--'fixed-delay':defines a periodic trigger with a fixed delay indicating the number of milliseconds to wait
-                after each task execution has completed.
-           'fixed-rate', indicating how often the method should be executed regardless of how long any previous execution takes.
-           'initial-delay' parameter may be specified indicating the number of milliseconds to wait before the first execution of the method
-         -->
-        <!--<task:scheduled ref="sampleTask" method="greet" fixed-delay="5000" initial-delay="3000"/>-->
-
-        <!--<task:scheduled ref="sampleTask" method="feedback" fixed-rate="5000" initial-delay="3000"/>-->
-
-        <!--<task:scheduled ref="sampleTask" method="greet" cron="*/5 * * * * MON-FRI"/>-->
-    <!--</task:scheduled-tasks>-->
 
 </beans>
