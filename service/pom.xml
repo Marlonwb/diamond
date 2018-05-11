@@ -3,17 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>person.marlon</groupId>
         <artifactId>diamond</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <!--<relativePath>../pom.xml</relativePath>-->
     </parent>
 
-    <artifactId>diamond-war</artifactId>
+    <artifactId>diamond-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>diamond-war</name>
+    <packaging>jar</packaging>
+    <name>diamond-service</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,23 +27,21 @@
         </dependency>
         <dependency>
             <groupId>person.marlon</groupId>
-            <artifactId>diamond-task</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <!--<scope>compile</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>person.marlon</groupId>
-            <artifactId>diamond-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <!--<scope>compile</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>person.marlon</groupId>
             <artifactId>diamond-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
             <!--<scope>compile</scope>-->
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.9</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.5</version>
+        </dependency>
     </dependencies>
-
-    
 </project>
