@@ -18,7 +18,7 @@
     <bean id="userSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="userDataSource" />
         <property name="configLocation" value="classpath:mybatis-config.xml" />
-        <property name="mapperLocations" value="classpath*:sql_map/user/*-mapper.xml" />
+        <property name="mapperLocations" value="classpath*:sql_map/user/UserMapper.xml" />
     </bean>
     <bean id="userTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="userDataSource" />
