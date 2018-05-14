@@ -17,6 +17,6 @@ public class UserDao extends UserSqlSessionDaoSupport {
 
     public User getUser(Long userId) {
 //        UserMapper userMapper  = getSqlSession().getMapper(UserMapper.class);
-         return userMapper.selectOne(userId);
+         return userMapper.selectByPrimaryKey(userId);
     }
 }
