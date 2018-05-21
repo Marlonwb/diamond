@@ -8,6 +8,7 @@ public class EncryptUtil {
 
     public static final String MD5 = "MD5";
     public static final String SHA256 = "SHA-256";
+    public static final String SHA1 = "SHA-1";
 
     /**
      * 对字符串加密,加密算法使用MD5,SHA-1,SHA-256,默认使用SHA-256

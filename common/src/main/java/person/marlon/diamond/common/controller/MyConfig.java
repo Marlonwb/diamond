@@ -14,13 +14,17 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @Configuration
-@PropertySource(value = {"classpath:system.properties"},ignoreResourceNotFound=false)
+@PropertySource(value = {"classpath:system.properties"},ignoreResourceNotFound=true)
 public class MyConfig {
 
     private Logger logger = LoggerFactory.getLogger(MyConfig.class);
 
+    private final Environment env;//env.getProperty("start_greeting")\
+
     @Autowired
-    private Environment env;//env.getProperty("start_greeting")\
+    public MyConfig(Environment env) {
+        this.env = env;
+    }
 
     @Resource
     private TaskExecutor taskExecutor;
