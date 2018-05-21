@@ -20,7 +20,7 @@ hello,${user.age} !
 <script src="http://localhost:8080/jquery-1.11.1.min.js"></script>
 <script>
     $.ajax({
-        url: "http://localhost:8080/demo/greeting/hi",
+        url: "http://localhost:8080/generic/greeting/hi",
         type: 'POST',
         data: {name:"bwang"}
     });

@@ -28,7 +28,7 @@ public class RetTypeController {
      */
     @RequestMapping("/forward")
     public String forward(){
-        return"forward:/demo/rt/home";//路径不要加"/",经测试302返回路径会丢失前置路径,造成404
+        return"forward:/generic/rt/home";//路径不要加"/",经测试302返回路径会丢失前置路径,造成404
     }
 
     /**
