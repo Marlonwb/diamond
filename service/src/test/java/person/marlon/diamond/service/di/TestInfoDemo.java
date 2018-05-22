@@ -1,6 +1,8 @@
 package person.marlon.diamond.service.di;
 
 import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,12 +33,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * context of a @RepeatedTest. See Repeated Test Examples.
  */
 class TestInfoDemo {
+    private Logger logger = LoggerFactory.getLogger(TestInfoDemo.class);
+
     TestInfoDemo(TestInfo testInfo) {
-        assertEquals("TestInfo Demo", testInfo.getDisplayName());
+        logger.info("TestInfoDemo:executing.");
+        assertEquals("TestInfoDemo", testInfo.getDisplayName());
     }
 
     @BeforeEach
     void init(TestInfo testInfo) {
+        logger.info("init:executing.");
         String displayName = testInfo.getDisplayName();
         assertTrue(displayName.equals("TEST 1") || displayName.equals("test2()"));
     }
@@ -45,11 +51,14 @@ class TestInfoDemo {
     @DisplayName("TEST 1")
     @Tag("my-tag")
     void test1(TestInfo testInfo) {
+        logger.info("TEST 1:executing.");
         assertEquals("TEST 1", testInfo.getDisplayName());
         assertTrue(testInfo.getTags().contains("my-tag"));
     }
 
     @Test
+    @Tag("aaa")
     void test2() {
+        logger.info("TEST 2:executing.");
     }
 }
