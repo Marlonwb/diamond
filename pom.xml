@@ -188,6 +188,14 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
             <dependency>
                 <groupId>javax.servlet.jsp</groupId>
@@ -321,22 +329,29 @@
                             <include>**/*Test.java</include>
                             <include>**/*Tests.java</include>
                             <include>**/*TestCase.java</include>
+                            <include>**/RepeatedTestsDemo.java</include>
                         </includes>
-                        <!--<properties>-->
-                            <!-- <includeTags>fast</includeTags> -->
+                        <properties>
+                             <includeTags>my-tag,aaa</includeTags>
+                             <!--<includeTags>aaa</includeTags>-->
                             <!--<excludeTags>slow</excludeTags>-->
                             <!--
                             <configurationParameters>
                                 junit.jupiter.conditions.deactivate = *
                             </configurationParameters>
                             -->
-                        <!--</properties>-->
+                        </properties>
                     </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>org.junit.platform</groupId>
                             <artifactId>junit-platform-surefire-provider</artifactId>
                             <version>${junit.platform.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-engine</artifactId>
+                            <version>${junit.jupiter.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
