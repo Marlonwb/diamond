@@ -67,7 +67,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>springMVC</servlet-name>
-        <url-pattern>/demo/*</url-pattern>
+        <url-pattern>/generic/*</url-pattern>
     </servlet-mapping>
     <!-- Spring MVC 核心配置结束 -->
 

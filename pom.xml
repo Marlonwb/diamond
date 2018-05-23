@@ -146,11 +146,11 @@
                 <version>${spring.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>2.0.5.RELEASE</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.data</groupId>-->
+                <!--<artifactId>spring-data-jpa</artifactId>-->
+                <!--<version>2.0.5.RELEASE</version>-->
+            <!--</dependency>-->
 
             <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
             <!--<dependency>-->
@@ -165,12 +165,6 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>23.6-jre</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -197,11 +191,11 @@
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
-            <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>jsp-api</artifactId>
-                <version>2.2</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>javax.servlet.jsp</groupId>-->
+                <!--<artifactId>jsp-api</artifactId>-->
+                <!--<version>2.2</version>-->
+            <!--</dependency>-->
 
             <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
             <dependency>
@@ -209,6 +203,7 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <!--<version>3.1.0</version>-->
                 <version>4.0.0</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
@@ -295,6 +290,7 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.46</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
 
