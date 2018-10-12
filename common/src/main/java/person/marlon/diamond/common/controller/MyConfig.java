@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.task.TaskExecutor;
 import person.marlon.diamond.common.util.CharGraph;
+import person.marlon.diamond.common.util.CustomHashMap;
 import person.marlon.diamond.common.util.I18nUtil;
 
 import javax.annotation.PostConstruct;
@@ -35,6 +36,8 @@ public class MyConfig {
         System.out.println(CharGraph.generateFoZu());
         taskExecutor.execute(() -> System.out.println(Thread.currentThread().getName() + ":" +"logger = " + logger));
 
+        CustomHashMap<String,String> map = new CustomHashMap<>();
+        map.put("yhjasdsahdasd","1");
         logger.info(Thread.currentThread().getName() +":haahaahahahahaha");
 
 //        new Timer("dynamic").scheduleAtFixedRate(new TimerTask() {

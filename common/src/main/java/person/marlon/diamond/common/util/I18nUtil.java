@@ -3,6 +3,8 @@ package person.marlon.diamond.common.util;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.util.Locale;
+
 public class I18nUtil {
 
     private static MessageSource messageSource = ApplicationContextUtil.getBean("messageSource");
@@ -15,7 +17,8 @@ public class I18nUtil {
      * @return
      */
     public static String getMessage(String key, Object[] args) {
-        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+        Locale locale = LocaleContextHolder.getLocaleContext() == null ? Locale.ENGLISH : LocaleContextHolder.getLocaleContext().getLocale();
+        return messageSource.getMessage(key, args, locale);
     }
 
     /**
