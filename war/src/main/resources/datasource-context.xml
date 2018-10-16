@@ -26,4 +26,50 @@
     </bean>
     <tx:annotation-driven transaction-manager="userTransactionManager"/>
 
+    <bean id="marlonDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc_marlon_driver_class}" />
+        <property name="jdbcUrl" value="${jdbc_marlon_url}" />
+        <property name="username" value="${jdbc_marlon_username}" />
+        <property name="password" value="${jdbc_marlon_password}" />
+        <property name="connectionTimeout" value="30000" />
+        <property name="idleTimeout" value="600000" />
+        <property name="maxLifetime" value="1800000" />
+        <property name="maximumPoolSize" value="10" />
+    </bean>
+    <bean id="marlonSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="marlonDataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <!--<property name="mapperLocations" value="classpath*:sql_map/*-mapper.xml" />-->
+    </bean>
+    <bean id="passwordNoteMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="person.marlon.diamond.dao.password.mappers.PasswordNoteMapper" />
+        <property name="sqlSessionFactory" ref="marlonSqlSessionFactory" />
+    </bean>
+    <bean id="marlonTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="marlonDataSource" />
+        <qualifier value="userTransaction" />
+    </bean>
+    <tx:annotation-driven transaction-manager="userTransactionManager"/>
+
+    <bean id="ipvtDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc_ipvt_driver_class}" />
+        <property name="jdbcUrl" value="${jdbc_ipvt_url}" />
+        <property name="username" value="${jdbc_ipvt_username}" />
+        <property name="password" value="${jdbc_ipvt_password}" />
+        <property name="connectionTimeout" value="30000" />
+        <property name="idleTimeout" value="600000" />
+        <property name="maxLifetime" value="1800000" />
+        <property name="maximumPoolSize" value="10" />
+    </bean>
+    <bean id="ipvtSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="ipvtDataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="mapperLocations" value="classpath*:sql_map/ipvt/*-mapper.xml" />
+    </bean>
+    <bean id="ipvtTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="userDataSource" />
+        <qualifier value="userTransaction" />
+    </bean>
+    <tx:annotation-driven transaction-manager="ipvtTransactionManager"/>
+
 </beans>

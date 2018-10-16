@@ -8,34 +8,23 @@
         <groupId>person.marlon</groupId>
         <artifactId>diamond</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <!--<relativePath>../pom.xml</relativePath>-->
     </parent>
 
-    <artifactId>diamond-war</artifactId>
+    <artifactId>diamond-web</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>diamond-war</name>
+    <packaging>jar</packaging>
+    <name>diamond-web</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>person.marlon</groupId>-->
-            <!--<artifactId>diamond-common</artifactId>-->
-            <!--<version>1.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>person.marlon</groupId>
-            <artifactId>diamond-task</artifactId>
+            <artifactId>diamond-common</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <!--<scope>compile</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>person.marlon</groupId>
-            <artifactId>diamond-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <!--<scope>compile</scope>-->
         </dependency>
         <dependency>
             <groupId>person.marlon</groupId>
@@ -45,11 +34,26 @@
         </dependency>
         <dependency>
             <groupId>person.marlon</groupId>
-            <artifactId>diamond-web</artifactId>
+            <artifactId>diamond-service</artifactId>
             <version>1.0-SNAPSHOT</version>
             <!--<scope>compile</scope>-->
         </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>org.junit.jupiter</groupId>-->
+        <!--<artifactId>junit-jupiter-engine</artifactId>-->
+        <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
-    
 </project>
