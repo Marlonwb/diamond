@@ -16,6 +16,7 @@
         <module>task</module>
         <module>service</module>
         <module>dao</module>
+        <module>web</module>
     </modules>
 
 
@@ -49,7 +50,7 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
                 <version>${spring.version}</version>
-                <!--&lt;!&ndash;switch off commons-logging&ndash;&gt;-->
+                <!--switch off commons-logging-->
                 <!--<exclusions>-->
                     <!--<exclusion>-->
                         <!--<groupId>commons-logging</groupId>-->
