@@ -15,9 +15,9 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //set http request domain with custom port
         WebUtil.setAbsoluteRequestDomain(request,request.getServerName());
-
-        return true;
-
+        String userAgent = request.getHeader("user-agent");
+        //check allowed browsers according to configurations.
+        return WebUtil.checkAllowedBrowser(WebUtil.getBrowserType(userAgent));
     }
 
     @Override
