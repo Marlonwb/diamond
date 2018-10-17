@@ -3,9 +3,14 @@ package person.marlon.diamond.common.util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import person.marlon.diamond.common.enums.BrowserEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class WebUtil {
 
@@ -136,4 +141,211 @@ public class WebUtil {
         return StringUtils.isEmpty(absoluteDomain) ? "redirect:" + relativeUri : "redirect:" + absoluteDomain + relativeUri;
     }
 
+    public static boolean checkAllowedBrowser(String browser){
+        if(StringUtils.isEmpty(browser)){
+            return false;
+        }
+
+        String supportList = ResourceUtil.getSupportBrowsers();
+        //若是all，表示全部支持
+        if ("all".equals(supportList)){
+            return true;
+        }
+        //判断浏览器是否在配置范围
+        if (supportList.contains(browser)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * cache regex patterns
+     */
+    private static final Pattern IE11_BROWSER =  Pattern.compile("rv:(\\d+)");
+    private static final Pattern OPERA_BROWSER =  Pattern.compile("o(pr|pera)/(\\d+)");
+    private static final Pattern EDGE_BROWSER_VERSION =  Pattern.compile("(?<=edge/)(\\d+).(\\d+)");
+    private static final Pattern FIREFOX_BROWSER_VERSION =  Pattern.compile("(?<=firefox/)\\d+");
+    private static final Pattern CHROME_BROWSER_VERSION =  Pattern.compile("(?<=chrome/)\\d+");
+    private static final Pattern OPERA_BROWSER_VERSION =  Pattern.compile("(?<=o(pr|pera)/)\\d+");
+    private static final Pattern SAFARI_BROWSER_VERSION =  Pattern.compile("(?<=version/)\\d+");
+
+    public static String getBrowserType(String userAgent){
+        userAgent = userAgent.toLowerCase();
+        String browser = BrowserEnum.OTHER.getValue();
+        try{
+            //先判断浏览器类型:因为UA部分存在重复(chrome/safari等)，要按照如下的顺序依次判断
+            //如果包含edge，特殊处理，因edge的ua含带了chrome safari
+            if(userAgent.contains(BrowserEnum.EDGE.getValue())){
+                browser = BrowserEnum.EDGE.getValue();
+            } else if (userAgent.contains(BrowserEnum.FIREFOX.getValue())) {
+                browser = BrowserEnum.FIREFOX.getValue();
+            } else if (IE11_BROWSER.matcher(userAgent).find()) {
+                browser = BrowserEnum.IE11.getValue();
+            } else if (OPERA_BROWSER.matcher(userAgent).find()) {
+                browser = BrowserEnum.OPERA.getValue();
+            } else if (userAgent.contains(BrowserEnum.CHROME.getValue())) {
+                browser = BrowserEnum.CHROME.getValue();
+            } else if (userAgent.contains(BrowserEnum.SAFARI.getValue())) {
+                browser = BrowserEnum.SAFARI.getValue();
+            }
+        }catch(Exception e){
+            logger.error("get browser type occurs an exception:" + e);
+        }
+        return browser;
+    }
+
+    public boolean validateAllowedBrowserVersion(String userAgent,String browser){
+        String supportList = ResourceUtil.getSupportBrowsers();
+        //判断浏览器是否在配置范围，如果在，再判断版本号是否过期
+        try{
+            if (supportList.contains(browser)) {
+                switch (browser) {
+                    case "rv:11.0"://BrowserEnum.IE11.getValue()
+                        return true;
+                    case "chrome"://BrowserEnum.CHROME.getValue()
+                        //Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3213.3 Safari/537.36
+                        String chromeVersion = WebUtil.getChromeBrowserVersion(userAgent);
+                        if (Integer.parseInt(chromeVersion) >= ResourceUtil.getLowestChromeVersion()) {
+                            return true;
+                        }
+                        break;
+                    case "firefox"://BrowserEnum.FIREFOX.getValue()
+                        //Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0
+                        String fireFoxVersion = WebUtil.getFireFoxBrowserVersion(userAgent);
+                        if (Integer.parseInt(fireFoxVersion) >= ResourceUtil.getLowestFirefoxVersion()) {
+                            return true;
+                        }
+                        break;
+                    case "safari"://BrowserEnum.SAFARI.getValue()
+                        //mozilla/5.0 (macintosh; intel mac os x 10_11_6) applewebkit/604.4.7 (khtml, like gecko) version/11.0.2 safari/604.4.7
+                        String safariVersion = WebUtil.getSafariBrowserVersion(userAgent);
+                        int version = Integer.parseInt(safariVersion);
+                        if (version >= ResourceUtil.getLowestSafariVersion()) {
+                            //屏蔽Safari9/10
+                            String unSupportedSafariVersion = ResourceUtil.getTempUnsupportedBrowserVersions();
+                            if(StringUtils.isNotEmpty(unSupportedSafariVersion)){
+                                ArrayList<String> unsupportedVersionList;
+                                try{
+                                    unsupportedVersionList = new ArrayList<>(Arrays.asList(unSupportedSafariVersion.split(",")));
+                                    for(String unsupportedVersion :unsupportedVersionList){
+                                        if(version == Integer.parseInt(unsupportedVersion)){
+                                            return false;
+                                        }
+                                    }
+                                }catch (Exception e){
+                                    logger.warn("handle unsupport_safari_versions_join configuration occurred an exception:" + e.getMessage());
+                                }
+                            }
+
+                            return true;
+                        }
+                        break;
+                    case "opera"://BrowserEnum.OPERA.getValue()
+                        //Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144
+                        String operaVersion = WebUtil.getOperaBrowserVersion(userAgent);
+
+                        if (Integer.parseInt(operaVersion) >= ResourceUtil.getLowestOperaVersion()) {
+                            return true;
+                        }
+                        break;
+                    case "edge":
+                        //edge版本大于等于15.15063版本（UI版本，和内核版本有区别）
+                        //Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393
+                        String edgeVersion = WebUtil.getEdgeBrowserVersion(userAgent);
+                        if(StringUtils.isNotEmpty(edgeVersion)){
+                            String[] versions = edgeVersion.split("\\.");
+                            if(versions.length > 1) {
+                                try{
+                                    int masterVersion = Integer.parseInt(versions[0]);
+                                    int subVersion = Integer.parseInt(versions[1]);
+                                    String[] cfgEdgeVersion = ResourceUtil.getLowestEdgeVersion().split("\\.");
+                                    int cfgMasterVersion = Integer.valueOf(cfgEdgeVersion[0]);
+                                    int cfgSubVersion = Integer.valueOf(cfgEdgeVersion[1]);
+                                    if (masterVersion > cfgMasterVersion) {
+                                        return true;
+                                    }else {
+                                        return masterVersion == cfgMasterVersion && subVersion >= cfgSubVersion;
+                                    }
+                                }catch (Exception e){
+                                    logger.warn("occurred an exception during parsing edge version.");
+                                }
+                                return false;
+                            }
+                        }
+                }
+                return false;
+            }else{
+                return  false;
+            }
+        }catch (Exception e){
+            logger.error("get allowed browser occurs an exception:" + e);
+        }
+        return false;
+    }
+
+    public static String getEdgeBrowserVersion(String ua){
+        String version = "";
+        try{
+            Matcher matcher = EDGE_BROWSER_VERSION.matcher(ua);
+            if(matcher.find()){
+                return matcher.group(0);
+            }
+        }catch (Exception e){
+            logger.error("edge ua can't match version pattern:" + e);
+        }
+        return "";
+    }
+
+    public static String getFireFoxBrowserVersion(String ua){
+        String version = "";
+        try{
+            Matcher matcher = FIREFOX_BROWSER_VERSION.matcher(ua);
+            if(matcher.find()){
+                return matcher.group(0);
+            }
+        }catch (Exception e){
+            logger.error("firefox ua can't match version pattern:" + e);
+        }
+        return "";
+    }
+
+    public static String getChromeBrowserVersion(String ua){
+        String version = "";
+        try{
+            Matcher matcher = CHROME_BROWSER_VERSION.matcher(ua);
+            if(matcher.find()){
+                return matcher.group(0);
+            }
+        }catch (Exception e){
+            logger.error("chrome ua can't match version pattern:" + e);
+        }
+        return "";
+    }
+
+    public static String getOperaBrowserVersion(String ua){
+        String version = "";
+        try{
+            Matcher matcher = OPERA_BROWSER_VERSION.matcher(ua);
+            if(matcher.find()){
+                return matcher.group(0);
+            }
+        }catch (Exception e){
+            logger.error("opera ua can't match version pattern:" + e);
+        }
+        return "";
+    }
+
+    public static String getSafariBrowserVersion(String ua){
+        String version = "";
+        try{
+            Matcher matcher = SAFARI_BROWSER_VERSION.matcher(ua);
+            if(matcher.find()){
+                return matcher.group(0);
+            }
+        }catch (Exception e){
+            logger.error("safari ua can't match version pattern:" + e);
+        }
+        return "";
+    }
 }
