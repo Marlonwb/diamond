@@ -64,11 +64,13 @@
         <property name="defaultLocale" value="zh_CN"/>
     </bean>
 
-    <task:executor
-            id="taskExecutor"
-            pool-size="5-25"
-            queue-capacity="100"
-            rejection-policy="CALLER_RUNS"
-            keep-alive="120"/>
+    <!--<task:executor-->
+            <!--id="taskExecutor"-->
+            <!--pool-size="5-25"-->
+            <!--queue-capacity="100"-->
+            <!--rejection-policy="CALLER_RUNS"-->
+            <!--keep-alive="120"/>-->
+
+    <aop:aspectj-autoproxy />
 
 </beans>

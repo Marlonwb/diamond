@@ -1,4 +1,4 @@
-package person.marlon.diamond.common.interceptor;
+package person.marlon.diamond.web.interceptor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
