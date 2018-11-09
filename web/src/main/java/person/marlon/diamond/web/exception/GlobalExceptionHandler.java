@@ -1,4 +1,4 @@
-package person.marlon.diamond.common.exception;
+package person.marlon.diamond.web.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

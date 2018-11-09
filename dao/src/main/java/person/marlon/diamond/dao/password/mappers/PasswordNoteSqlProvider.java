@@ -37,6 +37,10 @@ public class PasswordNoteSqlProvider {
             sql.VALUES("created_time", "#{createdTime,jdbcType=TIMESTAMP}");
         }
         
+        if (record.getPhoneNo() != null) {
+            sql.VALUES("phone_no", "#{phoneNo,jdbcType=BIGINT}");
+        }
+
         return sql.toString();
     }
 
@@ -72,6 +76,10 @@ public class PasswordNoteSqlProvider {
             sql.SET("created_time = #{createdTime,jdbcType=TIMESTAMP}");
         }
         
+        if (record.getPhoneNo() != null) {
+            sql.SET("phone_no = #{phoneNo,jdbcType=BIGINT}");
+        }
+
         sql.WHERE("id = #{id,jdbcType=INTEGER}");
         
         return sql.toString();

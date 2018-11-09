@@ -1,4 +1,4 @@
-package person.marlon.diamond.common.controller;
+package person.marlon.diamond.web.common.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class MyConfig {
     private void ver(){
         System.out.println(Thread.currentThread().getName() + ":" + I18nUtil.getMessage("start_greeting") + I18nUtil.getMessage("author"));
         System.out.println(CharGraph.generateFoZu());
-        taskExecutor.execute(() -> System.out.println(Thread.currentThread().getName() + ":" +"logger = " + logger));
+//        taskExecutor.execute(() -> System.out.println(Thread.currentThread().getName() + ":" +"logger = " + logger));
 
         CustomHashMap<String,String> map = new CustomHashMap<>();
         map.put("yhjasdsahdasd","1");
@@ -52,5 +52,7 @@ public class MyConfig {
 //
 //            }
 //        },3000,5000);
+
+//        WebUtil.checkAllowedBrowser(WebUtil.getBrowserType())
     }
 }

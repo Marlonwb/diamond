@@ -1,4 +1,4 @@
-package person.marlon.diamond.common.RestController;
+package person.marlon.diamond.web.RestController;
 
 public class Greeting {
 

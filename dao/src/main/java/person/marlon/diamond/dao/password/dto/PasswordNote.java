@@ -19,7 +19,9 @@ public class PasswordNote {
 
     private Date createdTime;
 
-    public PasswordNote(Integer id, String account, String password, String platform, String category, String comment, Date lastModified, Date createdTime) {
+    private Long phoneNo;
+
+    public PasswordNote(Integer id, String account, String password, String platform, String category, String comment, Date lastModified, Date createdTime, Long phoneNo) {
         this.id = id;
         this.account = account;
         this.password = password;
@@ -28,6 +30,7 @@ public class PasswordNote {
         this.comment = comment;
         this.lastModified = lastModified;
         this.createdTime = createdTime;
+        this.phoneNo = phoneNo;
     }
 
     public PasswordNote() {
@@ -96,5 +99,13 @@ public class PasswordNote {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public Long getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(Long phoneNo) {
+        this.phoneNo = phoneNo;
     }
 }
