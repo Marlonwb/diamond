@@ -21,14 +21,15 @@ public class PasswordController {
 	@ResponseBody
 	public String add(){
 		PasswordNote passwordNote = new PasswordNote();
-		passwordNote.setAccount("marlon");
-		passwordNote.setPassword("mynamehehe");
-		passwordNote.setPlatform("e-diary");
-		passwordNote.setCategory("笔记记事");
-		passwordNote.setComment("e-diary个人电子笔记本");
+		passwordNote.setAccount("");
+		passwordNote.setPassword("");
+		passwordNote.setPlatform("");
+		passwordNote.setCategory("");
+		passwordNote.setComment("");
 		Date currentTime = getCurrentTime();
 		passwordNote.setLastModified(currentTime);
 		passwordNote.setCreatedTime(currentTime);
+		passwordNote.setPhoneNo(1L);
 		passwordNoteService.insert(passwordNote);
 		return "ok";
 	}

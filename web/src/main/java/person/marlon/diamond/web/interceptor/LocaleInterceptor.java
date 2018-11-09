@@ -1,4 +1,4 @@
-package person.marlon.diamond.common.interceptor;
+package person.marlon.diamond.web.interceptor;
 
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

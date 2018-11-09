@@ -17,11 +17,11 @@ public interface PasswordNoteMapper {
         "insert into password_note (account, password, ",
         "platform, category, ",
         "comment, last_modified, ",
-        "created_time)",
+        "created_time, phone_no)",
         "values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{platform,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, ",
         "#{comment,jdbcType=VARCHAR}, #{lastModified,jdbcType=TIMESTAMP}, ",
-        "#{createdTime,jdbcType=TIMESTAMP})"
+        "#{createdTime,jdbcType=TIMESTAMP}, #{phoneNo,jdbcType=BIGINT})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(PasswordNote record);
@@ -32,7 +32,8 @@ public interface PasswordNoteMapper {
 
     @Select({
         "select",
-        "id, account, password, platform, category, comment, last_modified, created_time",
+        "id, account, password, platform, category, comment, last_modified, created_time, ",
+        "phone_no",
         "from password_note",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -44,7 +45,8 @@ public interface PasswordNoteMapper {
         @Arg(column="category", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="comment", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="last_modified", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-        @Arg(column="created_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
+        @Arg(column="created_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+        @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT)
     })
     PasswordNote selectByPrimaryKey(Integer id);
 
@@ -59,7 +61,8 @@ public interface PasswordNoteMapper {
           "category = #{category,jdbcType=VARCHAR},",
           "comment = #{comment,jdbcType=VARCHAR},",
           "last_modified = #{lastModified,jdbcType=TIMESTAMP},",
-          "created_time = #{createdTime,jdbcType=TIMESTAMP}",
+          "created_time = #{createdTime,jdbcType=TIMESTAMP},",
+          "phone_no = #{phoneNo,jdbcType=BIGINT}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(PasswordNote record);
