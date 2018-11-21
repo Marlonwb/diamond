@@ -5,15 +5,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.junit.jupiter.api.Test;
+import person.marlon.diamond.common.util.TimeUtil;
 import person.marlon.diamond.service.test.Calculator;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -585,10 +583,19 @@ class CalculatorTests {
 		//System.out.println(leapYear);
 	}
 
-//	@Test
-//	void test26(){
-//		0d == 0.0d
-//	}
+	@Test
+	void test26(){
+    	Calendar calendar = Calendar.getInstance();
+		TimeZone timeZone = calendar.getTimeZone();
+		System.out.println("timeZone = " + timeZone);
+		int timeZoneOffset = TimeUtil.getTimeZoneOffset(timeZone);
+		System.out.println("timeZoneOffset = " + timeZoneOffset);
+		String id = timeZone.getID();
+		int timeZoneOffset1 = TimeUtil.getTimeZoneOffset(id);
+		System.out.println("timeZoneOffset1 = " + timeZoneOffset1);
+		TimeZone timeZone1 = TimeZone.getTimeZone(id);
+		System.out.println("timeZone1 = " + timeZone1);
+	}
 
 	public static int getDateBetween(Date first,Date second){
 		long diff = first.getTime()-second.getTime();
