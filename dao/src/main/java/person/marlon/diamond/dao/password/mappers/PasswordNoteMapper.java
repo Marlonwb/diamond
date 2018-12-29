@@ -2,9 +2,10 @@ package person.marlon.diamond.dao.password.mappers;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import person.marlon.diamond.dao.password.dto.PasswordNote ;
+import person.marlon.diamond.dao.password.dto.PasswordNote;
 
 import java.util.Date;
+import java.util.List;
 
 public interface PasswordNoteMapper {
     @Delete({
@@ -66,4 +67,23 @@ public interface PasswordNoteMapper {
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(PasswordNote record);
+
+    @Select({
+            "select",
+            "id, account, password, platform, category, comment, last_modified, created_time, ",
+            "phone_no",
+            "from password_note"
+    })
+    @ConstructorArgs({
+            @Arg(column="id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
+            @Arg(column="account", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="password", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="platform", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="category", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="comment", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="last_modified", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+            @Arg(column="created_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+            @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT)
+    })
+    List<PasswordNote> getAll();
 }

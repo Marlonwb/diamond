@@ -1,7 +1,9 @@
 package person.marlon.diamond.web.package_note;
 
+import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import person.marlon.diamond.dao.password.dto.PasswordNote;
 import person.marlon.diamond.service.password_note.PasswordNoteService;
@@ -9,9 +11,10 @@ import person.marlon.diamond.service.password_note.PasswordNoteService;
 import javax.annotation.Resource;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Controller
-@RequestMapping("/password_note")
+@RequestMapping("/pass_note")
 public class PasswordController {
 
 	@Resource
@@ -34,9 +37,9 @@ public class PasswordController {
 		return "ok";
 	}
 
-	@RequestMapping("/update")
+	@RequestMapping(value = "/update",method = RequestMethod.POST)
 	@ResponseBody
-	public String update(Integer passwordId){
+	public String update(Integer passwordId,Foo foo){
 		PasswordNote passwordNote = passwordNoteService.getById(passwordId);
 		if(passwordNote == null){
 			return passwordId + " not exist.";
@@ -49,6 +52,17 @@ public class PasswordController {
 		passwordNoteService.update(newPasswordNote);
 
 		return "ok";
+	}
+
+	@RequestMapping(value = "/getAll",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String getAll(){
+		List<PasswordNote> passwordNoteList = passwordNoteService.getAll();
+		if(passwordNoteList == null){
+			return "password note record is not exist.";
+		}
+
+		return new Gson().toJson(passwordNoteList);
 	}
 
 

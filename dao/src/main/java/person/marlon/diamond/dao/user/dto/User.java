@@ -37,11 +37,11 @@ public class User {
 
     private Integer sex;//0-male 1-female 2-unknown
 
-    private String defaultLanguage;
+    private String preferLanguage;
 
     private Integer state;//0--frozen 1--normal -1--deleted
 
-    public User(Long id, Long userid, String nickname, String password, String firstname, String lastname, String middlename, Integer nameShow, String identity, String phone, String email, Integer isEmailVerified, Date registerTime, Date modifyTime, String iconUrl, String address, Integer sex, String defaultLanguage, Integer state) {
+    public User(Long id, Long userid, String nickname, String password, String firstname, String lastname, String middlename, Integer nameShow, String identity, String phone, String email, Integer isEmailVerified, Date registerTime, Date modifyTime, String iconUrl, String address, Integer sex, String preferLanguage, Integer state) {
         this.id = id;
         this.userid = userid;
         this.nickname = nickname;
@@ -59,7 +59,7 @@ public class User {
         this.iconUrl = iconUrl;
         this.address = address;
         this.sex = sex;
-        this.defaultLanguage = defaultLanguage;
+        this.preferLanguage = preferLanguage;
         this.state = state;
     }
 
@@ -203,12 +203,12 @@ public class User {
         this.sex = sex;
     }
 
-    public String getDefaultLanguage() {
-        return defaultLanguage;
+    public String getPreferLanguage() {
+        return preferLanguage;
     }
 
-    public void setDefaultLanguage(String defaultLanguage) {
-        this.defaultLanguage = defaultLanguage == null ? null : defaultLanguage.trim();
+    public void setPreferLanguage(String defaultLanguage) {
+        this.preferLanguage = defaultLanguage == null ? null : defaultLanguage.trim();
     }
 
     public Integer getState() {

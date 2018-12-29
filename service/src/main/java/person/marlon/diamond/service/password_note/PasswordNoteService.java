@@ -5,6 +5,7 @@ import person.marlon.diamond.dao.password.dto.PasswordNote;
 import person.marlon.diamond.dao.password.mappers.PasswordNoteMapper;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class PasswordNoteService {
@@ -22,6 +23,10 @@ public class PasswordNoteService {
 
 	public void update(PasswordNote passwordNote){
 		passwordNoteMapper.updateByPrimaryKeySelective(passwordNote);
+	}
+
+	public List<PasswordNote> getAll(){
+		return passwordNoteMapper.getAll();
 	}
 
 }

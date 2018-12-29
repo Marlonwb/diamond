@@ -13,6 +13,7 @@ import person.marlon.diamond.common.util.I18nUtil;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.UUID;
 
 @Configuration
 @PropertySource(value = {"classpath:system.properties"},ignoreResourceNotFound=true)
@@ -39,6 +40,8 @@ public class MyConfig {
         CustomHashMap<String,String> map = new CustomHashMap<>();
         map.put("yhjasdsahdasd","1");
         logger.info(Thread.currentThread().getName() +":haahaahahahahaha");
+
+        logger.info(UUID.randomUUID().toString().replace("-","").toUpperCase());
 
 //        new Timer("dynamic").scheduleAtFixedRate(new TimerTask() {
 //            @Override
