@@ -49,7 +49,7 @@
         <property name="dataSource" ref="marlonDataSource" />
         <qualifier value="userTransaction" />
     </bean>
-    <tx:annotation-driven transaction-manager="userTransactionManager"/>
+    <tx:annotation-driven transaction-manager="marlonTransactionManager"/>
 
     <bean id="ipvtDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc_ipvt_driver_class}" />

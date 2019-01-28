@@ -15,6 +15,12 @@ public class ApiResponse<T> {
     
     }
     
+    public ApiResponse (ApiResponse<T> apiResponse) {
+        this.data = apiResponse.getData();
+        this.msg = apiResponse.getMsg();
+        this.retCode = apiResponse.getRetCode();
+    }
+    
     public ApiResponse (T data) {
         this.data = data;
     }
@@ -34,8 +40,28 @@ public class ApiResponse<T> {
         return this.data;
     }
     
+    public void setData(T data) {
+        this.data = data;
+    }
+    
+    public String getMsg() {
+        return msg;
+    }
+    
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+    
+    public int getRetCode() {
+        return retCode;
+    }
+    
+    public void setRetCode(int retCode) {
+        this.retCode = retCode;
+    }
+    
     @Override
     public String toString() {
-        return  new Gson().toJson(this);
+        return new Gson().toJson(this);
     }
 }

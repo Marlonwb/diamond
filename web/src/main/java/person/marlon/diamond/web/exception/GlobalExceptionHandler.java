@@ -5,9 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
-import java.util.Map;
+import person.marlon.diamond.common.generic.ApiResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -15,13 +13,8 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
-	public Map<String,Object> exceptionHandler(Exception e){
-		Map<String,Object> result = new HashMap<>();
-		result.put("data", "");
-		result.put("retCode", "9999");
-		result.put("msg", e.toString());
-		//正常开发中，可创建一个统一响应实体，如CommonResp
+	public String exceptionHandler(Exception e){
 		logger.error("",e);
-		return result;
+		return new ApiResponse<>("",9999,e.toString()).toString();
 	}
 }

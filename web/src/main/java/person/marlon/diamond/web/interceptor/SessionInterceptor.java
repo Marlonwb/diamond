@@ -17,7 +17,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
         String sessionId = request.getRequestedSessionId();
         if(StringUtils.isEmpty(sessionId)){
            //sessionId =UUID.randomUUID().toString().replace("-", "").toUpperCase();
-            sessionId = request.getSession(true).getId();
+            request.getSession(true);
             //System.out.println("sessionId = " + sessionId);
         }
 

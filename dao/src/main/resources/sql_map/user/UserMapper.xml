@@ -20,17 +20,17 @@
       <arg column="icon_url" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="default_language" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="prefer_language" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="state" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, userid, nickname, password, firstname, lastname, middlename, name_show, identity, 
-    phone, email, is_email_verified, register_time, modify_time, icon_url, address, sex, 
-    default_language, state
+    id, userid, nickname, password, firstname, lastname, middlename, name_show, identity,
+    phone, email, is_email_verified, register_time, modify_time, icon_url, address, sex,
+    prefer_language, state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=BIGINT}
@@ -43,18 +43,18 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (userid, nickname, password, 
-      firstname, lastname, middlename, 
-      name_show, identity, phone, 
-      email, is_email_verified, register_time, 
-      modify_time, icon_url, address, 
-      sex, default_language, state
+    insert into user (userid, nickname, password,
+      firstname, lastname, middlename,
+      name_show, identity, phone,
+      email, is_email_verified, register_time,
+      modify_time, icon_url, address,
+      sex, prefer_language, state
       )
-    values (#{userid,jdbcType=BIGINT}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{firstname,jdbcType=VARCHAR}, #{lastname,jdbcType=VARCHAR}, #{middlename,jdbcType=VARCHAR}, 
-      #{nameShow,jdbcType=INTEGER}, #{identity,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{isEmailVerified,jdbcType=INTEGER}, #{registerTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP}, #{iconUrl,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+    values (#{userid,jdbcType=BIGINT}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{firstname,jdbcType=VARCHAR}, #{lastname,jdbcType=VARCHAR}, #{middlename,jdbcType=VARCHAR},
+      #{nameShow,jdbcType=INTEGER}, #{identity,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{isEmailVerified,jdbcType=INTEGER}, #{registerTime,jdbcType=TIMESTAMP},
+      #{modifyTime,jdbcType=TIMESTAMP}, #{iconUrl,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
       #{sex,jdbcType=INTEGER}, #{defaultLanguage,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}
       )
   </insert>
@@ -112,8 +112,8 @@
       <if test="sex != null">
         sex,
       </if>
-      <if test="defaultLanguage != null">
-        default_language,
+      <if test="preferLanguage != null">
+        prefer_language,
       </if>
       <if test="state != null">
         state,
@@ -227,8 +227,8 @@
       <if test="sex != null">
         sex = #{sex,jdbcType=INTEGER},
       </if>
-      <if test="defaultLanguage != null">
-        default_language = #{defaultLanguage,jdbcType=VARCHAR},
+      <if test="preferLanguage != null">
+        prefer_language = #{preferLanguage,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=INTEGER},
@@ -254,7 +254,7 @@
       icon_url = #{iconUrl,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
-      default_language = #{defaultLanguage,jdbcType=VARCHAR},
+      prefer_language = #{preferLanguage,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>

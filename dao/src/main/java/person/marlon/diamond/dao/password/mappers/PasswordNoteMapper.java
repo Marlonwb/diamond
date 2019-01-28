@@ -2,10 +2,12 @@ package person.marlon.diamond.dao.password.mappers;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+import person.marlon.diamond.common.generic.Page;
 import person.marlon.diamond.dao.password.dto.PasswordNote;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface PasswordNoteMapper {
     @Delete({
@@ -18,11 +20,13 @@ public interface PasswordNoteMapper {
         "insert into password_note (account, password, ",
         "platform, category, ",
         "comment, last_modified, ",
-        "created_time, phone_no)",
+        "created_time, phone_no, ",
+        "email, secure_info)",
         "values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{platform,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, ",
         "#{comment,jdbcType=VARCHAR}, #{lastModified,jdbcType=TIMESTAMP}, ",
-        "#{createdTime,jdbcType=TIMESTAMP}, #{phoneNo,jdbcType=BIGINT})"
+        "#{createdTime,jdbcType=TIMESTAMP}, #{phoneNo,jdbcType=BIGINT}, ",
+        "#{email,jdbcType=VARCHAR}, #{secureInfo,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(PasswordNote record);
@@ -34,7 +38,7 @@ public interface PasswordNoteMapper {
     @Select({
         "select",
         "id, account, password, platform, category, comment, last_modified, created_time, ",
-        "phone_no",
+        "phone_no, email, secure_info",
         "from password_note",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -47,7 +51,9 @@ public interface PasswordNoteMapper {
         @Arg(column="comment", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="last_modified", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="created_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-        @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT)
+        @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT),
+        @Arg(column="email", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="secure_info", javaType=String.class, jdbcType=JdbcType.VARCHAR)
     })
     PasswordNote selectByPrimaryKey(Integer id);
 
@@ -63,17 +69,20 @@ public interface PasswordNoteMapper {
           "comment = #{comment,jdbcType=VARCHAR},",
           "last_modified = #{lastModified,jdbcType=TIMESTAMP},",
           "created_time = #{createdTime,jdbcType=TIMESTAMP},",
-          "phone_no = #{phoneNo,jdbcType=BIGINT}",
+          "phone_no = #{phoneNo,jdbcType=BIGINT},",
+          "email = #{email,jdbcType=VARCHAR},",
+          "secure_info = #{secureInfo,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(PasswordNote record);
-
-    @Select({
-            "select",
-            "id, account, password, platform, category, comment, last_modified, created_time, ",
-            "phone_no",
-            "from password_note"
-    })
+    
+    @SelectProvider(type=PasswordNoteSqlProvider.class, method="getPassNotesList")
+//    @Select({
+//            "select",
+//            "id, account, password, platform, category, comment, last_modified, created_time, ",
+//            "phone_no, email, secure_info",
+//            "from password_note"
+//    })
     @ConstructorArgs({
             @Arg(column="id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
             @Arg(column="account", javaType=String.class, jdbcType=JdbcType.VARCHAR),
@@ -83,7 +92,20 @@ public interface PasswordNoteMapper {
             @Arg(column="comment", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="last_modified", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
             @Arg(column="created_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-            @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT)
+            @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT),
+            @Arg(column="email", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="secure_info", javaType=String.class, jdbcType=JdbcType.VARCHAR)
     })
-    List<PasswordNote> getAll();
+    List<PasswordNote> getPassNotesList(Map<String, Object> searchMap, Page page);
+    
+    @SelectProvider(type=PasswordNoteSqlProvider.class, method="countPassNotesList")
+//    @Select({
+//            "select",
+//            "id, account, password, platform, category, comment, last_modified, created_time, ",
+//            "phone_no, email, secure_info",
+//            "from password_note"
+//    })
+    @ResultType(Integer.class)
+    Integer countPassNotesList(Map<String, Object> searchMap, Page page);
+    
 }
