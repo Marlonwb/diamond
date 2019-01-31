@@ -596,6 +596,18 @@ class CalculatorTests {
 		TimeZone timeZone1 = TimeZone.getTimeZone(id);
 		System.out.println("timeZone1 = " + timeZone1);
 	}
+	
+	@Test
+	void test27(){
+		int i = Runtime.getRuntime().availableProcessors();
+		System.out.println("availableProcessors = " + i);
+		long l = Runtime.getRuntime().freeMemory();
+		System.out.println("freeMemory = " + l);
+		long l1 = Runtime.getRuntime().totalMemory();
+		System.out.println("totalMemory = " + l1);
+//		Runtime.getRuntime().gc();
+		
+	}
 
 	public static int getDateBetween(Date first,Date second){
 		long diff = first.getTime()-second.getTime();

@@ -21,12 +21,14 @@ public interface PasswordNoteMapper {
         "platform, category, ",
         "comment, last_modified, ",
         "created_time, phone_no, ",
-        "email, secure_info)",
+        "email, secure_info, ",
+        "display_name)",
         "values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{platform,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, ",
         "#{comment,jdbcType=VARCHAR}, #{lastModified,jdbcType=TIMESTAMP}, ",
         "#{createdTime,jdbcType=TIMESTAMP}, #{phoneNo,jdbcType=BIGINT}, ",
-        "#{email,jdbcType=VARCHAR}, #{secureInfo,jdbcType=VARCHAR})"
+        "#{email,jdbcType=VARCHAR}, #{secureInfo,jdbcType=VARCHAR} ," ,
+        " #{displayName,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(PasswordNote record);
@@ -38,7 +40,7 @@ public interface PasswordNoteMapper {
     @Select({
         "select",
         "id, account, password, platform, category, comment, last_modified, created_time, ",
-        "phone_no, email, secure_info",
+        "phone_no, email, secure_info, display_name",
         "from password_note",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -53,7 +55,8 @@ public interface PasswordNoteMapper {
         @Arg(column="created_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT),
         @Arg(column="email", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="secure_info", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+        @Arg(column="secure_info", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="display_name", javaType=String.class, jdbcType=JdbcType.VARCHAR)
     })
     PasswordNote selectByPrimaryKey(Integer id);
 
@@ -72,6 +75,7 @@ public interface PasswordNoteMapper {
           "phone_no = #{phoneNo,jdbcType=BIGINT},",
           "email = #{email,jdbcType=VARCHAR},",
           "secure_info = #{secureInfo,jdbcType=VARCHAR}",
+          "display_name = #{displayName,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(PasswordNote record);
@@ -94,7 +98,8 @@ public interface PasswordNoteMapper {
             @Arg(column="created_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
             @Arg(column="phone_no", javaType=Long.class, jdbcType=JdbcType.BIGINT),
             @Arg(column="email", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="secure_info", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+            @Arg(column="secure_info", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="display_name", javaType=String.class, jdbcType=JdbcType.VARCHAR)
     })
     List<PasswordNote> getPassNotesList(Map<String, Object> searchMap, Page page);
     

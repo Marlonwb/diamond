@@ -46,6 +46,7 @@ public class PasswordController {
         newPasswordNote.setPhoneNo(passwordNote.getPhoneNo());
         newPasswordNote.setEmail(passwordNote.getEmail());
         newPasswordNote.setSecureInfo(passwordNote.getSecureInfo());
+        newPasswordNote.setDisplayName(passwordNote.getDisplayName());
 		passwordNoteService.insert(newPasswordNote);
 		return new ApiResponse(0,"save success").toString();
 	}

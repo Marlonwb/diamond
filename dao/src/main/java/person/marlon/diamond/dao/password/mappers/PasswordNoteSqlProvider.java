@@ -52,6 +52,10 @@ public class PasswordNoteSqlProvider {
             sql.VALUES("secure_info", "#{secureInfo,jdbcType=VARCHAR}");
         }
         
+        if (record.getDisplayName() != null) {
+            sql.VALUES("display_name", "#{displayName,jdbcType=VARCHAR}");
+        }
+        
         return sql.toString();
     }
 
@@ -99,6 +103,10 @@ public class PasswordNoteSqlProvider {
             sql.SET("secure_info = #{secureInfo,jdbcType=VARCHAR}");
         }
         
+        if (record.getDisplayName() != null) {
+            sql.SET("display_name = #{displayName,jdbcType=VARCHAR}");
+        }
+        
         sql.WHERE("id = #{id,jdbcType=INTEGER}");
         
         return sql.toString();
@@ -126,7 +134,7 @@ public class PasswordNoteSqlProvider {
         
         SQL sql = new SQL();
     
-        sql.SELECT("id, account, password, platform, category, comment, last_modified, created_time, phone_no, email, secure_info");
+        sql.SELECT("id, account, password, platform, category, comment, last_modified, created_time, phone_no, email, secure_info, display_name");
         sql.FROM("password_note");
         sql.WHERE("1=1");
         if(searchMap!=null && searchMap.size()>0){
@@ -149,7 +157,7 @@ public class PasswordNoteSqlProvider {
             
             if(searchMap.get("platform") != null){
                 //sql.WHERE("platform like CONCAT('%','${searchMap.platform}','%')");
-                sql.WHERE("platform like CONCAT('%','#{platform}','%')");
+                sql.WHERE("platform like CONCAT('%','"+ searchMap.get("platform") +"','%')");
                         //"platform like CONCAT('%'," + searchMap.get("platform") + ",'%')");
             }
             if(searchMap.get("email") != null){
@@ -198,7 +206,7 @@ public class PasswordNoteSqlProvider {
             
             if(searchMap.get("platform") != null){
                 //sql.WHERE("platform like CONCAT('%','${searchMap.platform}','%')");
-                sql.WHERE("platform like CONCAT('%','#{platform}','%')");
+                sql.WHERE("platform like CONCAT('%','"+ searchMap.get("platform") +"','%')");
                 //"platform like CONCAT('%'," + searchMap.get("platform") + ",'%')");
             }
             if(searchMap.get("email") != null){

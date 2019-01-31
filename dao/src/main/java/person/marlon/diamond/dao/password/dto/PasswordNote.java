@@ -24,8 +24,10 @@ public class PasswordNote {
     private String email;
 
     private String secureInfo;
+    
+    private String displayName;
 
-    public PasswordNote(Integer id, String account, String password, String platform, String category, String comment, Date lastModified, Date createdTime, Long phoneNo, String email, String secureInfo) {
+    public PasswordNote(Integer id, String account, String password, String platform, String category, String comment, Date lastModified, Date createdTime, Long phoneNo, String email, String secureInfo,String displayName) {
         this.id = id;
         this.account = account;
         this.password = password;
@@ -37,6 +39,7 @@ public class PasswordNote {
         this.phoneNo = phoneNo;
         this.email = email;
         this.secureInfo = secureInfo;
+        this.displayName = displayName;
     }
 
     public PasswordNote() {
@@ -129,5 +132,13 @@ public class PasswordNote {
 
     public void setSecureInfo(String secureInfo) {
         this.secureInfo = secureInfo == null ? null : secureInfo.trim();
+    }
+    
+    public String getDisplayName() {
+        return displayName;
+    }
+    
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }
