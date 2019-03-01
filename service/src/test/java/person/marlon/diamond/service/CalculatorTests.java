@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import person.marlon.diamond.common.util.TimeUtil;
 import person.marlon.diamond.service.test.Calculator;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
@@ -636,5 +637,13 @@ class CalculatorTests {
 			}
 		}
 		return true;
+	}
+	
+	@Test
+	void test28(){
+		File file = new File("/aaa/bbb");
+		assertTrue(file.isDirectory());
+		assertTrue(file.canWrite());
+		
 	}
 }

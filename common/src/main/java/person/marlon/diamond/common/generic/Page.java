@@ -5,8 +5,8 @@ public class Page {
     private Integer pageNum = 1;
     private Integer totalCount;
     private Integer totalPage;
-    private Integer pageSize =20;
-    private Integer offset; // the page first record offset = (pageNum - 1) * pageSize;
+    private Integer pageSize = 20;
+    private Integer offset = (pageNum - 1) * pageSize; // the page first record offset = (pageNum - 1) * pageSize;
     private Sort sort; //sort params
     
     public Page(){
@@ -15,17 +15,16 @@ public class Page {
     public Page(Integer pageNum){
         this.pageNum = pageNum;
         this.offset = (pageNum - 1) * pageSize;
-        //this.sort = new Sort();
+        // this.sort = new Sort();
     }
     
     public Page(String sortField){
-        //this.sort = new Sort();
-        this.offset = (pageNum - 1) * pageSize;
+        // this.offset = (pageNum - 1) * pageSize;
         this.sort = new Sort(sortField);
     }
     
     public Page(String sortField, boolean ascSortType) {
-        this.offset = (pageNum - 1) * pageSize;
+        // this.offset = (pageNum - 1) * pageSize;
         if(ascSortType){//specify the sort type not as default
             this.sort = new Sort(sortField, true);
         }else{
