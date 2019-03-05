@@ -38,11 +38,12 @@ public class GenericUtil {
 				page = new Page();
 			}
 			
-			String sortField = (String)paramMap.get("sortField");
 			Sort sort = null;
-			if(sortField != null){
+            String sortField = (String)paramMap.get("sortField");
+            String sortType = (String)paramMap.get("sortType");
+            if(sortField != null){
 				//sortType
-				if(SortOrderEnum.ASC.getValue().equals(paramMap.get("sortType"))){
+				if(SortOrderEnum.ASC.getValue().equalsIgnoreCase(sortType)){
 					sort = new Sort(sortField,true);
 				}else{
 					sort = new Sort(sortField);
@@ -54,6 +55,11 @@ public class GenericUtil {
 				//else{
 				//	sort = new Sort();
 				//}
+                
+                //set sortType
+                if(StringUtils.isNotEmpty(sortType)){
+                    sort = new Sort(SortOrderEnum.ASC.getValue().equalsIgnoreCase(sortType));
+                }
 			}
 			if(sort != null){
 				page.setSort(sort);

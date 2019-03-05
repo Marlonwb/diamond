@@ -1,6 +1,7 @@
 package person.marlon.diamond.common.generic;
 
 import com.google.common.base.CaseFormat;
+import org.apache.commons.lang3.StringUtils;
 import person.marlon.diamond.common.enums.SortOrderEnum;
 
 public class Sort {
@@ -13,6 +14,12 @@ public class Sort {
     
     public Sort(String sortField) {
         this.sortField = convertCamelToUnderlinePattern(sortField);
+    }
+    
+    public Sort(Boolean ascSortType) {
+        if(ascSortType){
+            this.sortType = SortOrderEnum.ASC.getValue();
+        }
     }
     
     public Sort(String sortField, Boolean ascSortType) {
@@ -45,6 +52,9 @@ public class Sort {
      *  TestData-->test_data
      */
     private String convertCamelToUnderlinePattern(String field){
+        if(StringUtils.isEmpty(field)){
+            return "";
+        }
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field);
     }
     

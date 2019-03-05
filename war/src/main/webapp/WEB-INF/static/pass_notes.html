@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="subPassNotes">
+    <form>
+        <div id="platformBlock">
+            平台<input type="text" id="platform"/>
+        </div>
+        <div id="accountBlock">
+            账号<input type="text" id="account"/>
+        </div>
+        <div id="passwordBlock">
+            密码<input type="text" id="password"/>
+        </div>
+        <div id="nickNameBlock">
+            用户名<input type="text" id="displayName"/>
+        </div>
+        <div id="categoryBlock">
+            类别<input type="text" id="category"/>
+        </div>
+        <div id="commentBlock">
+            备注<input type="text" id="comment"/>
+        </div>
+        <div id="phoneNoBlock">
+            手机<input type="text" id="phoneNo"/>
+        </div>
+        <div id="emailBlock">
+            邮箱<input type="text" id="email"/>
+        </div>
+        <div id="secureInfoNoBlock">
+            安全信息<input type="text" id="secureInfo"/>
+        </div>
+
+        <!--<p></p>-->
+        <div id="submitBlock">
+            <!--<button id="submit">submit</button>-->
+            <input type="button" id="submit" value="submit">
+
+        </div>
+    </form>
+</div>
+
+<script>
+    function generatePassTable(pageNum){
+        let url = "http://marlon.test.com/pass_note/list";
+        if(pageNum !== undefined && pageNum != null){
+            let number = parseInt(pageNum);
+            if (Number.isInteger(number)){
+                url += "?pageNum=" + pageNum;
+            }
+        }
+        if(url.indexOf("?") >= 0){
+            url += "&sortType=asc";// TODO add sortType configuration.
+        }else{
+            url += "?sortType=asc";
+        }
+
+        getData(url)
+            .then(
+                result => {
+                    console.log(JSON.stringify(result));
+                    let outerTableNode = document.createElement("div");
+                    outerTableNode.setAttribute("id","outerTable");
+                    document.getElementsByTagName('body')[0].insertBefore(outerTableNode,document.getElementsByTagName('body')[0].firstChild);
+
+                    let tableNode = document.createElement("table");
+                    tableNode.setAttribute("id","pass_notes");
+                    //document.getElementsByTagName('body')[0].insertBefore(tableNode,document.getElementsByTagName('body')[0].firstChild);
+                    outerTableNode.appendChild(tableNode);
+
+                    let voteList = result.data;
+                    let pageNum = result.pageNum;
+                    let totalPage = result.totalPage;
+                    let tableContent = '';
+
+                    if(Array.isArray(voteList) && voteList.length > 0){
+                        tableContent = `<caption>Total Password Notes: ${voteList.length}
+                                        <p>
+                                        CurPage: ${pageNum}  Elevator: <input type="page_num" id="page_num"  style="width:20px"> <button id="elevator">Go</button>
+                                        <p>
+                                        Total Page: ${totalPage}
+                                        </caption>
+                                        <tr>
+                                            <th scope="col">Platform</th>
+                                            <th scope="col">Account</th>
+                                            <th scope="col">Password</th>
+                                            <th scope="col">DisplayName</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Comment</th>
+                                            <th scope="col">LastModified</th>
+                                            <th scope="col">CreatedTime</th>
+                                            <th scope="col">PhoneNo</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">SecureInfo</th>
+                                        </tr>`;
+
+                        //var count = document.getElementById("count");
+                        //count.innerText = voteList.length
+                        voteList.forEach(function (e) {
+                            tableContent+=`<tr>
+                                               <th scope="row">${e.platform === undefined ? '' : e.platform}</th>
+                                               <td scope="row">${e.account === undefined ? '' : e.account}</td>
+                                               <td scope="row">${e.password === undefined ? '' : e.password}</td>
+                                               <td scope="row">${e.displayName === undefined ? '' : e.displayName}</td>
+                                               <td scope="row">${e.category === undefined ? '' : e.category}</td>
+                                               <td scope="row">${e.comment === undefined ? '' : e.comment}</td>
+                                               <td scope="row">${e.lastModified  === undefined ? '' : e.lastModified }</td>
+                                               <td scope="row">${e.createdTime === undefined ? '' : e.createdTime}</td>
+                                               <td scope="row">${e.phoneNo === undefined ? '' : e.phoneNo}</td>
+                                               <td scope="row">${e.email=== undefined ? '' : e.email}</td>
+                                               <td scope="row">${e.secureInfo === undefined ? '' : e.secureInfo}</td>
+                                             </tr>`
+                        });
+                    }else{
+                        tableContent = `<caption>Password Notes</caption>
+                                        <tr>
+                                            <th scope="col">Platform</th>
+                                            <th scope="col">Account</th>
+                                            <th scope="col">Password</th>
+                                            <th scope="col">DisplayName</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Comment</th>
+                                            <th scope="col">LastModified</th>
+                                            <th scope="col">CreatedTime</th>
+                                            <th scope="col">PhoneNo</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">SecureInfo</th>
+                                        </tr>`;
+                    }
+                    // tableNode.style = " border-collapse: collapse;\n" +
+                    //     "        border: 2px solid rgb(200, 200, 200);\n" +
+                    //     "        letter-spacing: 1px;\n" +
+                    //     "        font-family: sans-serif;\n" +
+                    //     "        font-size: .8rem;";
+                    tableNode.innerHTML = tableContent;
+                    //添加文字输入事件
+                    document.getElementById("elevator").addEventListener("click",function(e){
+                        let pageNum = document.getElementById("page_num").value;
+                        removeOldTable();
+                        generatePassTable(pageNum);
+                    });
+                }
+            ) // JSON-string from `response.json()` call
+            .catch(error => console.error(error));
+    }
+
+    //https://blog.csdn.net/zhengqiqiqinqin/article/details/9302527
+    function doReset() {
+        for (let i = 0; i < document.getElementsByTagName("input").length; i++) {
+            if (document.getElementsByTagName("input")[i].type === "text") {
+                document.getElementsByTagName("input")[i].value = "";
+            }
+        }
+    }
+
+    function removeOldTable() {
+        doReset(); //清空input中文本
+        let passNotesNode = document.getElementById("pass_notes");
+        if(!isHidden(passNotesNode)){
+            passNotesNode.parentNode.removeChild(passNotesNode);
+        }
+
+    }
+    function getData(url = '') {
+        // Default options are marked with *
+        return fetch(url, {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // same-origin,include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+        })
+            .then(response => response.json()) // parses response to JSON
+    .catch(error => console.log(error))
+    }
+
+    function postData(url = ``, data = {}) {
+        // Default options are marked with *
+        return fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // same-origin,include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        })
+            .then(response => response.json()) // parses response to JSON
+    .catch(error => console.log(error))
+    }
+
+    function isHidden(el) {
+        let style = window.getComputedStyle(el);
+        return (style.display === 'none')
+    }
+
+    generatePassTable();//页面刷新显示密码本列表
+    let submitBut = document.getElementById('submit');
+    submitBut.addEventListener("click",function (ev) {
+        let data = {
+            account:document.getElementById("account").value,
+            password:document.getElementById("password").value,
+            displayName:document.getElementById("displayName").value,
+            platform:document.getElementById("platform").value,
+            category:document.getElementById("category").value,
+            comment:document.getElementById("comment").value,
+            phoneNo:document.getElementById("phoneNo").value === '' ? undefined : document.getElementById("phoneNo").value,
+            email:document.getElementById("email").value,
+            secureInfo:document.getElementById("secureInfo").value
+        };
+        postData(`http://marlon.test.com/pass_note/add`, data)
+            .then(function (result) {
+                if(result.retCode === 0){
+                    console.log(JSON.stringify(result));
+                    removeOldTable();
+                    //重新插入新文本
+                    generatePassTable();
+                    alert("保存成功！" );
+                }else{
+                    alert("请求出错：" + result.msg);
+                }
+
+                }) // JSON-string from `response.json()` call
+            .catch(error => console.error(error));
+    });
+
+
+</script>
+<style>
+    #subPassNotes{
+        margin-top: 300px;
+        width:100%;
+        text-align:center
+    }
+
+    /*div#outerTable{*/
+        /*text-align:center;*/
+    /*}*/
+
+    input {
+        margin:10px;
+    }
+
+    span{
+        margin-top: 10px;
+        margin-left: 10px
+    }
+
+    td,
+    th {
+        border: 1px solid rgb(190, 190, 190);
+        padding: 10px;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    th[scope="col"] {
+        background-color: #696969;
+        color: #fff;
+    }
+
+    th[scope="row"] {
+        background-color: #d7d9f2;
+    }
+
+    caption {
+        padding: 10px;
+        caption-side: bottom;
+    }
+
+    table {
+        border-collapse: collapse;
+        border: 2px solid rgb(200, 200, 200);
+        letter-spacing: 1px;
+        font-family: sans-serif;
+        font-size: .8rem;
+        margin:auto;
+    }
+</style>
+</body>
+</html>
