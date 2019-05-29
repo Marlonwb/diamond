@@ -15,8 +15,6 @@ import person.marlon.diamond.service.password_note.PasswordNoteService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,22 +30,11 @@ public class PasswordController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST,consumes = "application/json")
 	@ResponseBody
 	public String add(HttpServletRequest request, @RequestBody PasswordNote passwordNote){
-		logger.info("received user [{}] /pass_note/list request param --> {}",WebUtil.getIpAddr(request),new Gson().toJson(passwordNote));
-	    if(passwordNote == null) return new ApiResponse<>("").toString();
-		PasswordNote newPasswordNote = new PasswordNote();
-        newPasswordNote.setAccount(passwordNote.getAccount());
-        newPasswordNote.setPassword(passwordNote.getPassword());
-        newPasswordNote.setPlatform(passwordNote.getPlatform() == null?"unknown":passwordNote.getPlatform());
-        newPasswordNote.setCategory(passwordNote.getCategory());
-        newPasswordNote.setComment(passwordNote.getComment());
-		Date currentTime = getCurrentTime();
-        newPasswordNote.setLastModified(currentTime);
-        newPasswordNote.setCreatedTime(currentTime);
-        newPasswordNote.setPhoneNo(passwordNote.getPhoneNo());
-        newPasswordNote.setEmail(passwordNote.getEmail());
-        newPasswordNote.setSecureInfo(passwordNote.getSecureInfo());
-        newPasswordNote.setDisplayName(passwordNote.getDisplayName());
-		passwordNoteService.insert(newPasswordNote);
+		logger.info("received user [{}] /pass_note/add request param --> {}",WebUtil.getIpAddr(request),new Gson().toJson(passwordNote));
+		boolean insert = passwordNoteService.insert(passwordNote);
+		if(!insert){
+			return new ApiResponse<>(-1,"save failed").toString();
+		}
 		return new ApiResponse(0,"save success").toString();
 	}
 
@@ -62,7 +49,7 @@ public class PasswordController {
 		PasswordNote newPasswordNote = new PasswordNote();
 		newPasswordNote.setId(passwordNote.getId());
 
-		newPasswordNote.setLastModified(getCurrentTime());
+		newPasswordNote.setLastModified(passwordNoteService.getCurrentTime());
 		passwordNoteService.update(newPasswordNote);
 
 		return new ApiResponse(0,"update success").toString();
@@ -80,9 +67,5 @@ public class PasswordController {
 		return apiPageResponse.toString();
 	}
 
-	private Date getCurrentTime(){
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.HOUR,8);//服务器0时区，存储按东八区存
-		return calendar.getTime();
-	}
+	
 }

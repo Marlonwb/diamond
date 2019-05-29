@@ -1,6 +1,8 @@
 package person.marlon.diamond.common.util;
 
-import java.io.UnsupportedEncodingException;
+import org.springframework.util.StringUtils;
+
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -20,12 +22,12 @@ public class EncryptUtil {
         MessageDigest md = null;
 
         try {
-            if (encName == null || encName.equals("")) {
+            if (StringUtils.isEmpty(encName)) {
                 encName = SHA256;
             }
             md = MessageDigest.getInstance(encName);
-            md.update(strSrc.getBytes( "UTF-8"));
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            md.update(strSrc.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException ex) {
             return null;
         }
         return bytes2Hex(md.digest()); // to HexString;

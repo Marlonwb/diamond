@@ -23,7 +23,7 @@ public class GenericUtil {
 		Page page;
 		
 		if(paramMap == null){
-			page = new Page();
+			page = new Page();// default: pageNum = 1,pageSize = 20,offset = (pageNum - 1) * pageSize
 		}else{
 			if(paramMap.get("pageNum") != null && paramMap.get("pageSize") != null){
 				
@@ -69,5 +69,27 @@ public class GenericUtil {
 		
 		
 		return page;
+	}
+	
+	/**
+	 * 是否是数字
+	 *
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNumeric(String str) {
+		if (str == null) {
+			return false;
+		}
+		int sz = str.length();
+		if (sz == 0) {
+			return false;
+		}
+		for (int i = 0; i < sz; i++) {
+			if (Character.isDigit( str.charAt( i ) ) == false) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

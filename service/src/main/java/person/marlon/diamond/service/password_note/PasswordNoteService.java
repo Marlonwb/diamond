@@ -10,6 +10,8 @@ import person.marlon.diamond.dao.password.dto.PasswordNote;
 import person.marlon.diamond.dao.password.mappers.PasswordNoteMapper;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,10 +23,34 @@ public class PasswordNoteService {
 	@Resource
 	private PasswordNoteMapper passwordNoteMapper;
 
-	public void insert(PasswordNote passwordNote){
-		passwordNoteMapper.insert(passwordNote);
+	public boolean insert(PasswordNote passwordNote){
+		if(passwordNote == null){
+			return false;
+		}
+		PasswordNote newPasswordNote = new PasswordNote();
+		newPasswordNote.setAccount(passwordNote.getAccount());
+		newPasswordNote.setPassword(passwordNote.getPassword());
+		newPasswordNote.setPlatform(passwordNote.getPlatform() == null?"unknown":passwordNote.getPlatform());
+		newPasswordNote.setCategory(passwordNote.getCategory());
+		newPasswordNote.setComment(passwordNote.getComment());
+		Date currentTime = getCurrentTime();
+		newPasswordNote.setLastModified(currentTime);
+		newPasswordNote.setCreatedTime(currentTime);
+		newPasswordNote.setPhoneNo(passwordNote.getPhoneNo());
+		newPasswordNote.setEmail(passwordNote.getEmail());
+		newPasswordNote.setSecureInfo(passwordNote.getSecureInfo());
+		newPasswordNote.setDisplayName(passwordNote.getDisplayName());
+		
+		passwordNoteMapper.insert(newPasswordNote);
+		return true;
 	}
-
+	
+	public Date getCurrentTime(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.HOUR,8);//服务器0时区，存储按东八区存
+		return calendar.getTime();
+	}
+	
 	public PasswordNote getById(Integer id){
 		return passwordNoteMapper.selectByPrimaryKey(id);
 	}
@@ -61,7 +87,7 @@ public class PasswordNoteService {
 	
 	private Map<String,Object> paddingFieldToSearchMap(Map<String,Object> paramsMap){
 		//Map<String,Object> searchMap = new HashMap<>(paramsMap);
-		return paramsMap;// FIXME:assemble  search map form params map.
+		return paramsMap;// FIXME:assemble search map form params map.
 	}
 	
 }
