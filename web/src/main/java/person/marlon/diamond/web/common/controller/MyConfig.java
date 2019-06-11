@@ -33,7 +33,7 @@ public class MyConfig {
 
     @PostConstruct
     private void ver(){
-        System.out.println(Thread.currentThread().getName() + ":" + I18nUtil.getMessage("start_greeting") + I18nUtil.getMessage("author"));
+        System.out.println(Thread.currentThread().getName() + ": " + I18nUtil.getMessage("start_greeting") + " "+ I18nUtil.getMessage("author"));
         System.out.println(CharGraph.generateFoZu());
 //        taskExecutor.execute(() -> System.out.println(Thread.currentThread().getName() + ":" +"logger = " + logger));
 

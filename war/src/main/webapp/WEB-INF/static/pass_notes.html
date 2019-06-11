@@ -116,7 +116,9 @@
                                              </tr>`
                         });
                     }else{
-                        tableContent = `<caption>Password Notes</caption>
+                        tableContent = `<caption>Password Notes
+                                            <p> Reach the end of world <button id="back">Back</button><p>
+                                        </caption>
                                         <tr>
                                             <th scope="col">Platform</th>
                                             <th scope="col">Account</th>
@@ -138,11 +140,19 @@
                     //     "        font-size: .8rem;";
                     tableNode.innerHTML = tableContent;
                     //添加文字输入事件
-                    document.getElementById("elevator").addEventListener("click",function(e){
-                        let pageNum = document.getElementById("page_num").value;
-                        removeOldTable();
-                        generatePassTable(pageNum);
-                    });
+                    if( document.getElementById("elevator")){
+                        document.getElementById("elevator").addEventListener("click",function(e){
+                            let pageNum = document.getElementById("page_num").value;
+                            removeOldTable();
+                            generatePassTable(pageNum);
+                        });
+                    }
+                    if( document.getElementById("back")){
+                        document.getElementById("back").addEventListener("click",function(e){
+                            removeOldTable();
+                            generatePassTable();
+                        });
+                    }
                 }
             ) // JSON-string from `response.json()` call
             .catch(error => console.error(error));
