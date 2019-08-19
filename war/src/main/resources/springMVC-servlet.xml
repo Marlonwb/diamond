@@ -25,4 +25,6 @@
         <bean class="person.marlon.diamond.web.interceptor.SessionInterceptor" />
     </mvc:interceptors>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+
 </beans>

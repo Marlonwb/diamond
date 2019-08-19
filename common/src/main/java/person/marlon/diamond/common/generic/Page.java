@@ -80,6 +80,7 @@ public class Page {
     
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+        this.offset = (pageNum - 1) * pageSize;
     }
     
     public void setOffset(int offset) {

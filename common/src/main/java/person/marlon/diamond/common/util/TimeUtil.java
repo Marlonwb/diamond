@@ -146,7 +146,7 @@ public class TimeUtil {
 		//GregorianCalendar startCalendar = new GregorianCalendar(2017,1,28);
 		GregorianCalendar startCalendar = new GregorianCalendar();
 		startCalendar.setTime(start);
-		logger.info("start Date  YEAR-MONTH-DAY_OF_MONTH --> " + startCalendar.get(Calendar.YEAR) + "-" +
+		logger.info("start Date YEAR-MONTH-DAY_OF_MONTH --> " + startCalendar.get(Calendar.YEAR) + "-" +
 				+(startCalendar.get(Calendar.MONTH) + 1) + "-" +
 				+startCalendar.get(Calendar.DAY_OF_MONTH));
 		//GregorianCalendar endCalendar = new GregorianCalendar(2018,6,31);

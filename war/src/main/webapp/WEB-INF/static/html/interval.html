@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<div id="aaa"></div>
+<script>
+    var currentDom;
+    var repeatSendInterval;
+    $(document).ready(function () {
+        repeatSendInterval = setInterval(function() { //每10分钟
+            repeatSend();}, 1000 * 3);
+    });
+
+    // window.onload=function (ev) {
+        // currentDom = document.getElementById('aaa');
+        // currentDom.setAttribute("name","bbb");
+    // };
+
+    function repeatSend(i){
+        $.ajax({
+            url : "http://marlon.test.com/greet",
+            type : "get",
+            data : {
+                name:"marlon"
+            },
+            dataType : "json",
+            success : function(result) {
+                console.info(result);
+                // currentDom.setAttribute("name",result);
+                $('#aaa').attr("name",result);
+                $('#aaa').html("数数：" + (Math.round(Math.random()*100)));
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                if(!errorThrown){
+                    errorThrown = "network_error"
+                }
+                console.info("init log file error :"+errorThrown);
+            }
+        });
+    }
+
+    //停止并清理定时任务
+    function stopVideoNetworkCheckTimer (){
+        if(repeatSendInterval){
+            clearInterval(repeatSendInterval);
+            repeatSendInterval = undefined;
+        }
+    }
+</script>
+</body>
+</html>

@@ -9,7 +9,8 @@ public class RegularExpressionUtil {
 	private static final Pattern IP_PATTERN = Pattern.compile("^(((1[0-9]{2})|((2[0-4][0-9])|(25[0-5]))|([1-9]{2})|([0-9]))\\.){3}((1[0-9][0-9])|((2[0-4][0-9])|(25[0-5]))|([1-9][0-9])|([0-9]))$");
 
 	//域名URL正则
-	private static final Pattern DOMAIN_PATTERN =Pattern.compile("^((https|http)://)?(((([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+))\\.){1,2}(([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+)))$");
+	private static final Pattern DOMAIN_PATTERN =Pattern.compile("^((https|http)://)?(((([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+))\\.)+(([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+)))$");
+	//从{1,2}改为{1,} 今天找到一个反例：https://192.168.126.249 （2019-6-28）存在多个点的情况
 
 	/**
 	 * 判断字符串是否ip
@@ -22,7 +23,7 @@ public class RegularExpressionUtil {
 	}
 
 	/**
-	 * 判断字符串是否是域名
+	 * 判断字符串是否是域名+
 	 */
 	public static boolean isDomainPattern(String str){
 		if(StringUtils.isEmpty(str)){

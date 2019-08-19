@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>期刊数据上传</title>
+    <link rel="stylesheet" type="text/css" href="css/zcity.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/upload.js"></script>
+    <style>
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font: 12px 'Lucida Sans Unicode', 'Trebuchet MS', Arial, Helvetica;
+            margin: 0;
+            background-color: #d9dee2;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ebeef2), to(#d9dee2));
+            background-image: -webkit-linear-gradient(top, #ebeef2, #d9dee2);
+            background-image: -moz-linear-gradient(top, #ebeef2, #d9dee2);
+            background-image: -ms-linear-gradient(top, #ebeef2, #d9dee2);
+            background-image: -o-linear-gradient(top, #ebeef2, #d9dee2);
+            background-image: linear-gradient(top, #ebeef2, #d9dee2);
+        }
+
+        /*--------------------*/
+
+        #login {
+            background-color: #fff;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+            background-image: -webkit-linear-gradient(top, #fff, #eee);
+            background-image: -moz-linear-gradient(top, #fff, #eee);
+            background-image: -ms-linear-gradient(top, #fff, #eee);
+            background-image: -o-linear-gradient(top, #fff, #eee);
+            background-image: linear-gradient(top, #fff, #eee);
+            height: 240px;
+            width: 400px;
+            margin: -150px 0 0 -230px;
+            padding: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 0;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, .2), 0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, .2), 0 6px 0 #fff, 0 7px 0 rgba(0, 0, 0, .2);
+            -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(0, 0, 0, .1), 3px 3px 0 rgba(255, 255, 255, 1), 4px 4px 0 rgba(0, 0, 0, .1), 6px 6px 0 rgba(255, 255, 255, 1), 7px 7px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, .2), 0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, .2), 0 6px 0 #fff, 0 7px 0 rgba(0, 0, 0, .2);
+        }
+
+        #login:before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            border: 1px dashed #ccc;
+            top: 5px;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+            -moz-box-shadow: 0 0 0 1px #fff;
+            -webkit-box-shadow: 0 0 0 1px #fff;
+            box-shadow: 0 0 0 1px #fff;
+        }
+
+        /*--------------------*/
+
+        h1 {
+            text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0px 2px 0 rgba(0, 0, 0, .5);
+            text-transform: uppercase;
+            text-align: center;
+            color: #666;
+            margin: 0 0 30px 0;
+            letter-spacing: 4px;
+            font: normal 26px/1 Verdana, Helvetica;
+            position: relative;
+        }
+
+        h1:after, h1:before {
+            background-color: #777;
+            content: "";
+            height: 1px;
+            position: absolute;
+            top: 15px;
+            width: 120px;
+        }
+
+        h1:after {
+            background-image: -webkit-gradient(linear, left top, right top, from(#777), to(#fff));
+            background-image: -webkit-linear-gradient(left, #777, #fff);
+            background-image: -moz-linear-gradient(left, #777, #fff);
+            background-image: -ms-linear-gradient(left, #777, #fff);
+            background-image: -o-linear-gradient(left, #777, #fff);
+            background-image: linear-gradient(left, #777, #fff);
+            right: 0;
+        }
+
+        h1:before {
+            background-image: -webkit-gradient(linear, right top, left top, from(#777), to(#fff));
+            background-image: -webkit-linear-gradient(right, #777, #fff);
+            background-image: -moz-linear-gradient(right, #777, #fff);
+            background-image: -ms-linear-gradient(right, #777, #fff);
+            background-image: -o-linear-gradient(right, #777, #fff);
+            background-image: linear-gradient(right, #777, #fff);
+            left: 0;
+        }
+
+        /*--------------------*/
+
+        fieldset {
+            border: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        /*--------------------*/
+
+        #inputs input {
+            background: #f1f1f1 url(images/login-sprite.png) no-repeat;
+            padding: 15px 15px 15px 30px;
+            margin: 0 0 4px 4px;
+            width: 353px; /* 353 + 2 + 45 = 400 */
+
+            border: 1px solid #ccc;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+            -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+            box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+        }
+        #inputs select {
+            background: #f1f1f1 url(images/login-sprite.png) no-repeat;
+            padding: 15px 15px 15px 30px;
+            margin: 0 0 4px 4px;
+            width: 400px; /* 353 + 2 + 45 = 400 */
+            border: 1px solid #ccc;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+            -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+            box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+        }
+
+        #username {
+            background-position: 5px -2px !important;
+        }
+
+        #password {
+            background-position: 5px -52px !important;
+        }
+
+        #inputs input:focus {
+            background-color: #fff;
+            border-color: #e8c291;
+            outline: none;
+            -moz-box-shadow: 0 0 0 1px #e8c291 inset;
+            -webkit-box-shadow: 0 0 0 1px #e8c291 inset;
+            box-shadow: 0 0 0 1px #e8c291 inset;
+        }
+
+        /*--------------------*/
+        #actions {
+            margin: 25px 0 0 0;
+        }
+
+        #submit {
+            background-color: #ffb94b;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+            background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+            background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+            background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+            background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+            background-image: linear-gradient(top, #fddb6f, #ffb94b);
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+            -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #d69e31 #e3a037 #d5982d #e3a037;
+            float: left;
+            height: 35px;
+            padding: 0;
+            width: 120px;
+            cursor: pointer;
+            font: bold 15px Arial, Helvetica;
+            color: #8f5a0a;
+        }
+
+        #submit:hover, #submit:focus {
+            background-color: #fddb6f;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb94b), to(#fddb6f));
+            background-image: -webkit-linear-gradient(top, #ffb94b, #fddb6f);
+            background-image: -moz-linear-gradient(top, #ffb94b, #fddb6f);
+            background-image: -ms-linear-gradient(top, #ffb94b, #fddb6f);
+            background-image: -o-linear-gradient(top, #ffb94b, #fddb6f);
+            background-image: linear-gradient(top, #ffb94b, #fddb6f);
+        }
+
+        #submit:active {
+            outline: none;
+            -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+            -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+        }
+
+        #submit::-moz-focus-inner {
+            border: none;
+        }
+
+        #actions a {
+            color: #3151A2;
+            float: right;
+            line-height: 35px;
+            margin-left: 10px;
+        }
+
+        /*--------------------*/
+
+        #back {
+            display: block;
+            text-align: center;
+            position: relative;
+            top: 60px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+<form  method="POST"
+       action="/journal/add"
+       enctype="multipart/form-data">
+    <fieldset id="inputs">
+        <input id="qikan_name1" type="text" placeholder="期刊名称（中文）" name="publicationNameZh" autofocus required>
+        <input id="qikan_name2" type="text" placeholder="期刊名称（英文）" name="publicationNameEn" required>
+        <input id="qikan_name3" type="text" placeholder="期刊曾用名" name="usedPublicationName" required>
+        <input id="qikan_zhuguan" type="text" placeholder="主管单位" name="dominantAgency" required>
+        <input id="qikan_zhuban" type="text" placeholder="主办单位" name ="organizer" required>
+        <input id="qikan_chuangkan" type="text" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="创刊（年份,请输入数字）" name="publicationStart" required>
+        <input id="qikan_chubanshe" type="text" placeholder="出版社" name="publisher" required>
+        <input id="qikan_guoji" type="text" placeholder="国际刊号" name="issn" required>
+        <input id="qikan_guonei" type="text" placeholder="国内刊号" name="cssn" required>
+        <select id="qikan_faxing" name="distributionProvince">
+            <option value="0" disabled="disabled" selected="selected">出版地区</option>
+            <option value="北京市">北京市</option>
+            <option value="天津市">天津市</option>
+            <option value="上海市">上海市</option>
+            <option value="重庆市">重庆市</option>
+            <option value="河北省">河北省</option>
+            <option value="山西省">山西省</option>
+            <option value="台湾省">台湾省</option>
+            <option value="辽宁省">辽宁省</option>
+            <option value="吉林省">吉林省</option>
+            <option value="黑龙江省">黑龙江省</option>
+            <option value="江苏省">江苏省</option>
+            <option value="浙江省">浙江省</option>
+            <option value="安徽省">安徽省</option>
+            <option value="福建省">福建省</option>
+            <option value="江西省">江西省</option>
+            <option value="山东省">山东省</option>
+            <option value="河南省">河南省</option>
+            <option value="湖北省">湖北省</option>
+            <option value="湖南省">湖南省</option>
+            <option value="广东省">广东省</option>
+            <option value="甘肃省">甘肃省</option>
+            <option value="四川省">四川省</option>
+            <option value="贵州省">贵州省</option>
+            <option value="海南省">海南省</option>
+            <option value="云南省">云南省</option>
+            <option value="青海省">青海省</option>
+            <option value="陕西省">陕西省</option>
+            <option value="广西壮族自治区">广西壮族自治区</option>
+            <option value="西藏自治区">西藏自治区</option>
+            <option value="宁夏回族自治区">宁夏回族自治区</option>
+            <option value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+            <option value="澳门特别行政区">澳门特别行政区</option>
+            <option value="香港特别行政区">香港特别行政区</option>
+        </select>
+        <input id="qikan_zhubian" type="text" placeholder="主编" name="chiefEditor" required>
+        <input id="qikan_youfa" type="text" placeholder="邮发代号" name="postalDistributeCode" required>
+        <input id="qikan_youbian" type="text" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="邮编（请输入数字）" name="postcode" required>
+        <input id="qikan_fuhe" type="text" placeholder="复合影响因子" name="compoundInfluenceFactor" required>
+        <input id="qikan_zonghe" type="text" placeholder="综合影响因子" name="comprehensiveImpactFactor" required>
+        <select id="qikan_zhouqi" name="publicationCycle" >
+            <option value="0" disabled="disabled" selected="selected">发行周期</option>
+            <option value="1">周二刊</option>
+            <option value="2">周刊</option>
+            <option value="3">旬刊</option>
+            <option value="4">半月刊</option>
+            <option value="5">月刊</option>
+            <option value="6">双月刊</option>
+            <option value="7">季刊</option>
+            <option value="8">半年刊</option>
+            <option value="9">年刊</option>
+        </select>
+        <select id="qikan_shengao" name="reviewDuration" >
+            <option value="0" disabled="disabled" selected="selected">审稿时间</option>
+            <option value="1">一个月内</option>
+            <option value="3">1-3个月</option>
+            <option value="6">3-6个月</option>
+            <option value="9">6-9个月</option>
+            <option value="12">9-12个月</option>
+        </select>
+        <select id="qikan_yuyan" name="language" >
+            <option value="0" disabled="disabled" selected="selected">期刊语言</option>
+            <option value="中文">中文</option>
+            <option value="英文">英文</option>
+        </select>
+        <input id="journal_level" type="text" placeholder="期刊级别" name="journalLevel" required>
+        <input id="qikan_shoulu" type="text" placeholder="期刊收录" name="journalInclusion" required>
+        <input id="qikan_rongyu" type="text" placeholder="期刊荣誉" name="honor" required>
+        <input id="qikan_lanmu" type="text" placeholder="主要栏目" name="cheifColumns" required>
+        <input id="category" type="text" placeholder="快捷分类" name="category" required>
+    </fieldset>
+    <div>
+        <br>
+        <p>&nbsp;&nbsp;&nbsp;所属专业</p>
+        <br>
+        <div style="width:60%;float:left">
+            <!--zcityGroup start-->
+            <div class="zcityGroup" city-range="{'level_start':1,'level_end':3}" ></div>
+            <!--zcityGroup end-->
+        </div>
+
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/zcity.js"></script>
+
+        <script type="text/javascript">
+            zcityrun('.zcityGroup');
+        </script>
+
+
+        <div id="drop_area" style="width:30%;float:left;"></div>
+        <fieldset id="actions">
+            <input type="submit" id="submit" value="上      传">
+        </fieldset>
+    </div>
+</form>
+<script type="text/javascript">
+    var dragImgUpload = new DragImgUpload("#drop_area",{
+        callback:function (files) {
+            //回调函数，可以传递给后台等等
+            var file = files[0];
+            console.log("ready for upload file:" + file.name);
+            let fileUploadInput = document.createElement("input");
+            fileUploadInput.id = "fileUpload";
+            fileUploadInput.type = "file";
+            fileUploadInput.name = "file";
+            fileUploadInput.files = files;
+            fileUploadInput.setAttribute('style', 'display: none');
+            let inputFields = document.getElementById("inputs");
+            inputFields.appendChild(fileUploadInput);
+        }
+    });
+    let hash = window.location.hash;
+    if(hash === "#succ"){
+        alert("保存成功！");
+    }
+
+</script>
+
+
+
+
+<br><br>
+
+</body>
+</html>

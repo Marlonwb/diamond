@@ -1,5 +1,6 @@
 package person.marlon.diamond.web.common.controller;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,12 @@ import org.springframework.core.task.TaskExecutor;
 import person.marlon.diamond.common.util.CharGraph;
 import person.marlon.diamond.common.util.CustomHashMap;
 import person.marlon.diamond.common.util.I18nUtil;
+import person.marlon.diamond.dao.major.Major;
+import person.marlon.diamond.service.major.MajorService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.UUID;
 
 @Configuration
@@ -30,13 +34,19 @@ public class MyConfig {
 
     @Resource
     private TaskExecutor taskExecutor;
+    
+    @Resource
+    private MajorService majorService;
 
     @PostConstruct
     private void ver(){
         System.out.println(Thread.currentThread().getName() + ": " + I18nUtil.getMessage("start_greeting") + " "+ I18nUtil.getMessage("author"));
         System.out.println(CharGraph.generateFoZu());
-//        taskExecutor.execute(() -> System.out.println(Thread.currentThread().getName() + ":" +"logger = " + logger));
-
+        taskExecutor.execute(() -> System.out.println(Thread.currentThread().getName() + ":" +"logger = " + logger));
+    
+        List<Major> majorList = majorService.getMajorList();
+        System.out.println("new Gson().toJson(majorList) = " + new Gson().toJson(majorList));
+        
         CustomHashMap<String,String> map = new CustomHashMap<>();
         map.put("yhjasdsahdasd","1");
         logger.info(Thread.currentThread().getName() +":haahaahahahahaha");

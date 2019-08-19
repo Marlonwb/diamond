@@ -64,6 +64,14 @@
             <param-value>classpath:springMVC-servlet.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <!--location：上传文件用到的临时文件夹，是一个绝对路径，需要注意，这个属性是必填的-->
+            <location>D:\data\http\journal\temp</location>
+            <!--max-file-size:上传文件的最大值，单位是byte，默认没有限制-->
+            <max-file-size>2097152</max-file-size>
+            <!--max-request-size:整个mutipart请求的最大值，单位是byte，默认没有限制-->
+            <max-request-size>4194304</max-request-size>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>springMVC</servlet-name>

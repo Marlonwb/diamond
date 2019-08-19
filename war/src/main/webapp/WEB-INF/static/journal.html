@@ -6,48 +6,9 @@
     <link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body>
-<div id="subPassNotes">
-    <form>
-        <div id="platformBlock">
-            平台<input type="text" id="platform"/>
-        </div>
-        <div id="accountBlock">
-            账号<input type="text" id="account"/>
-        </div>
-        <div id="passwordBlock">
-            密码<input type="text" id="password"/>
-        </div>
-        <div id="nickNameBlock">
-            用户名<input type="text" id="displayName"/>
-        </div>
-        <div id="categoryBlock">
-            类别<input type="text" id="category"/>
-        </div>
-        <div id="commentBlock">
-            备注<input type="text" id="comment"/>
-        </div>
-        <div id="phoneNoBlock">
-            手机<input type="text" id="phoneNo"/>
-        </div>
-        <div id="emailBlock">
-            邮箱<input type="text" id="email"/>
-        </div>
-        <div id="secureInfoNoBlock">
-            安全信息<input type="text" id="secureInfo"/>
-        </div>
-
-        <!--<p></p>-->
-        <div id="submitBlock">
-            <!--<button id="submit">submit</button>-->
-            <input type="button" id="submit" value="submit">
-
-        </div>
-    </form>
-</div>
-
 <script>
     function generatePassTable(pageNum){
-        let url = "http://marlon.test.com/pass_note/list";
+        let url = "http://marlon.test.com/journal/list";
         if(pageNum !== undefined && pageNum != null){
             let number = parseInt(pageNum);
             if (Number.isInteger(number)){
@@ -59,7 +20,7 @@
         }else{
             url += "?sortType=asc";
         }
-
+        url += "&pageSize=1";
         getData(url)
             .then(
                 result => {
@@ -69,7 +30,7 @@
                     document.getElementsByTagName('body')[0].insertBefore(outerTableNode,document.getElementsByTagName('body')[0].firstChild);
 
                     let tableNode = document.createElement("table");
-                    tableNode.setAttribute("id","pass_notes");
+                    tableNode.setAttribute("id","journals");
                     //document.getElementsByTagName('body')[0].insertBefore(tableNode,document.getElementsByTagName('body')[0].firstChild);
                     outerTableNode.appendChild(tableNode);
 
@@ -86,52 +47,46 @@
                                         Total Page: ${totalPage}
                                         </caption>
                                         <tr>
-                                            <th scope="col">Platform</th>
-                                            <th scope="col">Account</th>
-                                            <th scope="col">Password</th>
-                                            <th scope="col">DisplayName</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Comment</th>
-                                            <th scope="col">LastModified</th>
-                                            <th scope="col">CreatedTime</th>
-                                            <th scope="col">PhoneNo</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">SecureInfo</th>
+                                            <th scope="col">期刊名</th>
+                                            <th scope="col">期刊级别</th>
+                                            <th scope="col">创刊</th>
+                                            <th scope="col">发行周期</th>
+                                            <th scope="col">出版社</th>
+                                            <th scope="col">主编</th>
+                                            <th scope="col">邮发代号</th>
+                                            <th scope="col">刊物类别</th>
+                                            <th scope="col">出版地区</th>
                                         </tr>`;
 
                         //var count = document.getElementById("count");
                         //count.innerText = voteList.length
                         voteList.forEach(function (e) {
                             tableContent+=`<tr>
-                                               <th scope="row">${e.platform === undefined ? '' : e.platform}</th>
-                                               <td scope="row">${e.account === undefined ? '' : e.account}</td>
-                                               <td scope="row">${e.password === undefined ? '' : e.password}</td>
-                                               <td scope="row">${e.displayName === undefined ? '' : e.displayName}</td>
+                                               <th scope="row">${e.publicationNameZh === undefined ? '' : e.publicationNameZh}</th>
+                                               <td scope="row">${e.journalLevel === undefined ? '' : e.journalLevel}</td>
+                                               <td scope="row">${e.publicationStart === undefined ? '' : e.publicationStart}</td>
+                                               <td scope="row">${e.publicationCycle === undefined ? '' : e.publicationCycle}</td>
+                                               <td scope="row">${e.publisher === undefined ? '' : e.publisher}</td>
+                                               <td scope="row">${e.cheifColumns === undefined ? '' : e.cheifColumns}</td>
+                                               <td scope="row">${e.postalDistributeCode  === undefined ? '' : e.postalDistributeCode }</td>
                                                <td scope="row">${e.category === undefined ? '' : e.category}</td>
-                                               <td scope="row">${e.comment === undefined ? '' : e.comment}</td>
-                                               <td scope="row">${e.lastModified  === undefined ? '' : e.lastModified }</td>
-                                               <td scope="row">${e.createdTime === undefined ? '' : e.createdTime}</td>
-                                               <td scope="row">${e.phoneNo === undefined ? '' : e.phoneNo}</td>
-                                               <td scope="row">${e.email=== undefined ? '' : e.email}</td>
-                                               <td scope="row">${e.secureInfo === undefined ? '' : e.secureInfo}</td>
+                                               <td scope="row">${e.distributionProvince === undefined ? '' : e.distributionProvince}</td>
                                              </tr>`
                         });
                     }else{
-                        tableContent = `<caption>Password Notes
+                        tableContent = `<caption>Journals
                                             <p> Reach the end of world: page [${pageNum}] doesn't exist :) <button id="back">Back</button><p>
                                         </caption>
                                         <tr>
-                                            <th scope="col">Platform</th>
-                                            <th scope="col">Account</th>
-                                            <th scope="col">Password</th>
-                                            <th scope="col">DisplayName</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Comment</th>
-                                            <th scope="col">LastModified</th>
-                                            <th scope="col">CreatedTime</th>
-                                            <th scope="col">PhoneNo</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">SecureInfo</th>
+                                            <th scope="col">期刊名</th>
+                                            <th scope="col">期刊级别</th>
+                                            <th scope="col">创刊</th>
+                                            <th scope="col">发行周期</th>
+                                            <th scope="col">出版社</th>
+                                            <th scope="col">主编</th>
+                                            <th scope="col">邮发代号</th>
+                                            <th scope="col">刊物类别</th>
+                                            <th scope="col">出版地区</th>
                                         </tr>`;
                     }
                     // tableNode.style = " border-collapse: collapse;\n" +
@@ -170,7 +125,7 @@
 
     function removeOldTable() {
         doReset(); //清空input中文本
-        let passNotesNode = document.getElementById("pass_notes");
+        let passNotesNode = document.getElementById("journals");
         let outerTableNode = document.getElementById("outerTable");
         if(!isHidden(passNotesNode)){
             outerTableNode.parentNode.removeChild(outerTableNode);
@@ -192,7 +147,7 @@
             referrer: "no-referrer", // no-referrer, *client
         })
             .then(response => response.json()) // parses response to JSON
-    .catch(error => console.log(error))
+            .catch(error => console.log(error))
     }
 
     function postData(url = ``, data = {}) {
@@ -211,7 +166,7 @@
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         })
             .then(response => response.json()) // parses response to JSON
-    .catch(error => console.log(error))
+            .catch(error => console.log(error))
     }
 
     /*
@@ -227,46 +182,17 @@
     }
 
     generatePassTable();//页面刷新显示密码本列表
-    let submitBut = document.getElementById('submit');
-    submitBut.addEventListener("click",function (ev) {
-        let data = {
-            account:document.getElementById("account").value,
-            password:document.getElementById("password").value,
-            displayName:document.getElementById("displayName").value,
-            platform:document.getElementById("platform").value,
-            category:document.getElementById("category").value,
-            comment:document.getElementById("comment").value,
-            phoneNo:document.getElementById("phoneNo").value === '' ? undefined : document.getElementById("phoneNo").value,
-            email:document.getElementById("email").value,
-            secureInfo:document.getElementById("secureInfo").value
-        };
-        postData(`http://marlon.test.com/pass_note/add`, data)
-            .then(function (result) {
-                if(result.retCode === 0){
-                    console.log(JSON.stringify(result));
-                    removeOldTable();
-                    //重新插入新文本
-                    generatePassTable();
-                    alert("保存成功！" );
-                }else{
-                    alert("请求出错：" + result.msg);
-                }
-
-                }) // JSON-string from `response.json()` call
-            .catch(error => console.error(error));
-    });
-
 
 </script>
 <style>
-    #subPassNotes{
-        margin-top: 300px;
-        width:100%;
-        text-align:center
-    }
+    /*#subPassNotes{*/
+    /*    margin-top: 300px;*/
+    /*    width:100%;*/
+    /*    text-align:center*/
+    /*}*/
 
     /*div#outerTable{*/
-        /*text-align:center;*/
+    /*text-align:center;*/
     /*}*/
 
     input {

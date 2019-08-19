@@ -34,11 +34,15 @@ public class GenericUtil {
 			}else if(paramMap.get("pageNum") != null /*&& paramMap.get("pageSize") == null */) {
 				int pageNum = Integer.parseInt((String)paramMap.get("pageNum"));
 				page = new Page(pageNum);
+			}else if( paramMap.get("pageSize") != null) {
+				int pageSize = Integer.parseInt((String)paramMap.get("pageSize"));
+				page = new Page();
+				page.setPageSize(pageSize);
 			}else{
 				page = new Page();
 			}
 			
-			Sort sort = null;
+			Sort sort;
             String sortField = (String)paramMap.get("sortField");
             String sortType = (String)paramMap.get("sortType");
             if(sortField != null){
@@ -50,23 +54,17 @@ public class GenericUtil {
 				}
 			}else{
 				if(StringUtils.isNotEmpty(defaultSortField)){
-					sort = new Sort(defaultSortField);
+					if(SortOrderEnum.ASC.getValue().equalsIgnoreCase(sortType)){
+						sort = new Sort(defaultSortField,true);
+					}else{
+						sort = new Sort(defaultSortField);
+					}
+				}else{
+					sort = new Sort(SortOrderEnum.ASC.getValue().equalsIgnoreCase(sortType));
 				}
-				//else{
-				//	sort = new Sort();
-				//}
-                
-                //set sortType
-                if(StringUtils.isNotEmpty(sortType)){
-                    sort = new Sort(SortOrderEnum.ASC.getValue().equalsIgnoreCase(sortType));
-                }
 			}
-			if(sort != null){
-				page.setSort(sort);
-			}
+			page.setSort(sort);
 		}
-		
-		
 		
 		return page;
 	}
