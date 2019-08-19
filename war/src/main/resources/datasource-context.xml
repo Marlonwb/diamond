@@ -69,11 +69,30 @@
     <bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" abstract="true" lazy-init="true">
          <property name="sqlSessionFactory" ref="journalSqlSessionFactory" />
     </bean>
+
+    <bean id="userMapper" parent="baseMapper">
+        <property name="mapperInterface" value="person.marlon.diamond.dao.user.mapper.UserMapper" />
+    </bean>
+    <bean id="groupMapper" parent="baseMapper">
+        <property name="mapperInterface" value="person.marlon.diamond.dao.group.mapper.GroupMapper" />
+    </bean>
+    <bean id="resourceMapper" parent="baseMapper">
+        <property name="mapperInterface" value="person.marlon.diamond.dao.resource.mapper.ResourceMapper" />
+    </bean>
+    <bean id="userResourceAuthorityMapper" parent="baseMapper">
+        <property name="mapperInterface" value="person.marlon.diamond.dao.user_resource_authority.mapper.UserResourceAuthorityMapper" />
+    </bean>
+    <bean id="groupResourceAuthorityMapper" parent="baseMapper">
+        <property name="mapperInterface" value="person.marlon.diamond.dao.group_resource_authority.mapper.GroupResourceAuthorityMapper" />
+    </bean>
+    <bean id="userGroupRelationMapper" parent="baseMapper">
+        <property name="mapperInterface" value="person.marlon.diamond.dao.user_group_relation.mapper.UserGroupRelationMapper" />
+    </bean>
     <bean id="majorMapper" parent="baseMapper">
-         <property name="mapperInterface" value="person.marlon.diamond.dao.major.mappers.MajorMapper" />
+         <property name="mapperInterface" value="person.marlon.diamond.dao.major.mapper.MajorMapper" />
     </bean>
     <bean id="journalMapper" parent="baseMapper">
-         <property name="mapperInterface" value="person.marlon.diamond.dao.journal.mappers.JournalMapper" />
+         <property name="mapperInterface" value="person.marlon.diamond.dao.journal.mapper.JournalMapper" />
     </bean>
     <bean id="journalTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="journalDataSource" />

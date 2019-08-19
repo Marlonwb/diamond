@@ -14,7 +14,7 @@ import person.marlon.diamond.common.util.GenericUtil;
 import person.marlon.diamond.common.util.WebUtil;
 import person.marlon.diamond.dao.journal.Journal;
 import person.marlon.diamond.dao.major.Major;
-import person.marlon.diamond.dao.major.mappers.MajorMapper;
+import person.marlon.diamond.dao.major.mapper.MajorMapper;
 import person.marlon.diamond.service.file.FileService;
 import person.marlon.diamond.service.journal.JournalService;
 

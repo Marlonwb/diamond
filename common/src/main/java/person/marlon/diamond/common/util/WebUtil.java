@@ -1,8 +1,11 @@
 package person.marlon.diamond.common.util;
 
+import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import person.marlon.diamond.common.constants.GlobalConstants;
+import person.marlon.diamond.common.demo.model.User;
 import person.marlon.diamond.common.enums.BrowserEnum;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +19,22 @@ public class WebUtil {
 
     private static Logger logger = LoggerFactory.getLogger(WebUtil.class);
 
-    private static final String ABSOLUTE_REQUEST_DOMAIN = "absoluteDomain";
 
+    public static void setLoginRequestBody(HttpServletRequest request, JsonObject body){
+        request.setAttribute(GlobalConstants.LOGIN_REQUEST_BODY,body);
+    }
+
+    public static JsonObject getLoginRequestBody(HttpServletRequest request){
+        return (JsonObject)request.getAttribute(GlobalConstants.LOGIN_REQUEST_BODY);
+    }
+
+    public static void setLoginUser(HttpServletRequest request, User loginUser){
+        request.getSession().setAttribute(GlobalConstants.LOGIN_USER,loginUser);// 储存登陆用户
+    }
+
+    public static User getLoginUser(HttpServletRequest request){
+        return (User)request.getSession().getAttribute(GlobalConstants.LOGIN_USER);
+    }
 
     /**
      * 获取访问IP
@@ -93,7 +110,7 @@ public class WebUtil {
      * (of course if the request doesn't exist,will not return either)
      */
     public static String getAbsoluteRequestDomain(HttpServletRequest request){
-        return (String)request.getAttribute(WebUtil.ABSOLUTE_REQUEST_DOMAIN);
+        return (String)request.getAttribute(GlobalConstants.ABSOLUTE_REQUEST_DOMAIN);
     }
 
     public static void setAbsoluteRequestDomain(HttpServletRequest request,String requestServerName){
@@ -107,7 +124,7 @@ public class WebUtil {
         if(absoluteUrl.endsWith("/")){
             absoluteUrl = absoluteUrl.substring(0,absoluteUrl.length()-1);
         }
-        request.setAttribute(WebUtil.ABSOLUTE_REQUEST_DOMAIN,absoluteUrl);
+        request.setAttribute(GlobalConstants.ABSOLUTE_REQUEST_DOMAIN,absoluteUrl);
     }
 
     /**

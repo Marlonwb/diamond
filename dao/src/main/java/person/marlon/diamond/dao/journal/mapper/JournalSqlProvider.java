@@ -1,4 +1,4 @@
-package person.marlon.diamond.dao.journal.mappers;
+package person.marlon.diamond.dao.journal.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
 import person.marlon.diamond.common.generic.Page;

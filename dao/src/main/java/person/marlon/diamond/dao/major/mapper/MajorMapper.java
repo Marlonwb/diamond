@@ -1,4 +1,4 @@
-package person.marlon.diamond.dao.major.mappers;
+package person.marlon.diamond.dao.major.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
