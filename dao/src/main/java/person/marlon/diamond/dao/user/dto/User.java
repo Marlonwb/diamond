@@ -3,9 +3,7 @@ package person.marlon.diamond.dao.user.dto;
 import java.util.Date;
 
 public class User {
-    private Long id;
-
-    private Long userid;
+    private Long userId;
 
     private String nickname;
 
@@ -27,7 +25,7 @@ public class User {
 
     private Integer isEmailVerified;//0:not verified 1:verified
 
-    private Date registerTime;
+    private Date createTime;
 
     private Date modifyTime;
 
@@ -41,9 +39,10 @@ public class User {
 
     private Integer state;//0--frozen 1--normal -1--deleted
 
-    public User(Long id, Long userid, String nickname, String password, String firstname, String lastname, String middlename, Integer nameShow, String identity, String phone, String email, Integer isEmailVerified, Date registerTime, Date modifyTime, String iconUrl, String address, Integer sex, String preferLanguage, Integer state) {
-        this.id = id;
-        this.userid = userid;
+    private Long mainGroupId;
+
+    public User(Long userId, String nickname, String password, String firstname, String lastname, String middlename, Integer nameShow, String identity, String phone, String email, Integer isEmailVerified, Date createTime, Date modifyTime, String iconUrl, String address, Integer sex, Integer state, String preferLanguage, Long mainGroupId) {
+        this.userId = userId;
         this.nickname = nickname;
         this.password = password;
         this.firstname = firstname;
@@ -54,33 +53,26 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.isEmailVerified = isEmailVerified;
-        this.registerTime = registerTime;
+        this.createTime = createTime;
         this.modifyTime = modifyTime;
         this.iconUrl = iconUrl;
         this.address = address;
         this.sex = sex;
-        this.preferLanguage = preferLanguage;
         this.state = state;
+        this.preferLanguage = preferLanguage;
+        this.mainGroupId = mainGroupId;
     }
 
     public User() {
         super();
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getNickname() {
@@ -163,12 +155,12 @@ public class User {
         this.isEmailVerified = isEmailVerified;
     }
 
-    public Date getRegisterTime() {
-        return registerTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Date getModifyTime() {
@@ -203,19 +195,27 @@ public class User {
         this.sex = sex;
     }
 
-    public String getPreferLanguage() {
-        return preferLanguage;
-    }
-
-    public void setPreferLanguage(String defaultLanguage) {
-        this.preferLanguage = defaultLanguage == null ? null : defaultLanguage.trim();
-    }
-
     public Integer getState() {
         return state;
     }
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getPreferLanguage() {
+        return preferLanguage;
+    }
+
+    public void setPreferLanguage(String preferLanguage) {
+        this.preferLanguage = preferLanguage == null ? null : preferLanguage.trim();
+    }
+
+    public Long getMainGroupId() {
+        return mainGroupId;
+    }
+
+    public void setMainGroupId(Long mainGroupId) {
+        this.mainGroupId = mainGroupId;
     }
 }

@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import person.marlon.diamond.common.generic.ApiPageResponse;
 import person.marlon.diamond.common.generic.Page;
 import person.marlon.diamond.dao.journal.Journal;
-import person.marlon.diamond.dao.journal.mappers.JournalMapper;
-import person.marlon.diamond.dao.major.mappers.MajorMapper;
+import person.marlon.diamond.dao.journal.mapper.JournalMapper;
+import person.marlon.diamond.dao.major.mapper.MajorMapper;
 
 import javax.annotation.Resource;
 import java.util.List;
