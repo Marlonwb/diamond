@@ -8,7 +8,7 @@
 <body>
 <script>
     function generatePassTable(pageNum){
-        let url = "http://marlon.test.com/journal/list";
+        let url = "/journal/list";
         if(pageNum !== undefined && pageNum != null){
             let number = parseInt(pageNum);
             if (Number.isInteger(number)){
@@ -20,10 +20,15 @@
         }else{
             url += "?sortType=asc";
         }
-        url += "&pageSize=1";
+        // url += "&pageSize=1";
         getData(url)
             .then(
                 result => {
+                    //未登录，重定向到登录页面
+                    if(!result){
+                        window.location.href = "/static/login.html";
+                    }
+
                     console.log(JSON.stringify(result));
                     let outerTableNode = document.createElement("div");
                     outerTableNode.setAttribute("id","outerTable");
@@ -40,11 +45,11 @@
                     let tableContent = '';
 
                     if(Array.isArray(voteList) && voteList.length > 0){
-                        tableContent = `<caption>Total Password Notes: ${voteList.length}
+                        tableContent = `<caption> 总条目： ${voteList.length}
                                         <p>
-                                        CurPage: ${pageNum}  Elevator: <input type="page_num" id="page_num"  style="width:20px"> <button id="elevator">Go</button>
+                                        当前页: 第${pageNum}页 &nbsp; 直达： <input type="page_num" id="page_num"  style="width:20px"> <button id="elevator">页</button>
                                         <p>
-                                        Total Page: ${totalPage}
+                                        总页数： ${totalPage}
                                         </caption>
                                         <tr>
                                             <th scope="col">期刊名</th>
@@ -74,8 +79,8 @@
                                              </tr>`
                         });
                     }else{
-                        tableContent = `<caption>Journals
-                                            <p> Reach the end of world: page [${pageNum}] doesn't exist :) <button id="back">Back</button><p>
+                        tableContent = `<caption>期刊数据页
+                                            <p> 已到达底页 第 [${pageNum}]页 不存在，请重试  <button id="back">返回</button><p>
                                         </caption>
                                         <tr>
                                             <th scope="col">期刊名</th>
