@@ -1,4 +1,4 @@
-package person.marlon.diamond.dao.password.dto;
+package person.marlon.diamond.common.dto;
 
 import java.util.Date;
 

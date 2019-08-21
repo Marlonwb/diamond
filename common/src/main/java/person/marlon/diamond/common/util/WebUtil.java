@@ -5,9 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import person.marlon.diamond.common.constants.GlobalConstants;
-import person.marlon.diamond.common.demo.model.User;
+import person.marlon.diamond.common.dto.User;
 import person.marlon.diamond.common.enums.BrowserEnum;
-
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.util.ArrayList;

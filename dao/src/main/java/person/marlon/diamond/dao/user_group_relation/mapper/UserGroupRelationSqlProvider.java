@@ -1,7 +1,7 @@
 package person.marlon.diamond.dao.user_group_relation.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
-import person.marlon.diamond.dao.user_group_relation.UserGroupRelation;
+import person.marlon.diamond.common.dto.UserGroupRelation;
 
 public class UserGroupRelationSqlProvider {
 

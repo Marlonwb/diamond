@@ -10,7 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import person.marlon.diamond.common.generic.ApiResponse;
 import person.marlon.diamond.common.util.EncryptUtil;
 import person.marlon.diamond.common.util.WebUtil;
-import person.marlon.diamond.dao.user.dto.User;
+import person.marlon.diamond.common.dto.User;
 import person.marlon.diamond.service.user.UserService;
 
 import javax.annotation.Resource;

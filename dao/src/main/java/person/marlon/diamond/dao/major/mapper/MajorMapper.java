@@ -2,7 +2,7 @@ package person.marlon.diamond.dao.major.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import person.marlon.diamond.dao.major.Major;
+import person.marlon.diamond.common.dto.Major;
 
 import java.util.List;
 
@@ -39,8 +39,8 @@ public interface MajorMapper {
         @Arg(column="parent_major_id", javaType=Integer.class, jdbcType=JdbcType.INTEGER)
     })
     Major selectByPrimaryKey(Integer majorId);
-    
-    
+
+
     @Select({
             "select",
             "major_id",
@@ -54,8 +54,8 @@ public interface MajorMapper {
             @Arg(column="parent_major_id", javaType=Integer.class, jdbcType=JdbcType.INTEGER)
     })
     List<Integer> getIdByParentMajorId(Integer majorId);
-    
-    
+
+
     @Select({
             "select",
             "major_id, name, level, parent_major_id",

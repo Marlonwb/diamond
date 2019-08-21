@@ -1,7 +1,7 @@
 package person.marlon.diamond.dao.resource.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
-import person.marlon.diamond.dao.resource.Resource;
+import person.marlon.diamond.common.dto.Resource;
 
 public class ResourceSqlProvider {
 

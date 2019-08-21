@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import person.marlon.diamond.common.generic.ApiPageResponse;
 import person.marlon.diamond.common.generic.Page;
-import person.marlon.diamond.dao.password.dto.PasswordNote;
+import person.marlon.diamond.common.dto.PasswordNote;
 import person.marlon.diamond.dao.password.mappers.PasswordNoteMapper;
 
 import javax.annotation.Resource;

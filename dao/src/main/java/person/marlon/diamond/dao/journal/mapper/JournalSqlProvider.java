@@ -2,7 +2,7 @@ package person.marlon.diamond.dao.journal.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
 import person.marlon.diamond.common.generic.Page;
-import person.marlon.diamond.dao.journal.Journal;
+import person.marlon.diamond.common.dto.Journal;
 
 import java.util.List;
 import java.util.Map;

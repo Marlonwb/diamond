@@ -2,19 +2,19 @@ package person.marlon.diamond.dao.user_group_relation.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import person.marlon.diamond.dao.user_group_relation.UserGroupRelation;
+import person.marlon.diamond.common.dto.UserGroupRelation;
 
 import java.util.Date;
 
 public interface UserGroupRelationMapper {
     @Delete({
-        "delete from person.marlon.diamond.dao.user_group_relation",
+        "delete from person.marlon.diamond.dto.user_group_relation",
         "where user_group_relation_id = #{userGroupRelationId,jdbcType=BIGINT}"
     })
     int deleteByPrimaryKey(Long userGroupRelationId);
 
     @Insert({
-        "insert into person.marlon.diamond.dao.user_group_relation (user_id, group_id, ",
+        "insert into person.marlon.diamond.dto.user_group_relation (user_id, group_id, ",
         "create_time, modify_time)",
         "values (#{userId,jdbcType=BIGINT}, #{groupId,jdbcType=BIGINT}, ",
         "#{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})"
@@ -29,7 +29,7 @@ public interface UserGroupRelationMapper {
     @Select({
         "select",
         "user_group_relation_id, user_id, group_id, create_time, modify_time",
-        "from person.marlon.diamond.dao.user_group_relation",
+        "from person.marlon.diamond.dto.user_group_relation",
         "where user_group_relation_id = #{userGroupRelationId,jdbcType=BIGINT}"
     })
     @ConstructorArgs({
@@ -45,7 +45,7 @@ public interface UserGroupRelationMapper {
     int updateByPrimaryKeySelective(UserGroupRelation record);
 
     @Update({
-        "update person.marlon.diamond.dao.user_group_relation",
+        "update person.marlon.diamond.dto.user_group_relation",
         "set user_id = #{userId,jdbcType=BIGINT},",
           "group_id = #{groupId,jdbcType=BIGINT},",
           "create_time = #{createTime,jdbcType=TIMESTAMP},",

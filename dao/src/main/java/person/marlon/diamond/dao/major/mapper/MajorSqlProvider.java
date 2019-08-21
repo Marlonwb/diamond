@@ -1,7 +1,7 @@
 package person.marlon.diamond.dao.major.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
-import person.marlon.diamond.dao.major.Major;
+import person.marlon.diamond.common.dto.Major;
 
 public class MajorSqlProvider {
 

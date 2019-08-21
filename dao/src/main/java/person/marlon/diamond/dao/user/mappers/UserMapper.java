@@ -1,6 +1,6 @@
 package person.marlon.diamond.dao.user.mappers;
 
-import person.marlon.diamond.dao.user.dto.User ;
+import person.marlon.diamond.common.dto.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);

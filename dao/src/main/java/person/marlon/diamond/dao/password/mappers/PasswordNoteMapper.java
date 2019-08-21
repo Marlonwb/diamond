@@ -3,7 +3,7 @@ package person.marlon.diamond.dao.password.mappers;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import person.marlon.diamond.common.generic.Page;
-import person.marlon.diamond.dao.password.dto.PasswordNote;
+import person.marlon.diamond.common.dto.PasswordNote;
 
 import java.util.Date;
 import java.util.List;

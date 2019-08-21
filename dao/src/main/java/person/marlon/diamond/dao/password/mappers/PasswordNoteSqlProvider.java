@@ -2,7 +2,7 @@ package person.marlon.diamond.dao.password.mappers;
 
 import org.apache.ibatis.jdbc.SQL;
 import person.marlon.diamond.common.generic.Page;
-import person.marlon.diamond.dao.password.dto.PasswordNote;
+import person.marlon.diamond.common.dto.PasswordNote;
 
 import java.util.Map;
 

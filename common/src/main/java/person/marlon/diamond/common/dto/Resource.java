@@ -1,11 +1,11 @@
-package person.marlon.diamond.dao.group;
+package person.marlon.diamond.common.dto;
 
 import java.util.Date;
 
-public class Group {
-    private Long groupId;
+public class Resource {
+    private Long resourceId;
 
-    private String groupName;
+    private String resourceName;
 
     private Date createTime;
 
@@ -13,32 +13,32 @@ public class Group {
 
     private String comment;
 
-    public Group(Long groupId, String groupName, Date createTime, Date modifyTime, String comment) {
-        this.groupId = groupId;
-        this.groupName = groupName;
+    public Resource(Long resourceId, String resourceName, Date createTime, Date modifyTime, String comment) {
+        this.resourceId = resourceId;
+        this.resourceName = resourceName;
         this.createTime = createTime;
         this.modifyTime = modifyTime;
         this.comment = comment;
     }
 
-    public Group() {
+    public Resource() {
         super();
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public Long getResourceId() {
+        return resourceId;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getResourceName() {
+        return resourceName;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName == null ? null : groupName.trim();
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName == null ? null : resourceName.trim();
     }
 
     public Date getCreateTime() {

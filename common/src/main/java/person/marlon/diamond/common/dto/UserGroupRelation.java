@@ -1,4 +1,4 @@
-package person.marlon.diamond.dao.user_group_relation;
+package person.marlon.diamond.common.dto;
 
 import java.util.Date;
 

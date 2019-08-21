@@ -11,7 +11,7 @@ import org.springframework.core.task.TaskExecutor;
 import person.marlon.diamond.common.util.CharGraph;
 import person.marlon.diamond.common.util.CustomHashMap;
 import person.marlon.diamond.common.util.I18nUtil;
-import person.marlon.diamond.dao.major.Major;
+import person.marlon.diamond.common.dto.Major;
 import person.marlon.diamond.service.major.MajorService;
 
 import javax.annotation.PostConstruct;

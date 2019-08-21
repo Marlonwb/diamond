@@ -12,44 +12,32 @@ import person.marlon.diamond.common.generic.ApiResponse;
 import person.marlon.diamond.common.generic.Page;
 import person.marlon.diamond.common.util.GenericUtil;
 import person.marlon.diamond.common.util.WebUtil;
-import person.marlon.diamond.dao.journal.Journal;
-import person.marlon.diamond.dao.major.Major;
-import person.marlon.diamond.dao.major.mapper.MajorMapper;
+import person.marlon.diamond.common.dto.Journal;
+import person.marlon.diamond.common.dto.Major;
 import person.marlon.diamond.service.file.FileService;
 import person.marlon.diamond.service.journal.JournalService;
+import person.marlon.diamond.service.major.MajorService;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/journal")
 public class JournalController {
     private Logger logger = LoggerFactory.getLogger(JournalController.class);
-    
+
     @Resource
     private JournalService journalService;
-    
+
     @Resource
     private FileService fileService;
-    
+
     @Resource
-    private MajorMapper majorMapper;
-    
-    private Map<String,Major> majorIdMap = new HashMap<>(256);
-    
-    @PostConstruct
-    private void init(){
-        List<Major> majorList = majorMapper.getMajorList();
-        for(Major major: majorList){
-            majorIdMap.put(major.getName(),major);
-        }
-    }
-    
+    private MajorService majorService;
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@RequestParam(required = false) MultipartFile file, @ModelAttribute Journal journal,
                       Model model) {
@@ -60,17 +48,17 @@ public class JournalController {
         }
         String[] majors = journal.getMajors();
         if(majors != null && majors.length == 3){
-            Major major = majorIdMap.get(majors[2]);
+            Major major = majorService.getMajorByName(majors[2]);
             if(major != null){
                 journal.setMajorId(major.getMajorId());
             }
         }
         // if upload with file, update journal_cover by original file name.
         if(file != null){
-            String originalFilename = file.getOriginalFilename();
+            String originalFilename = "" + file.getOriginalFilename();
             journal.setJournalCover(originalFilename);
         }
-        
+
         Date current = new Date();
         journal.setCreateTime(current);
         journal.setModifyTime(current);
@@ -131,6 +119,6 @@ public class JournalController {
 //        return apiPageResponse.toString();
         return null;
     }
-    
+
 }
 

@@ -2,19 +2,19 @@ package person.marlon.diamond.dao.user_resource_authority.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import person.marlon.diamond.dao.user_resource_authority.UserResourceAuthority;
+import person.marlon.diamond.common.dto.UserResourceAuthority;
 
 import java.util.Date;
 
 public interface UserResourceAuthorityMapper {
     @Delete({
-        "delete from person.marlon.diamond.dao.user_resource_authority",
+        "delete from person.marlon.diamond.dto.user_resource_authority",
         "where user_resource_authority_id = #{userResourceAuthorityId,jdbcType=BIGINT}"
     })
     int deleteByPrimaryKey(Long userResourceAuthorityId);
 
     @Insert({
-        "insert into person.marlon.diamond.dao.user_resource_authority (user_resource_authority_id, resource_id, ",
+        "insert into person.marlon.diamond.dto.user_resource_authority (user_resource_authority_id, resource_id, ",
         "user_id, authority, ",
         "create_time, modify_time, ",
         "comment)",
@@ -34,7 +34,7 @@ public interface UserResourceAuthorityMapper {
         "select",
         "user_resource_authority_id, resource_id, user_id, authority, create_time, modify_time, ",
         "comment",
-        "from person.marlon.diamond.dao.user_resource_authority",
+        "from person.marlon.diamond.dto.user_resource_authority",
         "where user_resource_authority_id = #{userResourceAuthorityId,jdbcType=BIGINT}"
     })
     @ConstructorArgs({
@@ -52,7 +52,7 @@ public interface UserResourceAuthorityMapper {
     int updateByPrimaryKeySelective(UserResourceAuthority record);
 
     @Update({
-        "update person.marlon.diamond.dao.user_resource_authority",
+        "update person.marlon.diamond.dto.user_resource_authority",
         "set resource_id = #{resourceId,jdbcType=BIGINT},",
           "user_id = #{userId,jdbcType=BIGINT},",
           "authority = #{authority,jdbcType=VARCHAR},",

@@ -1,7 +1,7 @@
 package person.marlon.diamond.dao.group.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
-import person.marlon.diamond.common.beans.Group;
+import person.marlon.diamond.common.dto.Group;
 
 public class GroupSqlProvider {
 

@@ -2,7 +2,7 @@ package person.marlon.diamond.dao.group.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import person.marlon.diamond.dao.group.Group;
+import person.marlon.diamond.common.dto.Group;
 
 import java.util.Date;
 

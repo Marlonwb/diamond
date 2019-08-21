@@ -1,7 +1,7 @@
 package person.marlon.diamond.dao.user_resource_authority.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
-import person.marlon.diamond.dao.user_resource_authority.UserResourceAuthority;
+import person.marlon.diamond.common.dto.UserResourceAuthority;
 
 public class UserResourceAuthoritySqlProvider {
 

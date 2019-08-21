@@ -10,7 +10,7 @@ import person.marlon.diamond.common.generic.ApiResponse;
 import person.marlon.diamond.common.generic.Page;
 import person.marlon.diamond.common.util.GenericUtil;
 import person.marlon.diamond.common.util.WebUtil;
-import person.marlon.diamond.dao.password.dto.PasswordNote;
+import person.marlon.diamond.common.dto.PasswordNote;
 import person.marlon.diamond.service.password_note.PasswordNoteService;
 
 import javax.annotation.Resource;

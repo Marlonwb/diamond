@@ -8,13 +8,13 @@ import java.util.Date;
 
 public interface GroupResourceAuthorityMapper {
     @Delete({
-        "delete from person.marlon.diamond.dao.group_resource_authority",
+        "delete from person.marlon.diamond.dto.group_resource_authority",
         "where group_resource_authority_id = #{userResourceAuthorityId,jdbcType=BIGINT}"
     })
     int deleteByPrimaryKey(Long userResourceAuthorityId);
 
     @Insert({
-        "insert into person.marlon.diamond.dao.group_resource_authority (group_resource_authority_id, resource_id, ",
+        "insert into person.marlon.diamond.dto.group_resource_authority (group_resource_authority_id, resource_id, ",
         "group_id, authority, ",
         "create_time, modify_time, ",
         "comment)",
@@ -34,7 +34,7 @@ public interface GroupResourceAuthorityMapper {
         "select",
         "group_resource_authority_id, resource_id, group_id, authority, create_time, modify_time, ",
         "comment",
-        "from person.marlon.diamond.dao.group_resource_authority",
+        "from person.marlon.diamond.dto.group_resource_authority",
         "where group_resource_authority_id = #{userResourceAuthorityId,jdbcType=BIGINT}"
     })
     @ConstructorArgs({
@@ -52,7 +52,7 @@ public interface GroupResourceAuthorityMapper {
     int updateByPrimaryKeySelective(GroupResourceAuthority record);
 
     @Update({
-        "update person.marlon.diamond.dao.group_resource_authority",
+        "update person.marlon.diamond.dto.group_resource_authority",
         "set resource_id = #{resourceId,jdbcType=BIGINT},",
           "group_id = #{groupId,jdbcType=BIGINT},",
           "authority = #{authority,jdbcType=VARCHAR},",

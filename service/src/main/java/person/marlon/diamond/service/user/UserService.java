@@ -6,18 +6,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import person.marlon.diamond.common.generic.ApiPageResponse;
 import person.marlon.diamond.common.generic.Page;
-import person.marlon.diamond.dao.group.Group;
+import person.marlon.diamond.common.dto.Group;
 import person.marlon.diamond.dao.group.mapper.GroupMapper;
-import person.marlon.diamond.dao.user.dto.User;
+import person.marlon.diamond.common.dto.User;
 import person.marlon.diamond.dao.user.mapper.UserMapper;
-import person.marlon.diamond.dao.user_group_relation.UserGroupRelation;
+import person.marlon.diamond.common.dto.UserGroupRelation;
 import person.marlon.diamond.dao.user_group_relation.mapper.UserGroupRelationMapper;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-//import person.marlon.diamond.dao.user.UserDao;
+//import person.marlon.diamond.dto.user.UserDao;
 
 @Service("userService")
 public class UserService {

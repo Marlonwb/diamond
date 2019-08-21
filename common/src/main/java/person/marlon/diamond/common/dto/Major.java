@@ -1,4 +1,4 @@
-package person.marlon.diamond.dao.major;
+package person.marlon.diamond.common.dto;
 
 public class Major {
     private Integer majorId;

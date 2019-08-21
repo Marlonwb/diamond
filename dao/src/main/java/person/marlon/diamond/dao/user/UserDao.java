@@ -1,7 +1,7 @@
 package person.marlon.diamond.dao.user;
 
 import org.springframework.stereotype.Repository;
-import person.marlon.diamond.dao.user.dto.User;
+import person.marlon.diamond.common.dto.User;
 import person.marlon.diamond.dao.user.mappers.UserMapper;
 
 import javax.annotation.PostConstruct;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="person.marlon.diamond.dao.user.mappers.UserMapper">
-  <resultMap id="BaseResultMap" type="person.marlon.diamond.dao.user.dto.User">
+  <resultMap id="BaseResultMap" type="person.marlon.diamond.common.dto.User">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="userid" javaType="java.lang.Long" jdbcType="BIGINT" />
@@ -39,7 +39,7 @@
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="person.marlon.diamond.dao.user.dto.User">
+  <insert id="insert" parameterType="person.marlon.diamond.common.dto.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -58,7 +58,7 @@
       #{sex,jdbcType=INTEGER}, #{defaultLanguage,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="person.marlon.diamond.dao.user.dto.User">
+  <insert id="insertSelective" parameterType="person.marlon.diamond.common.dto.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -176,7 +176,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="person.marlon.diamond.dao.user.dto.User">
+  <update id="updateByPrimaryKeySelective" parameterType="person.marlon.diamond.common.dto.User">
     update user
     <set>
       <if test="userid != null">
@@ -236,7 +236,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="person.marlon.diamond.dao.user.dto.User">
+  <update id="updateByPrimaryKey" parameterType="person.marlon.diamond.common.dto.User">
     update user
     set userid = #{userid,jdbcType=BIGINT},
       nickname = #{nickname,jdbcType=VARCHAR},

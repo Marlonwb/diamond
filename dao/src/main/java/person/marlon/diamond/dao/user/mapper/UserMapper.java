@@ -3,7 +3,7 @@ package person.marlon.diamond.dao.user.mapper;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import person.marlon.diamond.common.generic.Page;
-import person.marlon.diamond.dao.user.dto.User;
+import person.marlon.diamond.common.dto.User;
 
 import java.util.Date;
 import java.util.List;

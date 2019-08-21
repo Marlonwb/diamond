@@ -1,4 +1,4 @@
-package person.marlon.diamond.dao.user_resource_authority;
+package person.marlon.diamond.common.dto;
 
 import java.util.Date;
 

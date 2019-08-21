@@ -1,14 +1,17 @@
 package person.marlon.diamond.service.journal;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import person.marlon.diamond.common.generic.ApiPageResponse;
 import person.marlon.diamond.common.generic.Page;
-import person.marlon.diamond.dao.journal.Journal;
+import person.marlon.diamond.common.dto.Journal;
 import person.marlon.diamond.dao.journal.mapper.JournalMapper;
+import person.marlon.diamond.common.dto.Major;
 import person.marlon.diamond.dao.major.mapper.MajorMapper;
+import person.marlon.diamond.service.major.MajorService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,6 +25,8 @@ public class JournalService {
     private JournalMapper journalMapper;
     @Resource
     private MajorMapper majorMapper;
+    @Resource
+    private MajorService majorService;
 
     public boolean insert(Journal journal){
         return journalMapper.insert(journal) > 0;
@@ -48,6 +53,32 @@ public class JournalService {
 
             }
             journalList = journalMapper.getList(searchMap,page);
+            if(journalList != null){
+                for(Journal journal : journalList){
+                    String journalCover = journal.getJournalCover();
+                    if(StringUtils.isNotEmpty(journalCover)){
+                        journal.setJournalCover("/static/" + journal.getJournalId() + "_" + journalCover);
+                    }
+                    if(journal.getMajorId() != null){
+                        // 只要journal存了major_id,必须是最后一层major(level=2)
+                        String[] majors = new String[3];
+                        Major grandChildMajor = majorService.getMajorById(journal.getMajorId());
+                        if(grandChildMajor != null){
+                            majors[2] = grandChildMajor.getName();
+                            Major childMajor = majorService.getMajorById(grandChildMajor.getParentMajorId());
+                            if(childMajor != null){
+                                majors[1] = childMajor.getName();
+                                Major major = majorService.getMajorById(grandChildMajor.getParentMajorId());
+                                if(major != null){
+                                    majors[0] = major.getName();
+                                }
+                            }
+                        }
+                        journal.setMajors(majors);
+                    }
+                }
+            }
+
             totalCount = journalMapper.countList(searchMap, page);
         }catch (Exception e){
             logger.error("get JournalList form db occurred an exception --> {}",e);
