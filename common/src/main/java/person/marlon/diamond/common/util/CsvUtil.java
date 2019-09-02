@@ -33,7 +33,7 @@ public class CsvUtil {
 
 		try {
 			buffCvsWriter = new BufferedWriter(new OutputStreamWriter(baos, StandardCharsets.UTF_8));
-			//写入微软特定的bom头信息，保证excel读取时按照UTF-8格式
+			//写入bom头信息，保证excel读取时按照UTF-8格式(即UTF-8 BOM 格式)
 			buffCvsWriter.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
 			// 写入cvs文件的头部
 			Map.Entry propertyEntry = null;
@@ -60,7 +60,7 @@ public class CsvUtil {
 					buffCvsWriter.newLine();
 				}
 			}
-			// 记得刷新缓冲区，不然数可能会不全，当然close的话也会flush，不加也没问题
+			// 刷新缓冲区
 			buffCvsWriter.flush();
 		} catch (IOException e) {
 			logger.error("write csv file error --> {}", e);

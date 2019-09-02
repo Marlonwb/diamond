@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class CookieUtil {
-
-    private final static String DEFAULT_CODING = "UTF-8";
 
     /**
      * 取得cookie值，经过编码转换
@@ -23,7 +22,7 @@ public class CookieUtil {
      */
     public static String getCookieValue(HttpServletRequest request, String key, String encode) {
         if (encode == null || "".equals(encode.trim())) {
-            encode = DEFAULT_CODING; // 默认"UTF-8"
+            encode = StandardCharsets.UTF_8.name(); // 默认"UTF-8"
         }
         String val = getRawCookieValue(request, key);
         if (val == null) return null;
@@ -104,7 +103,7 @@ public class CookieUtil {
     private static Cookie createCookie(String name, String value) {
         Cookie _cookie;
         try {
-            _cookie = new Cookie(name, URLEncoder.encode(value, DEFAULT_CODING));
+            _cookie = new Cookie(name, URLEncoder.encode(value, StandardCharsets.UTF_8.name()));
         } catch (UnsupportedEncodingException e) {
             _cookie = new Cookie(name, value);
 //            log.error("decode cookie value failed, value=" + value, e);

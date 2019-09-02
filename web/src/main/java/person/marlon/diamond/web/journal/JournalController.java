@@ -74,7 +74,7 @@ public class JournalController {
             }
         }
 //		return new ApiResponse<>(0, "upload success!").toString();
-        return "redirect:/static/upd.html#succ";
+        return "redirect:/static/journal.html";
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST,consumes = "application/json")

@@ -1,16 +1,15 @@
 package person.marlon.diamond.web.interceptor;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import person.marlon.diamond.common.dto.User;
 import person.marlon.diamond.common.generic.ApiResponse;
 import person.marlon.diamond.common.util.EncryptUtil;
 import person.marlon.diamond.common.util.WebUtil;
-import person.marlon.diamond.common.dto.User;
 import person.marlon.diamond.service.user.UserService;
 
 import javax.annotation.Resource;
@@ -79,7 +78,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
                 loginJson.addProperty("totalAttemptLoginCount",totalAttemptLoginCount);
 
                 // authentication
-                if(authenticate(request,loginJson)){
+                if(authenticate(request,loginJson,sessionId)){
                     sessionLoginMap.put(sessionId,loginJson);
                     return true;
                 }else{
@@ -130,7 +129,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
     @Resource
     private UserService userService;
 
-    private boolean authenticate(HttpServletRequest request,JsonObject loginJson){
+    private boolean authenticate(HttpServletRequest request,JsonObject loginJson,String sessionId){
         String bodyString = readRequestBody(request);
         if(StringUtils.isNotEmpty(bodyString)){
             JsonObject jsonObject = new Gson().fromJson(bodyString,JsonObject.class);
@@ -142,12 +141,16 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
                 User loginUser = userService.getUserByName(userName);
                 if(loginUser != null){
                     if(Objects.equals(EncryptUtil.encrypt(passwd, EncryptUtil.SHA256), loginUser.getPassword())){
-                        JsonElement loginUserJson = new Gson().toJsonTree(loginUser).getAsJsonObject();
                         // if request with verificationCode
                         if( jsonObject.get("vCode")!=null){
                             String vCode = jsonObject.get("vCode").getAsString();
                             String cachedVerificationCode = loginJson.get("verificationCode").getAsString();
                             if(!vCode.toLowerCase().equals(cachedVerificationCode.toLowerCase())){
+                                // 验证码错误，重新生成一次验证码
+                                String verificationCode = generateValidateCode(6);
+                                loginJson.addProperty("verificationCode",verificationCode);
+                                logger.info("authenticate failed! will regenerateValidateCode verificationCode:[{}]",verificationCode);
+                                sessionLoginMap.put(sessionId,loginJson);
                                 return false;
                             }
                         }

@@ -4,14 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
+import person.marlon.diamond.common.util.GenericUtil;
 import person.marlon.diamond.common.util.TimeUtil;
 import person.marlon.diamond.service.test.Calculator;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -640,10 +645,124 @@ class CalculatorTests {
 	}
 	
 	@Test
-	void test28(){
-		File file = new File("/aaa/bbb");
-		assertTrue(file.isDirectory());
-		assertTrue(file.canWrite());
-		
+	void test28() {
+		boolean numeric = GenericUtil.isNumeric("011");
+		System.out.println(numeric);
 	}
+	public  static  String getMD5Code(String str) {
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("MD5");
+			messageDigest.reset();
+			messageDigest.update(str.getBytes("UTF-8"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		byte[] byteArray = messageDigest.digest();
+		
+		StringBuffer md5StrBuff = new StringBuffer();
+		for (int i = 0; i < byteArray.length; i++) {
+			if (Integer.toHexString(0xFF & byteArray[i]).length() == 1) {
+				md5StrBuff.append("0").append(Integer.toHexString(0xFF & byteArray[i]));
+			} else {
+				md5StrBuff.append(Integer.toHexString(0xFF & byteArray[i]));
+			}
+		}
+		
+		return md5StrBuff.toString();
+	}
+	
+	@Test
+	void test281() {
+		System.out.println(getMD5Code("1q2w3e4r"));
+	}
+	
+	//域名URL正则
+	private static final Pattern DOMAIN_PATTERN =Pattern.compile("^((https|http)://)?(((([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+))\\.)+(([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+)))$");
+	@Test
+	void test282() {
+		System.out.println(DOMAIN_PATTERN.matcher("192.168.126.249").matches());
+		String pattern = "^((https|http)://)?(((([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+))\\.)+(([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+)))$";
+		System.out.println(Pattern.matches(pattern,"192.168.126.249"));
+	}
+	
+	@Test
+	void test283() {
+		
+		Calendar startDay = Calendar.getInstance();
+		startDay.set(2016,6,6); // Calendar.JULY
+		Calendar endDya = Calendar.getInstance();
+		endDya.set(2019,Calendar.JULY,16);
+		
+		GregorianCalendar startDay1 = new GregorianCalendar(2016,6,6);
+		GregorianCalendar endDya1 = new GregorianCalendar(2019,Calendar.JULY,16);
+		
+		GregorianCalendar startDay2 = new GregorianCalendar(2019,0,1);
+		GregorianCalendar endDya2 = new GregorianCalendar(2019,2,31);
+		
+		System.out.println(TimeUtil.getNaturalMonthsAndDays(startDay.getTime(),endDya.getTime()));
+		System.out.println(TimeUtil.getNaturalMonthsAndDays(startDay1.getTime(),endDya1.getTime()));
+		System.out.println(TimeUtil.getNaturalMonthsAndDays(startDay2.getTime(),endDya2.getTime()));
+	
+	}
+	@Test
+	void test285() {
+		String text = "start 566001700";
+		if(text.equals("start")){
+			//do nothing
+		}else{
+			String[] splitArr = text.split("\\s+", 2);
+			if (splitArr .length  == 2) {//同上
+				if(splitArr[1].equals("start")){
+					String meetingId = splitArr[1];
+					if(StringUtils.isNumeric(meetingId)){
+//						asynExecuteSendingMessage(request,response_url,"generateStartMeetingMessage",new String[]{user_id,team_id,response_url,meetingId});
+						return;
+					}else{
+//						asynExecuteSendingMessage(request,response_url,"generateNotExistMeetingMessage",new String[]{user_id,team_id,response_url,meetingId});
+						return;
+					}
+				}else{
+//					asynExecuteSendingMessage(request,response_url,"generateNavigationInteractiveMessage",new Object[]{user_id,team_id,response_url,false});
+					return;
+				}
+			}
+		}
+	}
+    
+    @Test
+    void test284() {
+	
+		if( "/rtc/dispatch?meetingNum\\u003d596903757\\u0026userName\\u003dfjyang\\u0026email\\u003dfjyang@grandstream.cn\\u0026sn\\u003dcm9sZUNvZGU9ODcwNCZyZWdpc3Rlcj1mYWxzZSZwYXNzd29yZD0\\u0026isAuto\\u003dtrue".startsWith("/rtc/dispatch")){
+		
+		}
+    
+    }
+    
+//    @Resource
+//	private UserService userService;
+//    @Test
+//    void test286() {
+//		ApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml","datasource-context.xml"});
+//		List<Major> majorList = userService.getMajorList();
+//		System.out.println("new Gson().toJson(majorList) = " + new Gson().toJson(majorList));
+//
+//	}
+    
+    /** yyyy-MM-dd */
+    public static String		DEFAULT_DAY_FORMAT	= "yyyy-MM-dd";
+    /** yyyyMMddHHmmss */
+    public static String		DEFAULT_DATE_NO_SEPRATOR_FORMAT	= "yyyyMMddHHmmss";
+    
+    public static Date parseDate(String pattern, String dateString) {
+        DateFormat df = new SimpleDateFormat( pattern, Locale.ENGLISH );
+        try {
+            return df.parse( dateString );
+        } catch (ParseException e) {
+            System.out.println( "time format error"  + e );
+            return null;
+        }
+    }
+	
 }
