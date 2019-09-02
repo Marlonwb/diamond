@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Votes</title>
+</head>
+<body>
+<div id="subPassNotes">
+    <form>
+        <div id="platformBlock">
+            <!--<label for="choice-box-menu-item">项目：</label>-->
+            <label >项目：</label>
+            <br/>
+            <input type="radio" name="item" value="小品演出：三国杀" id="choice-box-menu-item0"/>小品演出：三国杀
+            <br/>
+            <input type="radio" name="item" value="小品演出：大乱斗" id="choice-box-menu-item1"/>小品演出：大乱斗
+            <br/>
+            <input type="radio" name="item" value="合唱《爱，因为在心中》" id="choice-box-menu-item2"/>合唱《爱，因为在心中》
+            <br/>
+            <input type="radio" name="item" value="合唱：《好汉歌》" id="choice-box-menu-item3"/>合唱：《好汉歌》
+        </div>
+
+        <!--<p></p>-->
+        <div id="submitBlock">
+            <!--<button id="submit">submit</button>-->
+            <input type="button" id="submit" value="投票">
+            投票总数<span id="count"></span>
+        </div>
+    </form>
+</div>
+
+<script>
+    function generateTable(){
+            getData(`/vote/list`)
+            .then(
+                function (result) {
+                    console.log(JSON.stringify(result));
+
+                    var totalVoteCount = 0;
+
+                    var tableNode = document.createElement("table");
+                    tableNode.setAttribute("id","votes");
+                    document.getElementsByTagName('body')[0].insertBefore(tableNode,document.getElementsByTagName('body')[0].firstChild);
+                    var tableContent = '<caption>Votes</caption>' +
+                        '    <tr>' +
+                        '        <th scope="col">Item</th>' +
+                        '        <th scope="col">Amount</th>' +
+                        '        <th scope="col">IpList</th>' +
+                        '    </tr>';
+                    var voteList = result.data;
+                    if(Array.isArray(voteList) && voteList.length > 0){
+                        voteList.forEach(function (e) {
+                            tableContent+='<tr>'
+                            tableContent+=' <th scope="row">'+ e.item +'</th>';
+                            tableContent+=' <td scope="row">'+ e.amount +'</td>';
+                            tableContent+=' <td scope="row">'+ e.voteIpList +'</td>';
+                            tableContent+='</tr>';
+                            totalVoteCount += e.voteIpList.length;
+                        })
+                    }
+                    tableNode.innerHTML = tableContent;
+                    var countNode = document.getElementById("count");
+                    countNode.innerText = totalVoteCount;
+                }
+            ) // JSON-string from `response.json()` call
+            .catch(error => console.error(error));
+    }
+
+    //https://blog.csdn.net/zhengqiqiqinqin/article/details/9302527
+    function doReset() {
+        for (var i = 0; i < document.getElementsByTagName("input").length; i++) {
+            if (document.getElementsByTagName("input")[i].type === "radio") {
+                document.getElementsByTagName("input")[i].checked = false;
+            }
+        }
+    }
+    function getData(url = ``) {
+        // Default options are marked with *
+        return fetch(url, {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // same-origin,include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+        })
+            .then(response => response.json()) // parses response to JSON
+    .catch(error => console.log(error))
+    }
+
+    function postData(url = ``, data = {}) {
+        // Default options are marked with *
+        return fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // same-origin,include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        })
+            .then(response => response.json()) // parses response to JSON
+    .catch(error => console.log(error))
+    }
+
+    function isHidden(el) {
+        var style = window.getComputedStyle(el);
+        return (style.display === 'none')
+    }
+
+    generateTable();//页面刷新显示密码本列表
+    var submitBut = document.getElementById('submit');
+    submitBut.addEventListener("click",function (ev) {
+        var radioValue = getRadioValue("item");
+        if(radioValue == null ){
+            alert("请选择一项");
+            return;
+        }
+        var data = {
+            item:getRadioValue("item")
+        };
+        postData(`/vote/add`, data)
+            .then(function (result) {
+                if(result.retCode === 0){
+                    doReset()//清空input中文本
+                    console.log(JSON.stringify(result));
+                    var votesNode = document.getElementById("votes");
+                    if(!isHidden(votesNode)){
+                        votesNode.parentNode.removeChild(votesNode);
+                    }
+                    //重新插入新文本
+                    generateTable();
+                }else{
+                    alert("请勿重复提交！！！");
+                }
+            }) // JSON-string from `response.json()` call
+            .catch(error => console.error(error));
+    });
+    function getRadioValue(radioName){
+        var radioValue=document.getElementsByName(radioName);
+        if(radioValue!=null){
+            for(var i=0;i<radioValue.length;i++){
+                // if(radioValue[i].checked){
+                if(radioValue[i].checked){
+                    return radioValue[i].value;
+                }
+            }
+        }
+        return null;
+    }
+</script>
+<style>
+    #subPassNotes{
+        margin-top: 300px;
+        width:100%;
+        /*text-align:center*/
+    }
+
+    input {
+        margin:10px;
+    }
+
+    span{
+        margin-top: 10px;
+        margin-left: 10px
+    }
+
+    td,
+    th {
+        border: 1px solid rgb(190, 190, 190);
+        padding: 10px;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    th[scope="col"] {
+        background-color: #696969;
+        color: #fff;
+    }
+
+    th[scope="row"] {
+        background-color: #d7d9f2;
+    }
+
+    caption {
+        padding: 10px;
+        caption-side: bottom;
+    }
+
+    table {
+        border-collapse: collapse;
+        border: 2px solid rgb(200, 200, 200);
+        letter-spacing: 1px;
+        font-family: sans-serif;
+        font-size: .8rem;
+    }
+</style>
+</body>
+</html>

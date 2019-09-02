@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPVT SDK</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <style>
+        body{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="meetingBlock">
+    <form>
+        <div id="_account">
+<!--         会议号<input type="text" id="meetingNum_" value=""/> &lt;!&ndash; value="100100" &ndash;&gt;-->
+         会议号<input type="text" id="meetingNum_" value=""/> <!-- value="100100" -->
+        </div>
+        <div id="_nickName">
+<!--            用户名<input type="text" id="displayName_" value=""/> &lt;!&ndash;value="bw"&ndash;&gt;-->
+            用户名<input type="text" id="displayName_" value="guest"/> <!--value="bw"-->
+        </div>
+        <div id="_email">
+<!--            邮箱<input type="text" id="email_" value=""/>  &lt;!&ndash;value="bw@test.com"&ndash;&gt;-->
+            邮箱<input type="text" id="email_" value="guest@test.com"/>  <!--value="bw@test.com"-->
+        </div>
+<!--        <div id="_layout">-->
+<!--            布局<input type="text" id="layout_" value="0"/>  &lt;!&ndash;value="bw@test.com"&ndash;&gt;-->
+<!--        </div>-->
+<!--        <div id="roomPassword">-->
+<!--            密码<input type="text" id="passwd_" value=""/>-->
+<!--        </div>-->
+<!--        <div id="hostCode">-->
+<!--            主持码<input type="text" id="hostCode_" value=""/>-->
+<!--        </div>-->
+        <!--<p></p>-->
+        <div id="submit">
+            <!--<button id="submit">submit</button>-->
+            <input type="button" id="submit_" value="enter">
+        </div>
+    </form>
+</div>
+<script src="https://192.168.126.249/web/js/sdk/ipvt_client_sdk_min.js"></script>
+<!--<script src="https://meetings.ipvideotalk.cn/web/js/sdk/ipvt_client_sdk.js"></script>-->
+<script>
+
+    // 必选，设置服务器地址
+    ipvtSDK.setServerAddr("https://192.168.126.249");
+    // ipvtSDK.setServerAddr("https://meetings.ipvideotalk.cn"/*,cb*/);
+
+    // 可选，用于创建并进入会议室（ipvtSDK.enterRoom）
+    ipvtSDK.init({
+        sdkAppId: 20002 ,//开发者sdkSecret，用于SDK内部调用服务器创会等API
+
+        sdkSecret:"354AB33D1C704645AD933DDB94D6B233", //开发者sdkSecret，用于SDK内部调用服务器创会等API
+
+        userName:"IPVTGuest01", // （用于登录账号）创会用需要先登录内部获取token,再调用创会接口
+
+        password:"5c48632ecdd4f49253ed3de9d87ce1eb" // （用于登录账号）创会用需要先登录内部获取token,再调用创会接口
+
+    },function(err){
+        //可选，回调函数，如失败，会带上错误原因，成功则没有err参数
+    });
+
+
+    //调用示例：
+    let submitBut1 = document.getElementById('submit_');
+
+    ipvtSDK.addEventHandler(ipvtSDK.EVENT_MEETING/*onJoinMeetingSuccess*/,function (data) {
+        console.info("event [ipvtSDK.EVENT_JOIN_MEETING_SUCCESS] triggered: " + JSON.stringify(data));
+    });
+
+    /**
+     * Example:  ipvtSDK.enterRoom
+     *
+     *  create room & join room
+     */
+    submitBut1.addEventListener("click",function (ev){
+        // enterRoom
+        let data = {
+            roomId:document.getElementById("meetingNum_").value,
+            userName:document.getElementById("displayName_").value,
+            email:document.getElementById("email_").value,
+            layout:ipvtSDK.LAYOUT_AUTO,
+            //isHost:true // optional, default:false
+			//roomPassword: ,// optional, default:
+            //record: // optional default:false
+
+        };
+        ipvtSDK.enterRoom(data,function () {
+            alert("joinMeeting cb executed!!!");
+        },function (err) {
+            alert(err);
+
+        });
+    });
+
+    /**
+     * Example:  ipvtSDK.joinRoom
+     *
+     *     join room
+     */
+    // submitBut1.addEventListener("click",function (ev){
+    //
+    //     // joinRoom
+    //     let data = {
+    //         roomId:document.getElementById("meetingNum_").value,
+    //         userName:document.getElementById("displayName_").value,
+    //         email:document.getElementById("email_").value,
+    //         // hostCode:3176,// optional
+    //         // roomPassword:12344,// optional
+    //     };
+    //
+    //     ipvtSDK.joinRoom(data,function () {
+    //         alert("joinMeeting cb executed!!!");
+    //     },function (err) {
+    //         alert(err);
+    //     });
+    // });
+
+// }
+</script>
+</body>
+</html>
