@@ -18,14 +18,46 @@
     let uploadButton = document.getElementById('fileUpload');
     //发送消息 webrtcSDK.sendMessageToUser(file,"10000002125","pic")
     uploadButton.addEventListener("click",function (ev){
-        uploadButton.onchange = function (e) {
-            uploadFile(uploadButton.files,function (result) {
-                alert("上传成功:" + JSON.stringify(result));
-            },function (result) {
-                alert("上传失败:" + JSON.stringify(result));
-            })
-        }
+        removeImgElements();
     });
+
+    uploadButton.onchange = function (e) {
+        // if exist old img elements, remove them
+        removeImgElements();
+
+        let files = uploadButton.files;
+        for (let i = 0; i < files.length; i++) {
+            let imageElement = document.createElement('img');
+            imageElement.src = URL.createObjectURL(files[i]);
+            imageElement.title = files[i].name;
+            document.body.appendChild(imageElement);
+            // URL.revokeObjectURL(imageElement.src);
+        }
+        uploadFile(uploadButton.files,function (result) {
+            alert("上传成功:" + JSON.stringify(result));
+            // RevokeURL after uploading, make sure the image can be rendered to the page first, otherwise the image may be broken
+            revokeImgURL();
+        },function (result) {
+            alert("上传失败:" + JSON.stringify(result));
+            revokeImgURL();
+        });
+    };
+
+
+    function revokeImgURL () {
+        let nodeList = document.querySelectorAll('img');
+        for (let i = 0; i < nodeList.length; i++) {
+            URL.revokeObjectURL(nodeList[i].src);
+        }
+    }
+
+    function removeImgElements(){
+        let nodeList = document.querySelectorAll('img');
+        for (let i = 0; i < nodeList.length; i++) {
+            document.body.removeChild(nodeList[i]);
+        }
+
+    }
 
     let uploadFile = function(files,succCB,errCB){
 
