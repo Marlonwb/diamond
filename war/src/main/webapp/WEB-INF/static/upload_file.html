@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+</head>
+<body>
+<!--<form method="POST" action="/file/uploadFile" enctype="multipart/form-data">-->
+<!--    File to upload: <input type="file" name="file" id="fileUpload">-->
+<!--    <input type="submit" value="Upload"> Press here to upload the file!-->
+<!--</form>-->
+<div id="file_submit">
+<!--  input元素加上 multiple="multiple" 属性，可多选，无，则单选-->
+<!--    File to upload: <input type="file" name="file" id="fileUpload">-->
+    File to upload: <input type="file" name="file" id="fileUpload" multiple="multiple">
+</div>
+<script>
+    let uploadButton = document.getElementById('fileUpload');
+    //发送消息 webrtcSDK.sendMessageToUser(file,"10000002125","pic")
+    uploadButton.addEventListener("click",function (ev){
+        uploadButton.onchange = function (e) {
+            uploadFile(uploadButton.files,function (result) {
+                alert("上传成功:" + JSON.stringify(result));
+            },function (result) {
+                alert("上传失败:" + JSON.stringify(result));
+            })
+        }
+    });
+
+    let uploadFile = function(files,succCB,errCB){
+
+        // 获取当前UTC时间
+        // let d = new Date();
+        // let year = d.getUTCFullYear();
+        // let mon = (d.getUTCMonth()+1)< 10 ? "0"+(d.getUTCMonth()+1): (d.getUTCMonth()+1).toString();
+        // let day = d.getUTCDate()< 10 ? "0"+d.getUTCDate(): d.getUTCDate().toString();
+        // let hour = d.getUTCHours()< 10 ? "0"+d.getUTCHours(): d.getUTCHours().toString();
+        // let min = d.getUTCMinutes()< 10 ? "0"+d.getUTCMinutes(): d.getUTCMinutes().toString();
+        // let sec = d.getUTCSeconds()< 10 ? "0"+d.getUTCSeconds(): d.getUTCSeconds().toString();
+        // let timeStamp = year+mon+day+hour+min+sec;
+        // 获取上传鉴权参数
+        // let roomInfo = getRoomInfo();
+        // let param = {
+        //     "bizType": "WEBRTC_CHAT",
+        //     "bizId": ConfUser.getMyId(),
+        //     "confSernum": roomInfo.meetingSerialNum,
+        //     "confNum": roomInfo.meetingNum,
+        //     "appID": "10010",
+        //     "format": "JSON",
+        //     "source": "webrtc",
+        //     "timeStamp": timeStamp,
+        //     "version": "1.0",
+        // }
+        // let signature = getUploadAuthentication(param);
+
+        let url = "/file/uploadFile";
+        let data = {};
+        data.isFormData = true; // 标记文件上传
+        // 上传请求
+        let formData = new FormData();
+        // 上传的input元素的files属性不是数组，转为数组
+        let fileList = Array.prototype.slice.call(files)
+        if(Array.isArray(fileList) && fileList.length > 0){
+            for(let i = 0; i < fileList.length; i++){
+                formData.append("file",fileList[i]);
+            }
+        }
+        data.formData = formData;
+        // 上传请求
+        postData(url, data)
+            .then(function (result) {
+                if(result.retCode === 0){
+                    console.info("file upload success: "+ JSON.stringify(result));
+
+                    // 如果做处理，后续可监听此通用事件
+                    // triggerEvent(ApiEventEnum.EVENT_MEETING, [ApiEventEnum.EVENT_FILE_UPLOADED, result]);
+
+                    if(succCB){
+                        succCB(result);
+                    }
+                }else{ // 逻辑失败
+                    console.info("file upload failed:" + result.retCode);
+                    // 服务器存储异常（nfs磁盘挂载失败）
+                    if(result.retCode === "60006"){
+                        // logger.info(VIDEO.SERVER_SAVE_ERR);
+                        console.info("Server Storage Exception");
+                    }
+                    if(errCB){
+                        errCB(JSON.stringify(result));
+                    }
+                }
+            }) // JSON-string from `response.json()` call
+            .catch(function (error) {
+                let errorJson = JSON.stringify(error);
+                if(errCB){
+                    errCB(errorJson);
+                }
+                return console.error("file upload failed:" + errorJson);
+            });
+    }
+
+    let getData = (url = '') => {
+        // Default options are marked with *
+        return fetch(url, {
+            method: "GET",
+            // *GET, POST, PUT, DELETE, etc.
+            mode: "cors",
+            // no-cors, cors, *same-origin
+            cache: "no-cache",
+            // *default, no-cache, reload, force-cache, only-if-cached
+            // credentials: "same-origin",
+            // credentials: "include",
+            // same-origin,include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded" //,"application/json"
+
+            },
+            redirect: "follow",
+            // manual, *follow, error
+            referrer: "no-referrer" // no-referrer, *client
+
+        }).then(function (response) {
+            return response.json();
+        }) // parses response to JSON
+            .catch(function (error) {
+                return error.json();
+            });
+    }
+    // 注意：data.isFormData=true，为文件上传接口
+    let postData = (url = ``, data = {}, contentType) => {
+        let contType = "application/json";
+        if(contentType){
+            contType = contentType;
+        }
+
+        let init =  data.isFormData ?  {
+            method: "POST",
+            // *GET, POST, PUT, DELETE, etc.
+            mode: "cors",
+            // no-cors, cors, *same-origin
+            cache: "no-cache",
+            // *default, no-cache, reload, force-cache, only-if-cached
+
+            // credentials: "same-origin",
+            // credentials: "include",
+
+            // same-origin,include, *same-origin, omit
+
+            // 文件上传，不带headers
+            // headers: {
+            //     "Content-Type":contType // "Content-Type": "application/x-www-form-urlencoded",
+            // },
+            redirect: "follow",
+            // manual, *follow, error
+            referrer: "no-referrer",
+            // no-referrer, *client
+            body: data.formData
+
+        } : {
+            method: "POST",
+            // *GET, POST, PUT, DELETE, etc.
+            mode: "cors",
+            // no-cors, cors, *same-origin
+            cache: "no-cache",
+            // *default, no-cache, reload, force-cache, only-if-cached
+
+            // credentials: "same-origin",
+            // credentials: "include",
+
+            // same-origin,include, *same-origin, omit
+
+            // 文件上传，不带headers
+            headers: {
+                "Content-Type":contType // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow",
+            // manual, *follow, error
+            referrer: "no-referrer",
+            // no-referrer, *client
+            body: contType === "application/json" ? JSON.stringify(data) : assembleFormedPostParams(data) // body data type must match "Content-Type" header
+
+        }
+
+        // Default options are marked with *
+        return fetch(url, init)
+            .then(function (response) {
+                return response.json();
+            }) // parses response to JSON
+            .catch(function (error) {
+                return error.json();
+            });
+    }
+
+    function assembleFormedPostParams(optionObj){
+        let params = "";
+        Object.keys(optionObj).forEach(function(key){
+            params += key + "=" + encodeURIComponent(optionObj[key]) + "&";
+        });
+        return params.substring(0, params.length-1); //去掉最后一个&
+    }
+</script>
+</body>
+</html>
