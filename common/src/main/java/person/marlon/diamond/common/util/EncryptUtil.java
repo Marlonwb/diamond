@@ -13,7 +13,7 @@ public class EncryptUtil {
     public static final String SHA1 = "SHA-1";
 
     /**
-     * 对字符串加密,加密算法使用MD5,SHA-1,SHA-256,默认使用SHA-256
+     * 对称加密算法：使用MD5,SHA-1,SHA-256,默认使用SHA-256
      * @param strSrc   要加密的字符串
      * @param encName   加密类型
      * @return default sha-256

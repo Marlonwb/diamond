@@ -10,7 +10,7 @@ public class RegularExpressionUtil {
 
 	//域名URL正则
 	private static final Pattern DOMAIN_PATTERN =Pattern.compile("^((https|http)://)?(((([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+))\\.)+(([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+)|([a-zA-Z0-9]+)))$");
-	//从{1,2}改为{1,} 今天找到一个反例：https://192.168.126.249 （2019-6-28）存在多个点的情况
+	//从{1,2}改为{1,},判断有漏洞，如：https://192.168.126.249 存在多个点的情况
 
 	/**
 	 * 判断字符串是否ip

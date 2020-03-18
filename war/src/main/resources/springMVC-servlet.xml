@@ -22,7 +22,7 @@
         <!--如有多个按照配置的顺序拦截-->
         <bean class="person.marlon.diamond.web.interceptor.AuthenticationInterceptor" />
         <bean class="person.marlon.diamond.web.interceptor.LocaleInterceptor" />
-        <bean class="person.marlon.diamond.web.interceptor.SessionInterceptor" />
+<!--        <bean class="person.marlon.diamond.web.interceptor.SessionInterceptor" />-->
     </mvc:interceptors>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>

@@ -144,7 +144,7 @@ public class RSAUtil {
 	        }
 	        return str;
 	    }
-	    public static void main2 (String[] args) throws Exception {
+	    public static void main (String[] args) throws Exception {
 	        Map<String, String> keyMap = createKeys();
 	        String  publicKey = keyMap.get("publicKey");
 	        String  privateKey = keyMap.get("privateKey");
