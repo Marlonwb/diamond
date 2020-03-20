@@ -18,23 +18,29 @@
     let uploadButton = document.getElementById('fileUpload');
     //发送消息 webrtcSDK.sendMessageToUser(file,"10000002125","pic")
     uploadButton.addEventListener("click",function (ev){
-        removeImgElements();
+        removeImgDivElement();
     });
+
+    let allowedPicTypes = ["image/jpeg","image/bmp","image/png","image/gif"];
 
     uploadButton.onchange = function (e) {
         // if exist old img elements, remove them
-        removeImgElements();
+        removeImgDivElement();
 
         // <div> -- <img> -- <img> -- <p> --</div>
         let divElement = document.createElement('div');
+        divElement.setAttribute("id","img-div");
         let divContent = ``;
 
         let files = uploadButton.files;
-        // files.forEach(function (file) {
-        //     divContent += `<img src=${URL.createObjectURL(file)} title=${file.name} width="20%">`;
-        // });
+
         for (let i = 0; i < files.length; i++) {
-            divContent += `<img src=${URL.createObjectURL(files[i])} title=${files[i].name} width="20%">`;
+            if(allowedPicTypes.indexOf(files[i].type) !== -1){
+                // pic type
+                divContent += `<img src=${URL.createObjectURL(files[i])} title=${files[i].name} width="20%">`;
+            }else{
+                divContent += `<img src="/static/img/icon-file.png" title=${files[i].name} width="20%">`;
+            }
         }
 
         divContent += `<p />
@@ -63,7 +69,7 @@
         let cancelButtonElement = document.getElementById("cancel");
         cancelButtonElement.addEventListener("click",function (e) {
             revokeImgURL();
-            document.body.removeChild(divElement);
+            removeImgDivElement();
         });
 
         let uploadButtonElement = document.getElementById("upload");
@@ -76,7 +82,7 @@
                 alert("上传失败:" + JSON.stringify(result));
                 revokeImgURL();
             });
-            document.body.removeChild(divElement);
+            removeImgDivElement();
         });
     };
 
@@ -88,12 +94,11 @@
         }
     }
 
-    function removeImgElements(){
-        let nodeList = document.querySelectorAll('img');
-        for (let i = 0; i < nodeList.length; i++) {
-            document.body.removeChild(nodeList[i]);
+    function removeImgDivElement(){
+        let imgDivElement = document.getElementById("img-div");
+        if(imgDivElement){
+            document.body.removeChild(imgDivElement);
         }
-
     }
 
     let uploadFile = function(files,succCB,errCB){
