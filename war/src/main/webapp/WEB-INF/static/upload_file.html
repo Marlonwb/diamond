@@ -25,21 +25,58 @@
         // if exist old img elements, remove them
         removeImgElements();
 
+        // <div> -- <img> -- <img> -- <p> --</div>
+        let divElement = document.createElement('div');
+        let divContent = ``;
+
         let files = uploadButton.files;
+        // files.forEach(function (file) {
+        //     divContent += `<img src=${URL.createObjectURL(file)} title=${file.name} width="20%">`;
+        // });
         for (let i = 0; i < files.length; i++) {
-            let imageElement = document.createElement('img');
-            imageElement.src = URL.createObjectURL(files[i]);
-            imageElement.title = files[i].name;
-            document.body.appendChild(imageElement);
-            // URL.revokeObjectURL(imageElement.src);
+            divContent += `<img src=${URL.createObjectURL(files[i])} title=${files[i].name} width="20%">`;
         }
-        uploadFile(uploadButton.files,function (result) {
-            alert("上传成功:" + JSON.stringify(result));
-            // RevokeURL after uploading, make sure the image can be rendered to the page first, otherwise the image may be broken
+
+        divContent += `<p />
+                       <button id="cancel">取消</button>
+                       <button id="upload">上传</button>
+                `;
+
+        // for (let i = 0; i < files.length; i++) {
+        //     let imageElement = document.createElement('img');
+        //     // imageElement.src = URL.createObjectURL(files[i]);
+        //     // imageElement.title = files[i].name;
+        //     imageElement.setAttribute("src",URL.createObjectURL(files[i]));
+        //     imageElement.setAttribute("title",files[i].name);
+        //     imageElement.setAttribute("width","20%");
+        //     divElement.appendChild(imageElement);
+        //     // URL.revokeObjectURL(imageElement.src);
+        // }
+        // let paragraphElement = document.createElement('p');
+        // divElement.appendChild(paragraphElement);
+        // let buttonElement = document.createElement('button');
+        // buttonElement.innerHTML = "上传";
+        divElement.innerHTML = divContent;
+        document.body.appendChild(divElement);
+
+        // add button click event triggering
+        let cancelButtonElement = document.getElementById("cancel");
+        cancelButtonElement.addEventListener("click",function (e) {
             revokeImgURL();
-        },function (result) {
-            alert("上传失败:" + JSON.stringify(result));
-            revokeImgURL();
+            document.body.removeChild(divElement);
+        });
+
+        let uploadButtonElement = document.getElementById("upload");
+        uploadButtonElement.addEventListener("click",function (e) {
+            uploadFile(uploadButton.files,function (result) {
+                alert("上传成功:" + JSON.stringify(result));
+                // RevokeURL after uploading, make sure the image can be rendered to the page first, otherwise the image may be broken
+                revokeImgURL();
+            },function (result) {
+                alert("上传失败:" + JSON.stringify(result));
+                revokeImgURL();
+            });
+            document.body.removeChild(divElement);
         });
     };
 
@@ -85,18 +122,34 @@
         // }
         // let signature = getUploadAuthentication(param);
 
+        // Array.prototype.slice.call()不允许传undefined和null,其余会转为数组，此处做判断
+        if(files === undefined || files === null){
+            console.warn("files parameter is empty!");
+            if(typeof errCB === "function"){
+                errCB("files parameter is empty!")
+            }
+            return;
+        }
+
+        // 上传的input元素的files属性不是数组，转为数组
+        let fileList = Array.prototype.slice.call(files);
+        if(fileList.length === 0){
+            console.warn("fileList is empty!!");
+            if(typeof errCB === "function"){
+                errCB("fileList is empty!")
+            }
+            return;
+        }
+
         let url = "/file/uploadFile";
         let data = {};
         data.isFormData = true; // 标记文件上传
         // 上传请求
         let formData = new FormData();
-        // 上传的input元素的files属性不是数组，转为数组
-        let fileList = Array.prototype.slice.call(files)
-        if(Array.isArray(fileList) && fileList.length > 0){
-            for(let i = 0; i < fileList.length; i++){
-                formData.append("file",fileList[i]);
-            }
+        for(let i = 0; i < fileList.length; i++){
+            formData.append("file",fileList[i]);
         }
+
         data.formData = formData;
         // 上传请求
         postData(url, data)
