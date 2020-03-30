@@ -164,10 +164,10 @@ public class FileService {
             // 写文件到服务器
             File serverFile = new File(dir.getAbsolutePath() + File.separator + newFilePrefix + file.getOriginalFilename());
             file.transferTo(serverFile);//该方法重复提交会删除旧的同名图片
-            logger.info("You successfully uploaded file=" +  file.getOriginalFilename());
+            logger.info("You successfully uploaded file : " +  file.getOriginalFilename());
             return true;
         } catch (Exception e) {
-            logger.info("You failed to upload " +  file.getOriginalFilename() + " => " + e.getMessage());
+            logger.info("Failed to upload " +  file.getOriginalFilename() + " => " + e.getMessage());
             return false;
         }
     }

@@ -46,8 +46,6 @@ public class FileController {
 //		}
 //	}
 	
-	private final String UPLOAD_FILE_PATH = ResourceUtil.getValue("upload_file_path");
-	
 	@Resource
 	private FileService fileService;
 	
@@ -59,22 +57,7 @@ public class FileController {
 		}
 		
 		for (int i = 0; i < files.length; i++) {
-			if (!files[i].isEmpty()) {
-				try {
-					// 文件存放服务端的位置
-					File dir = new File(UPLOAD_FILE_PATH + File.separator + "upload");
-					if (!dir.exists())
-						dir.mkdirs();
-					// 写文件到服务器
-					File serverFile = new File(dir.getAbsolutePath() + File.separator + files[i].getOriginalFilename());
-					files[i].transferTo(serverFile);//该方法重复提交会删除旧的同名图片
-					logger.info("successfully uploaded file:" +  files[i].getOriginalFilename());
-				} catch (Exception e) {
-					logger.warn(" failed to upload " +  files[i].getOriginalFilename() + " => " + e.getMessage());
-				}
-			} else {
-				logger.warn("failed to upload " +  files[i].getOriginalFilename() + " because the file was empty.");
-			}
+			fileService.writeFile(files[i],"");
 		}
 		return new ApiResponse<>(0, "You successfully uploaded files:" +  files).toString();
 	}
