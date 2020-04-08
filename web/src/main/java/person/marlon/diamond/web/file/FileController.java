@@ -12,6 +12,9 @@ import person.marlon.diamond.service.file.FileService;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/file")
@@ -56,10 +59,13 @@ public class FileController {
 			return new ApiResponse<>(-1,"upload file is null!").toString();
 		}
 		
+		List<String> list = new ArrayList<>();
 		for (int i = 0; i < files.length; i++) {
-			fileService.writeFile(files[i],"");
+			if(fileService.writeFile(files[i],"")){
+				list.add(files[i].getOriginalFilename());
+			}
 		}
-		return new ApiResponse<>(0, "You successfully uploaded files:" +  files).toString();
+		return new ApiResponse<>(0, "You successfully uploaded files: " + list).toString();
 	}
 	
 	@PostMapping(value = "/uploadFileWithAddtionalData",produces = "application/json;charset=UTF-8")
