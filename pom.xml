@@ -218,7 +218,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.58</version>
+                <version>1.2.83</version>
             </dependency>
 
             <!-- google Bitmap算法实现：https://mvnrepository.com/artifact/com.googlecode.javaewah/JavaEWAH -->
